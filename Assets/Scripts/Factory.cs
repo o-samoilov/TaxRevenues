@@ -13,7 +13,7 @@ public class Factory : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             CreateProduct();
         }

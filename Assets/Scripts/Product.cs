@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Product : MonoBehaviour
 {
-    public float heightDestroy = 10f;
-    public float speed = 5f;
+    public float heightDestroy = 20f;
+    public float speed = 15f;
 
     void Start()
     {

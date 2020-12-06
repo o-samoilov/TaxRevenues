@@ -1,18 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Factory : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject productPrefab;
+
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Z))
+        {
+            CreateProduct();
+        }
+    }
+
+    public void CreateProduct()
+    {
+        var productPrefabPosition = gameObject.transform.position;
+        productPrefabPosition.z -= 3;
+        productPrefabPosition.y = 1;
+
+        Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
     }
 }

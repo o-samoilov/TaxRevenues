@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class Exchange : MonoBehaviour
 {
-    public int MaxProductsPerDay = 1000;
+    [Tooltip("Setting quantity max products for sold every day.")]
+    public static int MaxProductsPerDay = 1000;
     
-    private int _soldProductsToday = 0;
+    private static int _soldProductsToday = 0;
+    private static int _currentDay;
 
-    void Update()
+    private void Start()
     {
-        //todo 
-        // clear _soldProductsToday every day
+        _currentDay = DateTime.CurrentDay;
+    }
+    
+    private void Update()
+    {
+        if (_currentDay != DateTime.CurrentDay)
+        {
+            _currentDay = DateTime.CurrentDay;
+            _soldProductsToday = 0;
+        }
     }
 
-    public bool IsPossibleSell()
+    public static bool IsPossibleSell()
     {
         return _soldProductsToday < MaxProductsPerDay;
     }
 
-    public void Sold()
+    public static void Sold()
     {
         _soldProductsToday++;
     }

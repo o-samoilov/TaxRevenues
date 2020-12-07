@@ -1,4 +1,23 @@
-﻿public class DateTime
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+public class DateTime : MonoBehaviour
 {
-    public const float DayLength = 5f; // seconds
+    [Tooltip("Day length in seconds.")]
+    public float DayLength = 5f; // seconds
+    private static int _currentDay = 1;
+
+    public static int CurrentDay => _currentDay;
+
+    private void Start()
+    {
+        InvokeRepeating(nameof(NextDay), 0f, DayLength);
+    }
+
+    private void NextDay()
+    {
+        _currentDay++;
+    }
 }

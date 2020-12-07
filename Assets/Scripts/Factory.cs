@@ -7,24 +7,32 @@ public class Factory : MonoBehaviour
 {
     public GameObject productPrefab;
 
+    private float _money = 0;
+    
     void Start()
     {
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        /*if (Input.GetKeyDown(KeyCode.Z))
         {
             CreateProduct();
+        }*/
+
+        if (Exchange.IsPossibleSell())
+        {
+            var product = CreateProduct();
+            _money += Exchange.Sold(product);
         }
     }
 
-    public void CreateProduct()
+    public GameObject CreateProduct()
     {
         var productPrefabPosition = gameObject.transform.position;
         productPrefabPosition.z -= 3;
         productPrefabPosition.y = 1;
 
-        Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
+        return Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
     }
 }

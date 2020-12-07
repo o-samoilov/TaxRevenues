@@ -13,7 +13,7 @@ public class DateTime : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(NextDay), 0f, DayLength);
+        InvokeRepeating(nameof(NextDay), DayLength, DayLength);
     }
 
     private void NextDay()

@@ -5,7 +5,9 @@ using UnityEngine;
 public class Exchange : MonoBehaviour
 {
     [Tooltip("Setting quantity max products for sold every day.")]
-    public static int MaxProductsPerDay = 1000;
+    public static int MaxProductsPerDay = 10;// todo revert 1000
+    
+    public static float ProductPrice = 10f;
     
     private static int _soldProductsToday = 0;
     private static int _currentDay;
@@ -29,8 +31,10 @@ public class Exchange : MonoBehaviour
         return _soldProductsToday < MaxProductsPerDay;
     }
 
-    public static void Sold()
+    public static float Sold(GameObject product)
     {
         _soldProductsToday++;
+        
+        return ProductPrice;
     }
 }

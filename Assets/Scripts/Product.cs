@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Product : MonoBehaviour
 {
-    public float heightDestroy = 20f;
-    public float speed = 15f;
+    private const float HeightDestroy = 30f;
+    private const float Speed = 10f;
 
     void Start()
     {
@@ -14,9 +14,9 @@ public class Product : MonoBehaviour
     void Update()
     {
         var gameObjectTransform = gameObject.transform;
-        gameObjectTransform.position += new Vector3(0, speed * Time.deltaTime, 0);
+        gameObjectTransform.position += new Vector3(0, Speed * Time.deltaTime, 0);
 
-        if (gameObjectTransform.position.y >= heightDestroy)
+        if (gameObjectTransform.position.y >= HeightDestroy)
         {
             Destroy(gameObject);
         }

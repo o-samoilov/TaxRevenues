@@ -9,22 +9,21 @@ public class Manufacture : MonoBehaviour
 
     private float _money = 0;
 
+    private VM.Basic _vm;
+
     void Start()
     {
+        _vm = new VM.Basic(this);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        /*if (Input.GetKeyDown(KeyCode.Z))
         {
-            SetBigSize();
-        }
-
-        /*if (Exchange.IsPossibleSell())
-        {
-            var product = CreateProduct();
-            _money += Exchange.Sold(product);
+            SetMiddleSize();
         }*/
+        
+        _vm.Process();
     }
 
     public GameObject CreateProduct()
@@ -41,7 +40,7 @@ public class Manufacture : MonoBehaviour
         Scale(new Vector3(1f, 1f, 1f));
     }
     
-    public void SetMidldeSize()
+    public void SetMiddleSize()
     {
         Scale(new Vector3(1.5f, 3f, 1.5f));
     }

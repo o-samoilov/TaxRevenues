@@ -33,8 +33,18 @@ public class Exchange : MonoBehaviour
 
     public static float Sold(GameObject product)
     {
+        if (!IsPossibleSell())
+        {
+            return 0;
+        }
+        
         _soldProductsToday++;
         
         return ProductPrice;
+    }
+    
+    public static int CountOpportunitySell()
+    {
+        return MaxProductsPerDay - _soldProductsToday;
     }
 }

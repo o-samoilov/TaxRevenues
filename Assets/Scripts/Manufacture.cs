@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Factory : MonoBehaviour
+public class Manufacture : MonoBehaviour
 {
     public GameObject productPrefab;
 
@@ -20,11 +20,11 @@ public class Factory : MonoBehaviour
             CreateProduct();
         }*/
 
-        if (Exchange.IsPossibleSell())
+        /*if (Exchange.IsPossibleSell())
         {
             var product = CreateProduct();
             _money += Exchange.Sold(product);
-        }
+        }*/
     }
 
     public GameObject CreateProduct()

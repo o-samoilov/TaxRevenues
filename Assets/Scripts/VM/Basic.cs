@@ -11,7 +11,7 @@ namespace VM
 
         public void Process()
         {
-            //_manufacture.CreateProduct();
+            _manufacture.CreateProduct();
 
             /*if (Exchange.IsPossibleSell())
             {

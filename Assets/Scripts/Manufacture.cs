@@ -7,9 +7,12 @@ public class Manufacture : MonoBehaviour
 {
     public GameObject productPrefab;
 
-    private float _money = 0;
-
     private VM.Basic _vm;
+
+    private float _money = Settings.Basic.StartManufactureMoney;
+    private float _productCoast = Settings.Basic.StartManufactureProductCoast;
+    private float _productCreationTime = Settings.Basic.StartManufactureProductCreationTime;
+
 
     void Start()
     {
@@ -22,29 +25,50 @@ public class Manufacture : MonoBehaviour
         {
             SetMiddleSize();
         }*/
-        
+
         _vm.Process();
     }
 
-    public GameObject CreateProduct()
+    public bool IsPossibleCreateProduct()
     {
+        return _money >= _productCoast;
+    }
+    
+    public bool CreateProduct()
+    {
+        if (!IsPossibleCreateProduct())
+        {
+            return false;
+        }
+
+        _money -= _productCoast;
+        
         var productPrefabPosition = gameObject.transform.position;
         productPrefabPosition.z -= 3;
         productPrefabPosition.y = 1;
 
-        return Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
+        Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
+
+        //var product = obj.GetComponentInChildren<Product>();
+        
+        return true;
+    }
+
+    public void AddMoney(float money)
+    {
+        _money += money;
     }
 
     public void SetSmallSize()
     {
         Scale(new Vector3(1f, 1f, 1f));
     }
-    
+
     public void SetMiddleSize()
     {
         Scale(new Vector3(1.5f, 3f, 1.5f));
     }
-    
+
     public void SetBigSize()
     {
         Scale(new Vector3(2f, 5f, 2f));

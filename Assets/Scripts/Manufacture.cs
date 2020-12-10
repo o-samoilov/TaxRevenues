@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,10 +15,16 @@ public class Manufacture : MonoBehaviour
     private float _productCoast = Settings.Basic.StartManufactureProductCoast;
     private float _productCreationTime = Settings.Basic.StartManufactureProductCreationTime;
 
+    private Stopwatch _stopWatch;
+    private bool _isBusy = false;
+    private TimeSpan _productCreate;
+
 
     void Start()
     {
         _vm = new VM.Basic(this);
+        _stopWatch = new Stopwatch();
+        _stopWatch.Start();
     }
 
     void Update()
@@ -26,23 +34,38 @@ public class Manufacture : MonoBehaviour
             SetMiddleSize();
         }*/
 
-        _vm.Process();
+
+        //_vm.Process();
+    }
+
+    public bool IsBusy()
+    {
+        return _isBusy;
+    }
+    
+    private void checkBusy()
+    {
+        TimeSpan ts = _stopWatch.Elapsed;
+
     }
 
     public bool IsPossibleCreateProduct()
     {
         return _money >= _productCoast;
     }
-    
+
     public bool CreateProduct()
     {
-        if (!IsPossibleCreateProduct())
+        if (!IsPossibleCreateProduct() || IsBusy())
         {
             return false;
         }
 
-        _money -= _productCoast;
+        _isBusy = true;
+        //_productCreate = DateTime.Now.;
         
+        _money -= _productCoast;
+
         var productPrefabPosition = gameObject.transform.position;
         productPrefabPosition.z -= 3;
         productPrefabPosition.y = 1;
@@ -50,7 +73,7 @@ public class Manufacture : MonoBehaviour
         Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
 
         //var product = obj.GetComponentInChildren<Product>();
-        
+
         return true;
     }
 

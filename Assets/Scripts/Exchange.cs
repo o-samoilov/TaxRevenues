@@ -14,14 +14,14 @@ public class Exchange : MonoBehaviour
 
     private void Start()
     {
-        _currentDay = DateTime.CurrentDay;
+        _currentDay = WorldDateTime.CurrentDay;
     }
     
     private void Update()
     {
-        if (_currentDay != DateTime.CurrentDay)
+        if (_currentDay != WorldDateTime.CurrentDay)
         {
-            _currentDay = DateTime.CurrentDay;
+            _currentDay = WorldDateTime.CurrentDay;
             _soldProductsToday = 0;
         }
     }

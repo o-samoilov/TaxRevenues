@@ -12,6 +12,7 @@ namespace VM
         public void Process()
         {
             _manufacture.CreateProduct();
+            _manufacture.AddMoney(Exchange.ProductPrice);
 
             /*if (Exchange.IsPossibleSell())
             {

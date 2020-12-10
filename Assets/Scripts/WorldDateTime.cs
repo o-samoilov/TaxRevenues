@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class DateTime : MonoBehaviour
+public class WorldDateTime : MonoBehaviour
 {
     [Tooltip("Day length in seconds.")]
-    public float DayLength = 5f; // seconds
+    public float DayLength = 10f; // seconds
     private static int _currentDay = 1;
 
     public static int CurrentDay => _currentDay;

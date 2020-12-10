@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
 
 public class Manufacture : MonoBehaviour
 {
@@ -19,12 +20,16 @@ public class Manufacture : MonoBehaviour
     private bool _isBusy = false;
     private TimeSpan _productCreate;
 
+    private const string BigSize = "big_size";
+    private const string MediumSize = "medium_size";
+    private const string SmallSize = "small_size";
+
+    private string _currentSize = SmallSize;
 
     void Start()
     {
         _vm = new VM.Basic(this);
         _stopWatch = new Stopwatch();
-        _stopWatch.Start();
     }
 
     void Update()
@@ -34,19 +39,29 @@ public class Manufacture : MonoBehaviour
             SetMiddleSize();
         }*/
 
+        CheckBusy();
 
-        //_vm.Process();
+        if (!_isBusy)
+        {
+            _vm.Process();
+        }
     }
 
-    public bool IsBusy()
+    private void CheckBusy()
     {
-        return _isBusy;
-    }
-    
-    private void checkBusy()
-    {
-        TimeSpan ts = _stopWatch.Elapsed;
+        if (!_isBusy)
+        {
+            return;
+        }
 
+        var duration = float.Parse(_stopWatch.Elapsed.ToString(@"ss\,fff"));
+
+        if (duration >= _productCreationTime)
+        {
+            _isBusy = false;
+            _stopWatch.Stop();
+            _stopWatch.Reset();
+        }
     }
 
     public bool IsPossibleCreateProduct()
@@ -56,15 +71,14 @@ public class Manufacture : MonoBehaviour
 
     public bool CreateProduct()
     {
-        if (!IsPossibleCreateProduct() || IsBusy())
+        if (!IsPossibleCreateProduct() || _isBusy)
         {
             return false;
         }
 
-        _isBusy = true;
-        //_productCreate = DateTime.Now.;
-        
         _money -= _productCoast;
+        _isBusy = true;
+        _stopWatch.Start();
 
         var productPrefabPosition = gameObject.transform.position;
         productPrefabPosition.z -= 3;
@@ -84,16 +98,37 @@ public class Manufacture : MonoBehaviour
 
     public void SetSmallSize()
     {
+        if (_currentSize == SmallSize)
+        {
+            return;
+        }
+
+        _currentSize = SmallSize;
+
         Scale(new Vector3(1f, 1f, 1f));
     }
 
-    public void SetMiddleSize()
+    public void SetMediumSize()
     {
+        if (_currentSize == MediumSize)
+        {
+            return;
+        }
+
+        _currentSize = MediumSize;
+        
         Scale(new Vector3(1.5f, 3f, 1.5f));
     }
 
     public void SetBigSize()
     {
+        if (_currentSize == BigSize)
+        {
+            return;
+        }
+
+        _currentSize = MediumSize;
+        
         Scale(new Vector3(2f, 5f, 2f));
     }
 

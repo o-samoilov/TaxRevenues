@@ -13,10 +13,13 @@ public class Manufacture : MonoBehaviour
     private VM.Basic _vm;
 
     private float _money = Settings.Basic.StartManufactureMoney;
-    private float _productCoast = Settings.Basic.StartManufactureProductCoast;
+    private float _productCoastPrice = Settings.Basic.StartManufactureProductCoast;
     private float _productCreationTime = Settings.Basic.StartManufactureProductCreationTime;
 
-    private Stopwatch _stopWatch;
+    private const float MinProductCoastPrice = 10f;
+    private const float MinProductCreationTime = 1f;
+
+    private readonly Stopwatch _stopWatch = new Stopwatch();
     private bool _isBusy = false;
     private TimeSpan _productCreate;
 
@@ -29,7 +32,6 @@ public class Manufacture : MonoBehaviour
     void Start()
     {
         _vm = new VM.Basic(this);
-        _stopWatch = new Stopwatch();
     }
 
     void Update()
@@ -63,10 +65,17 @@ public class Manufacture : MonoBehaviour
             _stopWatch.Reset();
         }
     }
+    
+    public void AddMoney(float money)
+    {
+        _money += money;
+    }
+
+    #region Product
 
     public bool IsPossibleCreateProduct()
     {
-        return _money >= _productCoast;
+        return _money >= _productCoastPrice;
     }
 
     public bool CreateProduct()
@@ -76,7 +85,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        _money -= _productCoast;
+        _money -= _productCoastPrice;
         _isBusy = true;
         _stopWatch.Start();
 
@@ -91,11 +100,24 @@ public class Manufacture : MonoBehaviour
         return true;
     }
 
-    public void AddMoney(float money)
+    public void ReduceProductCoastPrice(float money)
     {
-        _money += money;
+        if (Mathf.Epsilon)
+        {
+            
+        }
+        //todo
+    }
+    
+    public void ReduceProductCreationTime(float money)
+    {
+        //todo
     }
 
+    #endregion
+
+    #region Size Manufacture object
+    
     public void SetSmallSize()
     {
         if (_currentSize == SmallSize)
@@ -142,4 +164,6 @@ public class Manufacture : MonoBehaviour
             gameObject.transform.position.z
         );
     }
+    
+    #endregion
 }

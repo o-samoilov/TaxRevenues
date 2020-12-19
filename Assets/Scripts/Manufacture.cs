@@ -72,6 +72,13 @@ public class Manufacture : MonoBehaviour
     public void AddMoney(float money)
     {
         _money += money;
+        CheckSize();
+    }
+    
+    public void SpendMoney(float money)
+    {
+        _money -= money;
+        CheckSize();
     }
 
     #region Product
@@ -117,7 +124,7 @@ public class Manufacture : MonoBehaviour
         }
 
         _productCoastPrice -= 0.01f;
-        _money -= ProductReduceCoastPricePrice;
+        SpendMoney(ProductReduceCoastPricePrice);
         
         return true;
     }
@@ -136,7 +143,7 @@ public class Manufacture : MonoBehaviour
         }
 
         _productCreationTime -= 0.01f;
-        _money -= ProductReduceCreationTimePrice;
+        SpendMoney(ProductReduceCreationTimePrice);
         
         return true;
     }
@@ -144,6 +151,23 @@ public class Manufacture : MonoBehaviour
     #endregion
 
     #region Size Manufacture object
+
+    public void CheckSize()
+    {
+        //todo const
+        if (_money <= 5000f)
+        {
+            SetSmallSize();
+        }
+        else if (_money <= 20000f) 
+        {
+            SetMediumSize();
+        }
+        else
+        {
+            SetBigSize();
+        }
+    }
     
     public void SetSmallSize()
     {

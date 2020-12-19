@@ -16,8 +16,11 @@ public class Manufacture : MonoBehaviour
     private float _productCoastPrice = Settings.Basic.StartManufactureProductCoast;
     private float _productCreationTime = Settings.Basic.StartManufactureProductCreationTime;
 
-    private const float MinProductCoastPrice = 10f;
-    private const float MinProductCreationTime = 1f;
+    private const float ProductReduceCoastPricePrice = 50f;
+    private const float ProductReduceCreationTimePrice = 50f;
+    
+    private const float MinProductCoastPricePrice = 10f;
+    private const float MinProductCreationTimePrice = 1f;
 
     private readonly Stopwatch _stopWatch = new Stopwatch();
     private bool _isBusy = false;
@@ -100,18 +103,42 @@ public class Manufacture : MonoBehaviour
         return true;
     }
 
-    public void ReduceProductCoastPrice(float money)
+    public bool IsPossibleReduceProductCoastPrice()
     {
-        if (Mathf.Epsilon)
-        {
-            
-        }
-        //todo
+        return _productCoastPrice <= MinProductCoastPricePrice && 
+               _money >= ProductReduceCoastPricePrice;
     }
     
-    public void ReduceProductCreationTime(float money)
+    public bool ReduceProductCoastPrice()
     {
-        //todo
+        if (!IsPossibleReduceProductCoastPrice())
+        {
+            return false;
+        }
+
+        _productCoastPrice -= 0.01f;
+        _money -= ProductReduceCoastPricePrice;
+        
+        return true;
+    }
+    
+    public bool IsPossibleReduceProductCreationTime()
+    {
+        return _productCreationTime <= MinProductCreationTimePrice && 
+               _money >= ProductReduceCreationTimePrice;
+    }
+    
+    public bool ReduceProductCreationTime()
+    {
+        if (!IsPossibleReduceProductCreationTime())
+        {
+            return false;
+        }
+
+        _productCreationTime -= 0.01f;
+        _money -= ProductReduceCreationTimePrice;
+        
+        return true;
     }
 
     #endregion

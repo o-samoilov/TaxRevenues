@@ -18,7 +18,7 @@ public class Manufacture : MonoBehaviour
 
     private const float ProductReduceCoastPricePrice = 50f;
     private const float ProductReduceCreationTimePrice = 50f;
-    
+
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 1f;
 
@@ -68,18 +68,32 @@ public class Manufacture : MonoBehaviour
             _stopWatch.Reset();
         }
     }
-    
+
+    #region Finance
+
     public void AddMoney(float money)
     {
         _money += money;
         CheckSize();
     }
-    
+
+    public void PayTaxes(float money)
+    {
+        //todo
+    }
+
+    public void PayFine(float money)
+    {
+        //todo
+    }
+
     public void SpendMoney(float money)
     {
         _money -= money;
         CheckSize();
     }
+
+    #endregion
 
     #region Product
 
@@ -112,10 +126,10 @@ public class Manufacture : MonoBehaviour
 
     public bool IsPossibleReduceProductCoastPrice()
     {
-        return _productCoastPrice <= MinProductCoastPricePrice && 
+        return _productCoastPrice <= MinProductCoastPricePrice &&
                _money >= ProductReduceCoastPricePrice;
     }
-    
+
     public bool ReduceProductCoastPrice()
     {
         if (!IsPossibleReduceProductCoastPrice())
@@ -125,16 +139,16 @@ public class Manufacture : MonoBehaviour
 
         _productCoastPrice -= 0.01f;
         SpendMoney(ProductReduceCoastPricePrice);
-        
+
         return true;
     }
-    
+
     public bool IsPossibleReduceProductCreationTime()
     {
-        return _productCreationTime <= MinProductCreationTimePrice && 
+        return _productCreationTime <= MinProductCreationTimePrice &&
                _money >= ProductReduceCreationTimePrice;
     }
-    
+
     public bool ReduceProductCreationTime()
     {
         if (!IsPossibleReduceProductCreationTime())
@@ -144,7 +158,7 @@ public class Manufacture : MonoBehaviour
 
         _productCreationTime -= 0.01f;
         SpendMoney(ProductReduceCreationTimePrice);
-        
+
         return true;
     }
 
@@ -159,7 +173,7 @@ public class Manufacture : MonoBehaviour
         {
             SetSmallSize();
         }
-        else if (_money <= 20000f) 
+        else if (_money <= 20000f)
         {
             SetMediumSize();
         }
@@ -168,7 +182,7 @@ public class Manufacture : MonoBehaviour
             SetBigSize();
         }
     }
-    
+
     public void SetSmallSize()
     {
         if (_currentSize == SmallSize)
@@ -189,7 +203,7 @@ public class Manufacture : MonoBehaviour
         }
 
         _currentSize = MediumSize;
-        
+
         Scale(new Vector3(1.5f, 3f, 1.5f));
     }
 
@@ -201,7 +215,7 @@ public class Manufacture : MonoBehaviour
         }
 
         _currentSize = MediumSize;
-        
+
         Scale(new Vector3(2f, 5f, 2f));
     }
 
@@ -215,6 +229,6 @@ public class Manufacture : MonoBehaviour
             gameObject.transform.position.z
         );
     }
-    
+
     #endregion
 }

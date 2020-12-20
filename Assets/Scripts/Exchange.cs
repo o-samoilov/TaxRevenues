@@ -5,24 +5,22 @@ public class Exchange : MonoBehaviour
     [Tooltip("Setting quantity max products for sold every day.")]
     public static int MaxProductsPerDay = 1000;
 
+    public WorldDateTime worldDateTime;
     public static float ProductPrice = 10f;
 
     private static int _soldProductsToday = 0;
-
-    public WorldDateTime worldDateTime;
 
     private void Start()
     {
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
 
-
     public static bool IsPossibleSell()
     {
         return _soldProductsToday < MaxProductsPerDay;
     }
 
-    public static float Sold(GameObject product)
+    public static float Sold()
     {
         if (!IsPossibleSell())
         {

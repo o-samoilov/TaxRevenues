@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 1754948322}
   - component: {fileID: 1754948321}
   m_Layer: 0
-  m_Name: DateTime
+  m_Name: WorldDateTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2776e34c48c785b4d9f82a2ad7c65485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DayLength: 5
+  dayLength: 10
 --- !u!4 &1754948322
 Transform:
   m_ObjectHideFlags: 0
@@ -441,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14fac797efb6704ab1ed56b9ba7aca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldDateTime: {fileID: 1754948321}
 --- !u!1001 &2086331017
 PrefabInstance:
   m_ObjectHideFlags: 0

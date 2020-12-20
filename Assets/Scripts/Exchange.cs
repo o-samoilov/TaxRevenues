@@ -1,30 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Exchange : MonoBehaviour
 {
     [Tooltip("Setting quantity max products for sold every day.")]
-    public static int MaxProductsPerDay = 10;// todo revert 1000
-    
+    public static int MaxProductsPerDay = 1000;
+
     public static float ProductPrice = 10f;
-    
+
     private static int _soldProductsToday = 0;
-    private static int _currentDay;
+
+    public WorldDateTime worldDateTime;
 
     private void Start()
     {
-        _currentDay = WorldDateTime.CurrentDay;
+        worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
-    
-    private void Update()
-    {
-        if (_currentDay != WorldDateTime.CurrentDay)
-        {
-            _currentDay = WorldDateTime.CurrentDay;
-            _soldProductsToday = 0;
-        }
-    }
+
 
     public static bool IsPossibleSell()
     {
@@ -37,14 +28,21 @@ public class Exchange : MonoBehaviour
         {
             return 0;
         }
-        
+
         _soldProductsToday++;
-        
+
         return ProductPrice;
     }
-    
+
     public static int CountOpportunitySell()
     {
         return MaxProductsPerDay - _soldProductsToday;
+    }
+
+    private static void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
+    {
+        _soldProductsToday = 0;
+
+        //todo save statistic
     }
 }

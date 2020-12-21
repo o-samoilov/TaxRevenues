@@ -3,8 +3,8 @@ namespace Settings
     public class Basic
     {
         //Manufacture
-        public const float StartManufactureMoney = 1000f;
-        public const float StartManufactureProductCoast = 100f;
-        public const float StartManufactureProductCreationTime = 3f; // seconds
+        public const float ManufactureMoney = 1000f;
+        public const float ManufactureProductCoast = 90f;
+        public const float ManufactureProductCreationTime = 3f; // seconds
     }
 }

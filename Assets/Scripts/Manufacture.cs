@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
+using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 public class Manufacture : MonoBehaviour
@@ -12,9 +10,9 @@ public class Manufacture : MonoBehaviour
 
     private VM.Basic _vm;
 
-    private float _money = Settings.Basic.StartManufactureMoney;
-    private float _productCoastPrice = Settings.Basic.StartManufactureProductCoast;
-    private float _productCreationTime = Settings.Basic.StartManufactureProductCreationTime;
+    private float _money = Settings.Basic.ManufactureMoney;
+    private float _productCoastPrice = Settings.Basic.ManufactureProductCoast;
+    private float _productCreationTime = Settings.Basic.ManufactureProductCreationTime;
 
     private const float ProductReduceCoastPricePrice = 50f;
     private const float ProductReduceCreationTimePrice = 50f;
@@ -39,11 +37,6 @@ public class Manufacture : MonoBehaviour
 
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Z))
-        {
-            SetMiddleSize();
-        }*/
-
         CheckBusy();
 
         if (!_isBusy)
@@ -77,14 +70,20 @@ public class Manufacture : MonoBehaviour
         CheckSize();
     }
 
-    public void PayTaxes(float money)
+    public void PayTaxes(Product product)
     {
-        //todo
+        float taxesCount = TaxOffice.CalculateTaxes(this, product);
+        SpendMoney(taxesCount);
+        
+        //todo statistic
     }
 
-    public void PayFine(float money)
+    public void PayFine(Product product)
     {
-        //todo
+        float fineCount = TaxOffice.CalculateFine(this, product);
+        SpendMoney(fineCount);
+        
+        //todo statistic
     }
 
     public void SpendMoney(float money)
@@ -102,11 +101,12 @@ public class Manufacture : MonoBehaviour
         return _money >= _productCoastPrice;
     }
 
-    public bool CreateProduct()
+    [CanBeNull]
+    public Product CreateProduct()
     {
         if (!IsPossibleCreateProduct() || _isBusy)
         {
-            return false;
+            return null;
         }
 
         _money -= _productCoastPrice;
@@ -117,11 +117,15 @@ public class Manufacture : MonoBehaviour
         productPrefabPosition.z -= 3;
         productPrefabPosition.y = 1;
 
-        Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
+        var environment = gameObject.transform.parent.gameObject;
 
-        //var product = obj.GetComponentInChildren<Product>();
+        var productGameObject = Instantiate(productPrefab, productPrefabPosition, Quaternion.identity);
+        productGameObject.transform.SetParent(environment.transform);
 
-        return true;
+        var product = environment.GetComponentInChildren<Product>();
+        product.CoastPrice = _productCoastPrice;
+
+        return product;
     }
 
     public bool IsPossibleReduceProductCoastPrice()
@@ -164,7 +168,7 @@ public class Manufacture : MonoBehaviour
 
     #endregion
 
-    #region Size Manufacture object
+    #region Size Manufacture Object
 
     public void CheckSize()
     {

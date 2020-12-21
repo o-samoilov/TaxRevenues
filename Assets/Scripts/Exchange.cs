@@ -6,7 +6,7 @@ public class Exchange : MonoBehaviour
     public static int MaxProductsPerDay = 1000;
 
     public WorldDateTime worldDateTime;
-    public static float ProductPrice = 10f;
+    public static float ProductPrice = 100f;
 
     private static int _soldProductsToday = 0;
 

@@ -7,10 +7,9 @@ public class Product : MonoBehaviour
     private const float HeightDestroy = 30f;
     private const float Speed = 10f;
 
-    void Start()
-    {
-    }
-
+    public float Price { get; set; }
+    public float CoastPrice { get; set; }
+    
     void Update()
     {
         var gameObjectTransform = gameObject.transform;

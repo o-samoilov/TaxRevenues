@@ -37,6 +37,21 @@ public class Manufacture : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SetSmallSize();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SetMediumSize();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SetBigSize();
+        }
+
         CheckBusy();
 
         if (!_isBusy)
@@ -72,17 +87,17 @@ public class Manufacture : MonoBehaviour
 
     public void PayTaxes(Product product)
     {
-        float taxesCount = TaxOffice.CalculateTaxes(this, product);
-        SpendMoney(taxesCount);
-        
+        float taxes = TaxOffice.CalculateTaxes(this, product);
+        SpendMoney(taxes);
+
         //todo statistic
     }
 
     public void PayFine(Product product)
     {
-        float fineCount = TaxOffice.CalculateFine(this, product);
-        SpendMoney(fineCount);
-        
+        float fines = TaxOffice.CalculateFines(this, product);
+        SpendMoney(fines);
+
         //todo statistic
     }
 
@@ -113,9 +128,23 @@ public class Manufacture : MonoBehaviour
         _isBusy = true;
         _stopWatch.Start();
 
+        //Create product from prefab
         var productPrefabPosition = gameObject.transform.position;
-        productPrefabPosition.z -= 3;
-        productPrefabPosition.y = 1;
+        if (_currentSize == SmallSize)
+        {
+            productPrefabPosition.z -= 3;
+            productPrefabPosition.y = 1;
+        }
+        else if (_currentSize == MediumSize)
+        {
+            productPrefabPosition.z -= 5;
+            productPrefabPosition.y = 2;
+        }
+        else
+        {
+            productPrefabPosition.z -= 6;
+            productPrefabPosition.y = 3;
+        }
 
         var environment = gameObject.transform.parent.gameObject;
 
@@ -196,7 +225,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = SmallSize;
 
-        Scale(new Vector3(1f, 1f, 1f));
+        Scale(new Vector3(1f, 1f, 1f), 1.6f);
     }
 
     public void SetMediumSize()
@@ -208,7 +237,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = MediumSize;
 
-        Scale(new Vector3(1.5f, 3f, 1.5f));
+        Scale(new Vector3(1.5f, 3f, 1.5f), 3.8f);
     }
 
     public void SetBigSize()
@@ -220,16 +249,16 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = MediumSize;
 
-        Scale(new Vector3(2f, 5f, 2f));
+        Scale(new Vector3(2f, 5f, 2f), 6f);
     }
 
-    private void Scale(Vector3 scale)
+    private void Scale(Vector3 scale, float y)
     {
         gameObject.transform.localScale = scale;
 
         gameObject.transform.position = new Vector3(
             gameObject.transform.position.x,
-            (scale.y / 2) * -1,
+            y,
             gameObject.transform.position.z
         );
     }

@@ -6,7 +6,7 @@ public class TaxOffice
         return 50;
     }
     
-    public static float CalculateFine(Manufacture manufacture, Product product)
+    public static float CalculateFines(Manufacture manufacture, Product product)
     {
         // todo complex fine
         return 50;

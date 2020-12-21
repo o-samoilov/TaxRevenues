@@ -9,7 +9,7 @@ public class Product : MonoBehaviour
 
     public float Price { get; set; }
     public float CoastPrice { get; set; }
-    
+
     void Update()
     {
         var gameObjectTransform = gameObject.transform;

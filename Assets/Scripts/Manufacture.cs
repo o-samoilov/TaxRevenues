@@ -93,7 +93,7 @@ public class Manufacture : MonoBehaviour
         //todo statistic
     }
 
-    public void PayFine(Product product)
+    public void PayFines(Product product)
     {
         float fines = TaxOffice.CalculateFines(this, product);
         SpendMoney(fines);
@@ -101,7 +101,7 @@ public class Manufacture : MonoBehaviour
         //todo statistic
     }
 
-    public void SpendMoney(float money)
+    private void SpendMoney(float money)
     {
         _money -= money;
         CheckSize();

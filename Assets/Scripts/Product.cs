@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Product : MonoBehaviour
 {
-    private const float HeightDestroy = 30f;
-    private const float Speed = 10f;
+    private const float HeightDestroy = 50f;
+    private const float Speed = 20f;
 
     public float Price { get; set; }
     public float CoastPrice { get; set; }

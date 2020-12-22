@@ -4,7 +4,7 @@ namespace GeneticAlgorithm.Commands
 {
     public class Manager
     {
-        public List<AbstractCommand> GetCommandsNames()
+        public List<AbstractCommand> GetCommands()
         {
             return new List<AbstractCommand>()
             {
@@ -14,7 +14,7 @@ namespace GeneticAlgorithm.Commands
         
         public int GetCountCommands()
         {
-            return GetCommandsNames().Count;
+            return GetCommands().Count;
         }
     }
 }

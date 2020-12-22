@@ -4,7 +4,7 @@ namespace GeneticAlgorithm.Questions
 {
     public class Manager
     {
-        public List<AbstractQuestion> GetQuestionsNames()
+        public List<AbstractQuestion> GetQuestions()
         {
             return new List<AbstractQuestion>()
             {
@@ -14,7 +14,7 @@ namespace GeneticAlgorithm.Questions
         
         public int GetCountQuestions()
         {
-            return GetQuestionsNames().Count;
+            return GetQuestions().Count;
         }
     }
 }

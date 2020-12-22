@@ -10,6 +10,7 @@ public class Manufacture : MonoBehaviour
     public GameObject productPrefab;
 
     private VM.Basic _vm;
+    private TaxOffice _taxOffice = new TaxOffice();
 
     public float Money
     {
@@ -36,12 +37,17 @@ public class Manufacture : MonoBehaviour
 
     private string _currentSize = SmallSize;
 
-    void Start()
+    public int GetId()
+    {
+        return this.GetHashCode();
+    }
+
+    private void Start()
     {
         _vm = new VM.Basic(this);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -90,7 +96,7 @@ public class Manufacture : MonoBehaviour
         _money += money;
         CheckSize();
     }
-    
+
     private void SpendMoney(float money)
     {
         _money -= money;
@@ -99,7 +105,7 @@ public class Manufacture : MonoBehaviour
 
     public void PayTaxes(Product product)
     {
-        float taxes = TaxOffice.CalculateTaxes(this, product);
+        float taxes = _taxOffice.CalculateTaxes(this, product);
         SpendMoney(taxes);
 
         //todo statistic
@@ -107,7 +113,7 @@ public class Manufacture : MonoBehaviour
 
     public void PayFines(Product product)
     {
-        float fines = TaxOffice.CalculateFines(this, product);
+        float fines = _taxOffice.CalculateFines(this, product);
         SpendMoney(fines);
 
         //todo statistic

@@ -13,6 +13,8 @@ namespace GeneticAlgorithm.Commands
      */
     public class CreateProduct : AbstractCommand
     {
+        private TaxOffice _taxOffice = new TaxOffice();
+
         public override string GetName()
         {
             return "create_product";
@@ -27,7 +29,7 @@ namespace GeneticAlgorithm.Commands
         {
             return 2;
         }
-        
+
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
             if (!manufacture.IsPossibleCreateProduct())
@@ -37,11 +39,12 @@ namespace GeneticAlgorithm.Commands
 
             var product = manufacture.CreateProduct();
 
+            // if Coefficient == 0 pay taxes else pay fines if need
             if (genElement.Coefficient == 0)
             {
                 manufacture.PayTaxes(product);
             }
-            else
+            else if (_taxOffice.IsNeedPayFines(manufacture, product)) 
             {
                 manufacture.PayFines(product);
             }

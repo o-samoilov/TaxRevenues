@@ -10,7 +10,12 @@ public class Product : MonoBehaviour
     public float Price { get; set; }
     public float CoastPrice { get; set; }
 
-    void Update()
+    public int GetId()
+    {
+        return this.GetHashCode();
+    }
+
+    private void Update()
     {
         var gameObjectTransform = gameObject.transform;
         gameObjectTransform.position += new Vector3(0, Speed * Time.deltaTime, 0);

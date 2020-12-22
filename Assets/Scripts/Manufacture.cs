@@ -119,6 +119,14 @@ public class Manufacture : MonoBehaviour
         //todo statistic
     }
 
+    public void PayBribe(Product product)
+    {
+        float fines = _taxOffice.CalculateFines(this, product);
+        SpendMoney(fines);
+
+        //todo statistic
+    }
+
     #endregion
 
     #region Product

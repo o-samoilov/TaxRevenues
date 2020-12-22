@@ -4,11 +4,28 @@ namespace GeneticAlgorithm
 {
     public class Gen
     {
-        public List<GenElement> Elements { get; }
+        private int _currentElementIndex = 0;
+        private List<GenElement> _elements;
 
         public Gen(List<GenElement> elements)
         {
-            Elements = elements;
+            _elements = elements;
+        }
+
+        public GenElement GetCurrentElement()
+        {
+            return _elements[_currentElementIndex];
+        }
+
+        public void Move(int steps)
+        {
+            //todo check this
+            _currentElementIndex += steps % Size();
+        }
+
+        public int Size()
+        {
+            return _elements.Count;
         }
     }
 }

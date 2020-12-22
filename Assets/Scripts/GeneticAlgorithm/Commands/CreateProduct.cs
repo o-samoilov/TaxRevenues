@@ -1,11 +1,18 @@
 namespace GeneticAlgorithm.Commands
 {
+    internal enum CommandResult
+    {
+        ProductNotCreated = 1,
+        ProductCreated = 2
+    }
+
     /**
      * Command CreateProduct
      *
      * Coefficient
      * 0 - pay taxes
-     * 1 - pay fine
+     * 1 - pay fine if need
+     * 2 - pay bribe if need
      *
      * Relative jumps
      * 1 - product not created
@@ -27,14 +34,14 @@ namespace GeneticAlgorithm.Commands
 
         public override int GetMaxCoefficient()
         {
-            return 2;
+            return 3;
         }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
             if (!manufacture.IsPossibleCreateProduct())
             {
-                return 1; // No
+                return (int) CommandResult.ProductNotCreated;
             }
 
             var product = manufacture.CreateProduct();
@@ -43,13 +50,30 @@ namespace GeneticAlgorithm.Commands
             if (genElement.Coefficient == 0)
             {
                 manufacture.PayTaxes(product);
-            }
-            else if (_taxOffice.IsNeedPayFines(manufacture, product)) 
-            {
-                manufacture.PayFines(product);
+
+                return (int) CommandResult.ProductCreated;
             }
 
-            return 2; // Yes
+            if (_taxOffice.IsNeedPayFines(manufacture, product))
+            {
+                if (genElement.Coefficient == 1)
+                {
+                    manufacture.PayFines(product);
+
+                    return (int) CommandResult.ProductCreated;
+                }
+
+                if (_taxOffice.IsCouldPayBribe(manufacture, product))
+                {
+                    manufacture.PayBribe(product);
+                }
+                else
+                {
+                    manufacture.PayFines(product);
+                }
+            }
+
+            return (int) CommandResult.ProductCreated;
         }
     }
 }

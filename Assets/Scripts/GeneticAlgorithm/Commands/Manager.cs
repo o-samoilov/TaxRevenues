@@ -1,18 +1,20 @@
+using System.Collections.Generic;
+
 namespace GeneticAlgorithm.Commands
 {
     public class Manager
     {
-        public string[] GetQuestionsNames()
+        public List<AbstractCommand> GetCommandsNames()
         {
-            return new[]
+            return new List<AbstractCommand>()
             {
-                CreateProduct.Name
+                new CreateProduct()
             };
         }
         
         public int GetCountCommands()
         {
-            return GetQuestionsNames().Length;
+            return GetCommandsNames().Count;
         }
     }
 }

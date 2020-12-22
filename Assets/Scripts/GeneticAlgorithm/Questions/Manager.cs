@@ -1,18 +1,20 @@
+using System.Collections.Generic;
+
 namespace GeneticAlgorithm.Questions
 {
     public class Manager
     {
-        public string[] GetQuestionsNames()
+        public List<AbstractQuestion> GetQuestionsNames()
         {
-            return new[]
+            return new List<AbstractQuestion>()
             {
-                IsEnoughMoney.Name
+                new IsEnoughMoney()
             };
         }
         
         public int GetCountQuestions()
         {
-            return GetQuestionsNames().Length;
+            return GetQuestionsNames().Count;
         }
     }
 }

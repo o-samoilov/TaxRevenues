@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 public class Manufacture : MonoBehaviour
@@ -9,6 +10,11 @@ public class Manufacture : MonoBehaviour
     public GameObject productPrefab;
 
     private VM.Basic _vm;
+
+    public float Money
+    {
+        get => _money;
+    }
 
     private float _money = Settings.Basic.ManufactureMoney;
     private float _productCoastPrice = Settings.Basic.ManufactureProductCoast;
@@ -84,6 +90,12 @@ public class Manufacture : MonoBehaviour
         _money += money;
         CheckSize();
     }
+    
+    private void SpendMoney(float money)
+    {
+        _money -= money;
+        CheckSize();
+    }
 
     public void PayTaxes(Product product)
     {
@@ -101,19 +113,13 @@ public class Manufacture : MonoBehaviour
         //todo statistic
     }
 
-    private void SpendMoney(float money)
-    {
-        _money -= money;
-        CheckSize();
-    }
-
     #endregion
 
     #region Product
 
     public bool IsPossibleCreateProduct()
     {
-        return _money >= _productCoastPrice;
+        return Money >= _productCoastPrice;
     }
 
     [CanBeNull]
@@ -124,7 +130,7 @@ public class Manufacture : MonoBehaviour
             return null;
         }
 
-        _money -= _productCoastPrice;
+        SpendMoney(_productCoastPrice);
         _isBusy = true;
         _stopWatch.Start();
 
@@ -160,7 +166,7 @@ public class Manufacture : MonoBehaviour
     public bool IsPossibleReduceProductCoastPrice()
     {
         return _productCoastPrice <= MinProductCoastPricePrice &&
-               _money >= ProductReduceCoastPricePrice;
+               Money >= ProductReduceCoastPricePrice;
     }
 
     public bool ReduceProductCoastPrice()
@@ -179,7 +185,7 @@ public class Manufacture : MonoBehaviour
     public bool IsPossibleReduceProductCreationTime()
     {
         return _productCreationTime <= MinProductCreationTimePrice &&
-               _money >= ProductReduceCreationTimePrice;
+               Money >= ProductReduceCreationTimePrice;
     }
 
     public bool ReduceProductCreationTime()
@@ -202,11 +208,11 @@ public class Manufacture : MonoBehaviour
     public void CheckSize()
     {
         //todo const
-        if (_money <= 5000f)
+        if (Money <= 5000f)
         {
             SetSmallSize();
         }
-        else if (_money <= 20000f)
+        else if (Money <= 20000f)
         {
             SetMediumSize();
         }

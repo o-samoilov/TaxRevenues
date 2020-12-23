@@ -2,8 +2,9 @@ namespace GeneticAlgorithm.Commands
 {
     internal enum CommandResult
     {
-        ProductNotCreated = 1,
-        ProductCreated = 2
+        ProductCantBeCreated = 1,
+        ProductCantBeSold = 2,
+        ProductCreated = 3
     }
     
     internal enum CommandCoefficient
@@ -34,11 +35,14 @@ namespace GeneticAlgorithm.Commands
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
-            //todo Exchange.IsPossibleSell()
-            
             if (!manufacture.IsPossibleCreateProduct())
             {
-                return (int) CommandResult.ProductNotCreated;
+                return (int) CommandResult.ProductCantBeCreated;
+            }
+            
+            if (!Exchange.IsPossibleSell())
+            {
+                return (int) CommandResult.ProductCantBeSold;
             }
 
             var product = manufacture.CreateProduct();

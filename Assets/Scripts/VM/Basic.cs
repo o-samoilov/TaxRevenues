@@ -17,32 +17,22 @@ namespace VM
 
         public void Process()
         {
-            var genCurrentElement = _dnk.MainGen.GetCurrentElement();
+            var gen = _dnk.MainGen;
+            var genCurrentElement = gen.GetCurrentElement();
 
+            int steps;
             if (genCurrentElement.IsTypeCommand())
             {
                 var command = _commandsManager.GetByName(genCurrentElement.Name);
-                command.Process(_manufacture, genCurrentElement);
+                steps = command.Process(_manufacture, genCurrentElement);
             }
             else
             {
                 var question = _questionsManager.GetByName(genCurrentElement.Name);
-                question.Process(_manufacture, genCurrentElement);
+                steps = question.Process(_manufacture, genCurrentElement);
             }
             
-            var product = _manufacture.CreateProduct();
-            if (product != null)
-            {
-                product.Price = Exchange.ProductPrice;
-                _manufacture.AddMoney(Exchange.ProductPrice);
-            }
-            
-            
-            /*if (Exchange.IsPossibleSell())
-            {
-                var product = CreateProduct();
-                _money += Exchange.Sold(product);
-            }*/
+            gen.Move(steps);
         }
     }
 }

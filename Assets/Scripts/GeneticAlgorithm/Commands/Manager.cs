@@ -32,7 +32,8 @@ namespace GeneticAlgorithm.Commands
         {
             return new List<AbstractCommand>()
             {
-                new CreateProduct()
+                new CreateProduct(),
+                new RelativeJump()
             };
         }
     }

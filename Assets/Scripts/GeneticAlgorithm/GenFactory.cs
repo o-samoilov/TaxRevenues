@@ -5,7 +5,7 @@ namespace GeneticAlgorithm
 {
     public class GenFactory
     {
-        private const int BasicSize = 64;
+        public const int BasicSize = 64;
 
         private Random _random = new Random();
         private Commands.Manager _commandManager = new Commands.Manager();

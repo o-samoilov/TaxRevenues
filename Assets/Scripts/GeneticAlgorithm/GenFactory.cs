@@ -8,6 +8,8 @@ namespace GeneticAlgorithm
         public const int BasicSize = 64;
 
         private Random _random = new Random();
+        private ProbabilityManager _probabilityManager = new ProbabilityManager();
+
         private Commands.Manager _commandManager = new Commands.Manager();
         private Questions.Manager _questionsManager = new Questions.Manager();
 
@@ -20,7 +22,7 @@ namespace GeneticAlgorithm
                 var element = IsGenElementCommand()
                     ? CreateRandomCommandGenElement()
                     : CreateRandomQuestionGenElement();
-                
+
                 elements.Add(element);
             }
 
@@ -29,14 +31,14 @@ namespace GeneticAlgorithm
 
         private bool IsGenElementCommand()
         {
-            return _random.Next(0, 1) == 0;
+            return _probabilityManager.IsProbability(50);
         }
 
         private GenElement CreateRandomCommandGenElement()
         {
-            var commandIndex = _random.Next(0, _commandManager.GetCount() - 1);
+            var commandIndex = _random.Next(0, _commandManager.GetCount());
             var command = _commandManager.GetByIndex(commandIndex);
-            var coefficient = _random.Next(command.GetMinCoefficient(), command.GetMaxCoefficient());
+            var coefficient = _random.Next(command.GetMinCoefficient(), command.GetMaxCoefficient() + 1);
 
             return new GenElement(
                 GenTypes.Command,
@@ -44,15 +46,15 @@ namespace GeneticAlgorithm
                 coefficient
             );
         }
-        
+
         private GenElement CreateRandomQuestionGenElement()
         {
-            var questionIndex = _random.Next(0, _questionsManager.GetCount() - 1);
+            var questionIndex = _random.Next(0, _questionsManager.GetCount());
             var question = _questionsManager.GetByIndex(questionIndex);
-            var coefficient = _random.Next(question.GetMinCoefficient(), question.GetMaxCoefficient());
+            var coefficient = _random.Next(question.GetMinCoefficient(), question.GetMaxCoefficient() + 1);
 
             return new GenElement(
-                GenTypes.Command,
+                GenTypes.Question,
                 question.GetName(),
                 coefficient
             );

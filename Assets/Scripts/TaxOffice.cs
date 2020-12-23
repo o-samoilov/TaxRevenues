@@ -1,8 +1,6 @@
-using System;
-
 public class TaxOffice
 {
-    private Random _random = new Random();
+    private ProbabilityManager _probabilityManager = new ProbabilityManager();
     
     public float CalculateTaxes(Manufacture manufacture, Product product)
     {
@@ -26,7 +24,7 @@ public class TaxOffice
     {
         //todo complex 
         // 50%
-        return _random.Next(0, 1) == 0;
+        return _probabilityManager.IsProbability(50);
     }
     
     public bool IsCouldPayBribe(Manufacture manufacture, Product product)

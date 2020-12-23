@@ -1,13 +1,13 @@
 namespace GeneticAlgorithm.Commands
 {
-    internal enum CommandResult
+    internal enum Result
     {
         ProductCantBeCreated = 1,
         ProductCantBeSold = 2,
         ProductCreated = 3
     }
     
-    internal enum CommandCoefficient
+    internal enum Coefficient
     {
         PayTaxes = 1,
         PayFines = 2,
@@ -25,42 +25,42 @@ namespace GeneticAlgorithm.Commands
 
         public override int GetMinCoefficient()
         {
-            return (int) CommandCoefficient.PayTaxes;
+            return (int) Coefficient.PayTaxes;
         }
 
         public override int GetMaxCoefficient()
         {
-            return (int) CommandCoefficient.PayBribes;
+            return (int) Coefficient.PayBribes;
         }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
             if (!manufacture.IsPossibleCreateProduct())
             {
-                return (int) CommandResult.ProductCantBeCreated;
+                return (int) Result.ProductCantBeCreated;
             }
             
             if (!Exchange.IsPossibleSell())
             {
-                return (int) CommandResult.ProductCantBeSold;
+                return (int) Result.ProductCantBeSold;
             }
 
             var product = manufacture.CreateProduct();
 
-            if (genElement.Coefficient == (int) CommandCoefficient.PayTaxes)
+            if (genElement.Coefficient == (int) Coefficient.PayTaxes)
             {
                 manufacture.PayTaxes(product);
 
-                return (int) CommandResult.ProductCreated;
+                return (int) Result.ProductCreated;
             }
 
             if (_taxOffice.IsNeedPayFines(manufacture, product))
             {
-                if (genElement.Coefficient == (int) CommandCoefficient.PayFines)
+                if (genElement.Coefficient == (int) Coefficient.PayFines)
                 {
                     manufacture.PayFines(product);
 
-                    return (int) CommandResult.ProductCreated;
+                    return (int) Result.ProductCreated;
                 }
 
                 if (_taxOffice.IsCouldPayBribe(manufacture, product))
@@ -73,7 +73,7 @@ namespace GeneticAlgorithm.Commands
                 }
             }
 
-            return (int) CommandResult.ProductCreated;
+            return (int) Result.ProductCreated;
         }
     }
 }

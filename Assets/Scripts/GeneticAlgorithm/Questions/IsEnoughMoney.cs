@@ -1,17 +1,18 @@
 namespace GeneticAlgorithm.Questions
 {
-    /**
-     * Question IsEnoughMoney
-     *
-     * Coefficient (ranges money)
-     * 0 - >=500
-     * 1 - >=2000
-     * 2 - >=5000
-     *
-     * Relative jumps
-     * 1 - not enough
-     * 2 - enough
-     */
+    internal enum Result
+    {
+        NotEnough = 1,
+        Enough = 2
+    }
+
+    internal enum Coefficient
+    {
+        More5000 = 0,
+        More10000 = 1,
+        More50000 = 2
+    }
+
     public class IsEnoughMoney : AbstractQuestion
     {
         public override string GetName()
@@ -21,29 +22,35 @@ namespace GeneticAlgorithm.Questions
 
         public override int GetMinCoefficient()
         {
-            return 0;
+            return (int) Coefficient.More5000;
         }
 
         public override int GetMaxCoefficient()
         {
-            return 2;
+            return (int) Coefficient.More50000;
         }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
-            if (manufacture.Money < 500)
+            if (manufacture.Money < 1000)
             {
-                return 1;
+                return (int) Result.NotEnough;
             }
 
             switch (genElement.Coefficient)
             {
-                case 0:
-                    return manufacture.Money >= 500 ? 2 : 1;
-                case 1:
-                    return manufacture.Money >= 2000 ? 2 : 1;
-                case 2:
-                    return manufacture.Money >= 5000 ? 2 : 1;
+                case (int) Coefficient.More5000:
+                {
+                    return (int) (manufacture.Money >= 5000 ? Result.Enough : Result.NotEnough);
+                }
+                case (int) Coefficient.More10000:
+                {
+                    return (int) (manufacture.Money >= 10000 ? Result.Enough : Result.NotEnough);
+                }
+                case (int) Coefficient.More50000:
+                {
+                    return (int) (manufacture.Money >= 50000 ? Result.Enough : Result.NotEnough);
+                }
             }
 
             return 2;

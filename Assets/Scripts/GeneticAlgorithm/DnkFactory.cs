@@ -4,9 +4,7 @@ namespace GeneticAlgorithm
     {
         public Dnk CreateRandom()
         {
-            var genFactory = new GenFactory();
-
-            return new Dnk(genFactory.CreateRandom());
+            return new Dnk((new GenFactory()).CreateRandom());
         }
     }
 }

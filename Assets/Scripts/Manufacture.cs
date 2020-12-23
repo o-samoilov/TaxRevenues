@@ -7,19 +7,21 @@ using Debug = UnityEngine.Debug;
 
 public class Manufacture : MonoBehaviour
 {
+    public WorldDateTime worldDateTime;
     public GameObject productPrefab;
 
     private VM.Basic _vm;
-    private TaxOffice _taxOffice = new TaxOffice();
+    private TaxOffice _taxOffice;
+    private Stopwatch _stopWatch;
 
     public float Money
     {
         get => _money;
     }
 
-    private float _money = Settings.Basic.ManufactureMoney;
-    private float _productCoastPrice = Settings.Basic.ManufactureProductCoast;
-    private float _productCreationTime = Settings.Basic.ManufactureProductCreationTime;
+    private float _money;
+    private float _productCoastPrice;
+    private float _productCreationTime;
 
     private const float ProductReduceCoastPricePrice = 50f;
     private const float ProductReduceCreationTimePrice = 50f;
@@ -27,29 +29,54 @@ public class Manufacture : MonoBehaviour
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 1f;
 
-    private readonly Stopwatch _stopWatch = new Stopwatch();
-    private bool _isBusy = false;
+    private bool _isAlive;
+    private bool _isBusy;
+    private int _createDay;
     private TimeSpan _productCreate;
 
     private const string BigSize = "big_size";
     private const string MediumSize = "medium_size";
     private const string SmallSize = "small_size";
 
-    private string _currentSize = SmallSize;
+    private string _currentSize;
 
     public int GetId()
     {
         return this.GetHashCode();
     }
 
+    private void InitializeSettings()
+    {
+        _money = Settings.Basic.ManufactureMoney;
+        _productCoastPrice = Settings.Basic.ManufactureProductCoast;
+        _productCreationTime = Settings.Basic.ManufactureProductCreationTime;
+
+        _isAlive = true;
+        _isBusy = false;
+
+        _currentSize = SmallSize;
+
+        _createDay = worldDateTime.CurrentDay;
+    }
+
     private void Start()
     {
         _vm = new VM.Basic(this);
+        _taxOffice = new TaxOffice();
+        _stopWatch = new Stopwatch();
+
+        InitializeSettings();
+
+        var environment = gameObject.transform.parent.gameObject;
+        var world = environment.transform.parent.gameObject;
+        worldDateTime = world.GetComponentInChildren<WorldDateTime>();
+
+        worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        /*if (Input.GetKeyDown(KeyCode.Z))
         {
             SetSmallSize();
         }
@@ -62,6 +89,11 @@ public class Manufacture : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             SetBigSize();
+        }*/
+
+        if (!_isAlive)
+        {
+            return;
         }
 
         CheckBusy();
@@ -89,6 +121,27 @@ public class Manufacture : MonoBehaviour
         }
     }
 
+    private void Die()
+    {
+        _isAlive = false;
+
+        //todo red color
+    }
+
+    private void Alive()
+    {
+        InitializeSettings();
+        CheckSize();
+    }
+
+    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
+    {
+        SpendMoney(100);
+
+        Debug.Log("Pay maintenance");
+        //todo save statistic
+    }
+
     #region Finance
 
     public void AddMoney(float money)
@@ -100,6 +153,14 @@ public class Manufacture : MonoBehaviour
     private void SpendMoney(float money)
     {
         _money -= money;
+
+        if (_money < 0)
+        {
+            Die();
+
+            return;
+        }
+
         CheckSize();
     }
 
@@ -133,7 +194,7 @@ public class Manufacture : MonoBehaviour
 
     public bool IsPossibleCreateProduct()
     {
-        return Money >= _productCoastPrice;
+        return _money >= _productCoastPrice;
     }
 
     [CanBeNull]
@@ -222,11 +283,11 @@ public class Manufacture : MonoBehaviour
     public void CheckSize()
     {
         //todo const
-        if (Money <= 5000f)
+        if (_money <= 5000f)
         {
             SetSmallSize();
         }
-        else if (Money <= 20000f)
+        else if (_money <= 20000f)
         {
             SetMediumSize();
         }

@@ -9,7 +9,8 @@ public class Manufacture : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
     public GameObject productPrefab;
-
+    private Renderer _renderer;
+    
     private VM.Basic _vm;
     private TaxOffice _taxOffice;
     private Stopwatch _stopWatch;
@@ -57,6 +58,8 @@ public class Manufacture : MonoBehaviour
         _currentSize = SmallSize;
 
         _createDay = worldDateTime.CurrentDay;
+        
+        //_renderer.material.color = new Color(236, 236, 236);
     }
 
     private void Start()
@@ -64,6 +67,8 @@ public class Manufacture : MonoBehaviour
         _vm = new VM.Basic(this);
         _taxOffice = new TaxOffice();
         _stopWatch = new Stopwatch();
+        
+        _renderer = gameObject.GetComponentInChildren<Renderer>();
 
         var environment = gameObject.transform.parent.gameObject;
         var world = environment.transform.parent.gameObject;
@@ -108,6 +113,8 @@ public class Manufacture : MonoBehaviour
     private void Die()
     {
         _isAlive = false;
+        //_renderer.material.color = Color.red;
+
         Debug.Log("Die");
 
         //todo red color

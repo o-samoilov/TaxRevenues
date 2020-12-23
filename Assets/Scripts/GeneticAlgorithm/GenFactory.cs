@@ -34,8 +34,8 @@ namespace GeneticAlgorithm
 
         private GenElement CreateRandomCommandGenElement()
         {
-            var commandIndex = _random.Next(0, _commandManager.GetCountCommands() - 1);
-            var command = _commandManager.GetCommands()[commandIndex];
+            var commandIndex = _random.Next(0, _commandManager.GetCount() - 1);
+            var command = _commandManager.GetByIndex(commandIndex);
             var coefficient = _random.Next(command.GetMinCoefficient(), command.GetMaxCoefficient());
 
             return new GenElement(
@@ -47,8 +47,8 @@ namespace GeneticAlgorithm
         
         private GenElement CreateRandomQuestionGenElement()
         {
-            var questionIndex = _random.Next(0, _questionsManager.GetCountQuestions() - 1);
-            var question = _questionsManager.GetQuestions()[questionIndex];
+            var questionIndex = _random.Next(0, _questionsManager.GetCount() - 1);
+            var question = _questionsManager.GetByIndex(questionIndex);
             var coefficient = _random.Next(question.GetMinCoefficient(), question.GetMaxCoefficient());
 
             return new GenElement(

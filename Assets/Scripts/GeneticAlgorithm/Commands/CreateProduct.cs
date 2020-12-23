@@ -5,19 +5,14 @@ namespace GeneticAlgorithm.Commands
         ProductNotCreated = 1,
         ProductCreated = 2
     }
+    
+    internal enum CommandCoefficient
+    {
+        PayTaxes = 1,
+        PayFines = 2,
+        PayBribes = 3
+    }
 
-    /**
-     * Command CreateProduct
-     *
-     * Coefficient
-     * 0 - pay taxes
-     * 1 - pay fine if need
-     * 2 - pay bribe if need
-     *
-     * Relative jumps
-     * 1 - product not created
-     * 2 - product created
-     */
     public class CreateProduct : AbstractCommand
     {
         private TaxOffice _taxOffice = new TaxOffice();
@@ -29,16 +24,18 @@ namespace GeneticAlgorithm.Commands
 
         public override int GetMinCoefficient()
         {
-            return 1;
+            return (int) CommandCoefficient.PayTaxes;
         }
 
         public override int GetMaxCoefficient()
         {
-            return 3;
+            return (int) CommandCoefficient.PayBribes;
         }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
+            //todo Exchange.IsPossibleSell()
+            
             if (!manufacture.IsPossibleCreateProduct())
             {
                 return (int) CommandResult.ProductNotCreated;
@@ -46,8 +43,7 @@ namespace GeneticAlgorithm.Commands
 
             var product = manufacture.CreateProduct();
 
-            // if Coefficient == 0 pay taxes else pay fines if need
-            if (genElement.Coefficient == 0)
+            if (genElement.Coefficient == (int) CommandCoefficient.PayTaxes)
             {
                 manufacture.PayTaxes(product);
 
@@ -56,7 +52,7 @@ namespace GeneticAlgorithm.Commands
 
             if (_taxOffice.IsNeedPayFines(manufacture, product))
             {
-                if (genElement.Coefficient == 1)
+                if (genElement.Coefficient == (int) CommandCoefficient.PayFines)
                 {
                     manufacture.PayFines(product);
 

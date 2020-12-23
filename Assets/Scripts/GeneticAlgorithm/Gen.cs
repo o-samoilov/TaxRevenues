@@ -20,7 +20,7 @@ namespace GeneticAlgorithm
         public void Move(int steps)
         {
             //todo check this
-            _currentElementIndex += steps % Size();
+            _currentElementIndex = (_currentElementIndex + steps) % Size();
         }
 
         public int Size()

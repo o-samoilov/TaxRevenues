@@ -23,14 +23,9 @@ namespace Project
 
         float m_TotalRun = 1.0f;
 
-        private void Start()
-        {
-            Debug.Log("Start"); // nop?
-        }
-
         void Awake()
         {
-            Debug.Log("FlyCamera Awake() - RESETTING CAMERA POSITION"); // nop?
+            //Debug.Log("FlyCamera Awake() - RESETTING CAMERA POSITION"); // nop?
             // nop:
             // transform.position.Set(0,8,-32);
             // transform.rotation.Set(15,0,0,1);
@@ -40,6 +35,12 @@ namespace Project
 
         void Update()
         {
+            //Start position
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                gameObject.transform.position = new Vector3(0, 30, -100);
+            }
+
             if (Input.GetMouseButtonDown(1))
             {
                 m_LastMouse = Input.mousePosition; // $CTK reset when we begin

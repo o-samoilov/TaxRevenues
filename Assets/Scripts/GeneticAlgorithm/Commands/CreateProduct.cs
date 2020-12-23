@@ -6,7 +6,7 @@ namespace GeneticAlgorithm.Commands
         ProductCantBeSold = 2,
         ProductCreated = 3
     }
-    
+
     internal enum Coefficient
     {
         PayTaxes = 1,
@@ -39,13 +39,19 @@ namespace GeneticAlgorithm.Commands
             {
                 return (int) Result.ProductCantBeCreated;
             }
-            
+
             if (!Exchange.IsPossibleSell())
             {
                 return (int) Result.ProductCantBeSold;
             }
 
             var product = manufacture.CreateProduct();
+            if (product == null)
+            {
+                return (int) Result.ProductCantBeCreated;
+            }
+
+            manufacture.AddMoney(product.Price);
 
             if (genElement.Coefficient == (int) Coefficient.PayTaxes)
             {

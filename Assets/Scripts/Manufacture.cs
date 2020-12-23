@@ -65,32 +65,16 @@ public class Manufacture : MonoBehaviour
         _taxOffice = new TaxOffice();
         _stopWatch = new Stopwatch();
 
-        InitializeSettings();
-
         var environment = gameObject.transform.parent.gameObject;
         var world = environment.transform.parent.gameObject;
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
 
+        InitializeSettings();
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
 
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Z))
-        {
-            SetSmallSize();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            SetMediumSize();
-        }
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SetBigSize();
-        }*/
-
         if (!_isAlive)
         {
             return;
@@ -124,6 +108,7 @@ public class Manufacture : MonoBehaviour
     private void Die()
     {
         _isAlive = false;
+        Debug.Log("Die");
 
         //todo red color
     }
@@ -138,7 +123,7 @@ public class Manufacture : MonoBehaviour
     {
         SpendMoney(100);
 
-        Debug.Log("Pay maintenance");
+        Debug.Log("Pay maintenance (100)");
         //todo save statistic
     }
 
@@ -148,6 +133,8 @@ public class Manufacture : MonoBehaviour
     {
         _money += money;
         CheckSize();
+
+        Debug.Log("Add money. Money: " + _money);
     }
 
     private void SpendMoney(float money)
@@ -162,12 +149,16 @@ public class Manufacture : MonoBehaviour
         }
 
         CheckSize();
+
+        Debug.Log("Spend money. Money: " + _money);
     }
 
     public void PayTaxes(Product product)
     {
         float taxes = _taxOffice.CalculateTaxes(this, product);
         SpendMoney(taxes);
+
+        Debug.Log("Pay taxes " + taxes);
 
         //todo statistic
     }
@@ -177,14 +168,16 @@ public class Manufacture : MonoBehaviour
         float fines = _taxOffice.CalculateFines(this, product);
         SpendMoney(fines);
 
+        Debug.Log("Pay fines " + fines);
         //todo statistic
     }
 
     public void PayBribe(Product product)
     {
-        float fines = _taxOffice.CalculateFines(this, product);
-        SpendMoney(fines);
+        float bribe = _taxOffice.CalculateBribe(this, product);
+        SpendMoney(bribe);
 
+        Debug.Log("Pay bribe " + bribe);
         //todo statistic
     }
 
@@ -234,6 +227,8 @@ public class Manufacture : MonoBehaviour
 
         var product = environment.GetComponentInChildren<Product>();
         product.CoastPrice = _productCoastPrice;
+
+        Debug.Log("Create product");
 
         return product;
     }

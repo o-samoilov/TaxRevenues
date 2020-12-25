@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using GeneticAlgorithm;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
-public class Manufacture : MonoBehaviour
+public class Manufacture : MonoBehaviour, IComparer<Manufacture>
 {
     public WorldDateTime worldDateTime;
     public ManufacturesManager manufacturesManager;
@@ -16,12 +18,12 @@ public class Manufacture : MonoBehaviour
     private TaxOffice _taxOffice;
     private Stopwatch _stopWatch;
 
-    public float Money
-    {
-        get => _money;
-    }
+    public float Money => _money;
+    public Dnk Dnk => _dnk;
 
     private float _money;
+    private Dnk _dnk;
+
     private float _productCoastPrice;
     private float _productCreationTime;
 
@@ -42,29 +44,6 @@ public class Manufacture : MonoBehaviour
 
     private string _currentSize;
 
-    public int GetId()
-    {
-        return this.GetHashCode();
-    }
-
-    private void InitializeSettings(GeneticAlgorithm.Dnk dnk)
-    {
-        _money = Settings.Basic.ManufactureMoney;
-        _productCoastPrice = Settings.Basic.ManufactureProductCoast;
-        _productCreationTime = Settings.Basic.ManufactureProductCreationTime;
-
-        _isAlive = true;
-        _isBusy = false;
-
-        _currentSize = SmallSize;
-
-        _createDay = worldDateTime.CurrentDay;
-        
-        _vm = new VM.Basic(this, dnk);
-
-        //_renderer.material.color = new Color(236, 236, 236);
-    }
-
     private void Start()
     {
         _taxOffice = new TaxOffice();
@@ -77,7 +56,7 @@ public class Manufacture : MonoBehaviour
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
         manufacturesManager = world.GetComponentInChildren<ManufacturesManager>();
 
-        InitializeSettings(new GeneticAlgorithm.DnkFactory().CreateRandom());
+        InitializeSettings(new DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
 
@@ -94,6 +73,30 @@ public class Manufacture : MonoBehaviour
         {
             _vm.Process();
         }
+    }
+    
+    public int GetId()
+    {
+        return this.GetHashCode();
+    }
+
+    private void InitializeSettings(Dnk dnk)
+    {
+        _dnk = dnk;
+        _money = Settings.Basic.ManufactureMoney;
+        _productCoastPrice = Settings.Basic.ManufactureProductCoast;
+        _productCreationTime = Settings.Basic.ManufactureProductCreationTime;
+
+        _isAlive = true;
+        _isBusy = false;
+
+        _currentSize = SmallSize;
+
+        _createDay = worldDateTime.CurrentDay;
+        
+        _vm = new VM.Basic(this, _dnk);
+
+        //_renderer.material.color = new Color(236, 236, 236);
     }
 
     private void CheckBusy()
@@ -358,4 +361,19 @@ public class Manufacture : MonoBehaviour
     }
 
     #endregion
+
+    public int Compare(Manufacture x, Manufacture y)
+    {
+        if (x.Money < y.Money)
+        {
+            return 1;
+        }
+
+        if (x.Money > y.Money)
+        {
+            return -1;
+        }
+        
+        return 0;
+    }
 }

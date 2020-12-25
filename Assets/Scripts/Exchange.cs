@@ -6,7 +6,7 @@ public class Exchange : MonoBehaviour
     public static int MaxProductsPerDay = 1000;
 
     public WorldDateTime worldDateTime;
-    public static float ProductPrice = 100f;
+    public static float ProductPrice = 150f;
 
     private static int _soldProductsToday = 0;
 
@@ -20,7 +20,7 @@ public class Exchange : MonoBehaviour
         return _soldProductsToday < MaxProductsPerDay;
     }
 
-    public static float Sold()
+    public static float Sell()
     {
         if (!IsPossibleSell())
         {
@@ -37,7 +37,7 @@ public class Exchange : MonoBehaviour
         return MaxProductsPerDay - _soldProductsToday;
     }
 
-    private static void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
+    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
         _soldProductsToday = 0;
 

@@ -10,7 +10,7 @@ public class Manufacture : MonoBehaviour
     public WorldDateTime worldDateTime;
     public GameObject productPrefab;
     private Renderer _renderer;
-    
+
     private VM.Basic _vm;
     private TaxOffice _taxOffice;
     private Stopwatch _stopWatch;
@@ -58,7 +58,7 @@ public class Manufacture : MonoBehaviour
         _currentSize = SmallSize;
 
         _createDay = worldDateTime.CurrentDay;
-        
+
         //_renderer.material.color = new Color(236, 236, 236);
     }
 
@@ -67,7 +67,7 @@ public class Manufacture : MonoBehaviour
         _vm = new VM.Basic(this);
         _taxOffice = new TaxOffice();
         _stopWatch = new Stopwatch();
-        
+
         _renderer = gameObject.GetComponentInChildren<Renderer>();
 
         var environment = gameObject.transform.parent.gameObject;
@@ -128,9 +128,14 @@ public class Manufacture : MonoBehaviour
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        SpendMoney(100);
+        if (!_isAlive)
+        {
+            return;
+        }
 
         Debug.Log("Pay maintenance (100)");
+        SpendMoney(100);
+
         //todo save statistic
     }
 
@@ -163,9 +168,9 @@ public class Manufacture : MonoBehaviour
     public void PayTaxes(Product product)
     {
         float taxes = _taxOffice.CalculateTaxes(this, product);
-        SpendMoney(taxes);
 
         Debug.Log("Pay taxes " + taxes);
+        SpendMoney(taxes);
 
         //todo statistic
     }
@@ -173,18 +178,20 @@ public class Manufacture : MonoBehaviour
     public void PayFines(Product product)
     {
         float fines = _taxOffice.CalculateFines(this, product);
-        SpendMoney(fines);
 
         Debug.Log("Pay fines " + fines);
+        SpendMoney(fines);
+
         //todo statistic
     }
 
     public void PayBribe(Product product)
     {
         float bribe = _taxOffice.CalculateBribe(this, product);
-        SpendMoney(bribe);
 
         Debug.Log("Pay bribe " + bribe);
+        SpendMoney(bribe);
+
         //todo statistic
     }
 
@@ -205,6 +212,7 @@ public class Manufacture : MonoBehaviour
             return null;
         }
 
+        Debug.Log("Create product");
         SpendMoney(_productCoastPrice);
         _isBusy = true;
         _stopWatch.Start();
@@ -234,8 +242,6 @@ public class Manufacture : MonoBehaviour
 
         var product = environment.GetComponentInChildren<Product>();
         product.CoastPrice = _productCoastPrice;
-
-        Debug.Log("Create product");
 
         return product;
     }

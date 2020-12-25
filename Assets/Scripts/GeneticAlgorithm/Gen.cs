@@ -27,5 +27,19 @@ namespace GeneticAlgorithm
         {
             return _elements.Count;
         }
+
+        public override string ToString()
+        {
+            var result = "";
+
+            var number = 1;
+            foreach (var element in _elements)
+            {
+                result += $"{number}: {element.Name} Coefficient: {element.Coefficient}\n";
+                number++;
+            }
+
+            return result;
+        }
     }
 }

@@ -51,6 +51,7 @@ namespace GeneticAlgorithm.Commands
                 return (int) Result.ProductCantBeCreated;
             }
 
+            product.Price = Exchange.Sell();
             manufacture.AddMoney(product.Price);
 
             if (genElement.Coefficient == (int) Coefficient.PayTaxes)

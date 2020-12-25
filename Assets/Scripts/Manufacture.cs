@@ -46,7 +46,7 @@ public class Manufacture : MonoBehaviour
         return this.GetHashCode();
     }
 
-    private void InitializeSettings()
+    private void InitializeSettings(GeneticAlgorithm.Dnk dnk)
     {
         _money = Settings.Basic.ManufactureMoney;
         _productCoastPrice = Settings.Basic.ManufactureProductCoast;
@@ -58,13 +58,14 @@ public class Manufacture : MonoBehaviour
         _currentSize = SmallSize;
 
         _createDay = worldDateTime.CurrentDay;
+        
+        _vm = new VM.Basic(this, dnk);
 
         //_renderer.material.color = new Color(236, 236, 236);
     }
 
     private void Start()
     {
-        _vm = new VM.Basic(this);
         _taxOffice = new TaxOffice();
         _stopWatch = new Stopwatch();
 
@@ -74,7 +75,7 @@ public class Manufacture : MonoBehaviour
         var world = environment.transform.parent.gameObject;
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
 
-        InitializeSettings();
+        InitializeSettings(new GeneticAlgorithm.DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
 
@@ -120,9 +121,9 @@ public class Manufacture : MonoBehaviour
         //todo red color
     }
 
-    private void Alive()
+    private void Alive(GeneticAlgorithm.Dnk dnk)
     {
-        InitializeSettings();
+        InitializeSettings(dnk);
         CheckSize();
     }
 

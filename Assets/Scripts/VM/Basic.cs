@@ -9,10 +9,10 @@ namespace VM
         private GeneticAlgorithm.Commands.Manager _commandsManager = new  GeneticAlgorithm.Commands.Manager();
         private GeneticAlgorithm.Questions.Manager _questionsManager = new  GeneticAlgorithm.Questions.Manager();
 
-        public Basic(Manufacture manufacture)
+        public Basic(Manufacture manufacture, GeneticAlgorithm.Dnk dnk)
         {
             _manufacture = manufacture;
-            _dnk = new GeneticAlgorithm.DnkFactory().CreateRandom();
+            _dnk = dnk;
         }
 
         public void Process()

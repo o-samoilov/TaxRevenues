@@ -1,20 +1,20 @@
 namespace GeneticAlgorithm.Questions
 {
-    internal enum Result
-    {
-        NotEnough = 1,
-        Enough = 2
-    }
-
-    internal enum Coefficient
-    {
-        More5000 = 0,
-        More10000 = 1,
-        More50000 = 2
-    }
-
     public class IsEnoughMoney : AbstractQuestion
     {
+        private enum Result
+        {
+            NotEnough = 1,
+            Enough = 2
+        }
+
+        private enum Coefficient
+        {
+            More5000 = 0,
+            More10000 = 1,
+            More50000 = 2
+        }
+        
         public override string GetName()
         {
             return "is_enough_money";

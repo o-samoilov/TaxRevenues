@@ -2,14 +2,10 @@ namespace GeneticAlgorithm.Commands
 {
     public class ReduceProductCreationTime : AbstractCommand
     {
-        internal enum Result
+        private enum Result
         {
             ReduceProductCreationTime = 1,
             NotReduceProductCreationTime = 2
-        }
-
-        internal enum Coefficient
-        {
         }
 
         public override string GetName()

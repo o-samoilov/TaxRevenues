@@ -8,6 +8,7 @@ using Debug = UnityEngine.Debug;
 public class Manufacture : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
+    public ManufacturesManager manufacturesManager;
     public GameObject productPrefab;
     private Renderer _renderer;
 
@@ -74,6 +75,7 @@ public class Manufacture : MonoBehaviour
         var environment = gameObject.transform.parent.gameObject;
         var world = environment.transform.parent.gameObject;
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
+        manufacturesManager = world.GetComponentInChildren<ManufacturesManager>();
 
         InitializeSettings(new GeneticAlgorithm.DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
@@ -137,7 +139,7 @@ public class Manufacture : MonoBehaviour
             return;
         }
 
-        Alive();//todo get dnk
+        Alive(manufacturesManager.GetDnk());
 
         //todo save statistic
     }

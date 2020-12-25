@@ -1,23 +1,23 @@
 namespace GeneticAlgorithm.Commands
 {
-    internal enum Result
-    {
-        ProductCantBeCreated = 1,
-        ProductCantBeSold = 2,
-        ProductCreated = 3
-    }
-
-    internal enum Coefficient
-    {
-        PayTaxes = 1,
-        PayFines = 2,
-        PayBribes = 3
-    }
-
     public class CreateProduct : AbstractCommand
     {
         private TaxOffice _taxOffice = new TaxOffice();
 
+        private enum Result
+        {
+            ProductCantBeCreated = 1,
+            ProductCantBeSold = 2,
+            ProductCreated = 3
+        }
+
+        private enum Coefficient
+        {
+            PayTaxes = 1,
+            PayFines = 2,
+            PayBribes = 3
+        }
+        
         public override string GetName()
         {
             return "create_product";

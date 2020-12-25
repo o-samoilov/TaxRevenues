@@ -4,17 +4,32 @@ public class TaxOffice
     
     public float CalculateTaxes(Manufacture manufacture, Product product)
     {
+        return CalculateTaxes(manufacture, product.CoastPrice, product.Price);
+    }
+    
+    public float CalculateTaxes(Manufacture manufacture, float productCoastPrice, float productPrice)
+    {
         // todo complex taxes
         return 50;
     }
     
     public float CalculateFines(Manufacture manufacture, Product product)
     {
+        return CalculateFines(manufacture, product.CoastPrice, product.Price);
+    }
+    
+    public float CalculateFines(Manufacture manufacture, float productCoastPrice, float productPrice)
+    {
         // todo complex fine
         return 50;
     }
     
     public float CalculateBribe(Manufacture manufacture, Product product)
+    {
+        return CalculateBribe(manufacture, product.CoastPrice, product.Price);
+    }
+    
+    public float CalculateBribe(Manufacture manufacture, float productCoastPrice, float productPrice)
     {
         // todo complex bribe
         return 10;

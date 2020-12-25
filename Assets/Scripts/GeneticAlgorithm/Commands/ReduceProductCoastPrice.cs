@@ -2,14 +2,10 @@ namespace GeneticAlgorithm.Commands
 {
     public class ReduceProductCoastPrice : AbstractCommand
     {
-        internal enum Result
+        private enum Result
         {
             ReduceProductCoastPrice = 1,
             NotReduceProductCoastPrice = 2
-        }
-
-        internal enum Coefficient
-        {
         }
 
         public override string GetName()

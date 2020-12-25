@@ -11,6 +11,8 @@ public class ManufacturesManager : MonoBehaviour
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
     private Random _random = new Random();
     
+    private GenElementFactory _genElementFactory = new GenElementFactory();
+    
     private void Start()
     {
         var world = gameObject.transform.parent.gameObject;
@@ -18,9 +20,6 @@ public class ManufacturesManager : MonoBehaviour
         {
             _manufactures.Add(manufacture);
         }
-
-        var test = GetTopManufactureDnk();
-        var test2 = GetRandomManufactureDnk();
     }
 
     public Dnk GetDnk()
@@ -35,21 +34,38 @@ public class ManufacturesManager : MonoBehaviour
             dnk = GetRandomManufactureDnk();
         }
         
-        //todo deep copy 
-        //todo mutatation
-
+        //todo mutation 20% probability
+        if (_probabilityManager.IsProbability(20))
+        {
+            var index = _random.Next(0, dnk.MainGen.Size());
+            
+            dnk.MainGen.SetElement(index, _genElementFactory.CreateRandom());
+        }
+        
         return dnk;
     }
 
     private Dnk GetTopManufactureDnk()
     {
-        var bestManufactures = new List<Manufacture>();
-        bestManufactures.Sort();
+        _manufactures.Sort(delegate(Manufacture x, Manufacture y)
+        {
+            if (x.Money < y.Money)
+            {
+                return 1;
+            }
+
+            if (x.Money > y.Money)
+            {
+                return -1;
+            }
         
-        var index = _random.Next(0, _manufactures.Count);
+            return 0;
+        });
+        
+        var index = _random.Next(0, TopManufactureMaxIndex);
         var manufacture = _manufactures[index];
         
-        return manufacture.Dnk;
+        return (Dnk)manufacture.Dnk.Clone();
     }
     
     private Dnk GetRandomManufactureDnk()
@@ -57,6 +73,6 @@ public class ManufacturesManager : MonoBehaviour
         var index = _random.Next(0, _manufactures.Count);
         var manufacture = _manufactures[index];
 
-        return manufacture.Dnk;
+        return (Dnk)manufacture.Dnk.Clone();
     }
 }

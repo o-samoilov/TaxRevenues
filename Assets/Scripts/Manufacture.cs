@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
-public class Manufacture : MonoBehaviour, IComparer<Manufacture>
+public class Manufacture : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
     public ManufacturesManager manufacturesManager;
@@ -361,19 +361,4 @@ public class Manufacture : MonoBehaviour, IComparer<Manufacture>
     }
 
     #endregion
-
-    public int Compare(Manufacture x, Manufacture y)
-    {
-        if (x.Money < y.Money)
-        {
-            return 1;
-        }
-
-        if (x.Money > y.Money)
-        {
-            return -1;
-        }
-        
-        return 0;
-    }
 }

@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace GeneticAlgorithm
 {
-    public class Gen
+    public class Gen : ICloneable
     {
         private int _currentElementIndex = 0;
         private List<GenElement> _elements;
@@ -16,6 +17,11 @@ namespace GeneticAlgorithm
         {
             return _elements[_currentElementIndex];
         }
+        
+        public void SetElement(int index, GenElement genElement)
+        {
+            _elements[index] = genElement;
+        }
 
         public void Move(int steps)
         {
@@ -28,6 +34,17 @@ namespace GeneticAlgorithm
             return _elements.Count;
         }
 
+        public object Clone()
+        {
+            var elements = new List<GenElement>();
+            foreach (var element in _elements)
+            {
+                elements.Add(new GenElement(element.Type, element.Name, element.Coefficient));
+            }
+
+            return new Gen(elements);
+        }
+        
         public override string ToString()
         {
             var result = "";

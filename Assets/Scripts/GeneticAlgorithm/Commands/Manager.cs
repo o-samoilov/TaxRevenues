@@ -33,6 +33,8 @@ namespace GeneticAlgorithm.Commands
             return new List<AbstractCommand>()
             {
                 new CreateProduct(),
+                new ReduceProductCoastPrice(),
+                new ReduceProductCreationTime(),
                 new RelativeJump()
             };
         }

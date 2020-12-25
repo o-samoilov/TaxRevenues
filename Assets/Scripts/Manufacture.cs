@@ -129,13 +129,15 @@ public class Manufacture : MonoBehaviour
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        if (!_isAlive)
+        if (_isAlive)
         {
+            Debug.Log("Pay maintenance (100)");
+            SpendMoney(100);
+            
             return;
         }
 
-        Debug.Log("Pay maintenance (100)");
-        SpendMoney(100);
+        Alive();//todo get dnk
 
         //todo save statistic
     }

@@ -5,7 +5,7 @@ using GeneticAlgorithm;
 
 public class ManufacturesManager : MonoBehaviour
 {
-    private const int TopManufactureMaxIndex = 10;
+    private const int TopManufacturePart = 10; // 10%
         
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
@@ -61,8 +61,10 @@ public class ManufacturesManager : MonoBehaviour
         
             return 0;
         });
+
+        var topManufactureMaxIndex = (int) (_manufactures.Count * TopManufacturePart / 100);
         
-        var index = _random.Next(0, TopManufactureMaxIndex);
+        var index = _random.Next(0, topManufactureMaxIndex);
         var manufacture = _manufactures[index];
         
         return (Dnk)manufacture.Dnk.Clone();

@@ -138,8 +138,6 @@ public class Manufacture : MonoBehaviour
         _renderer.material = dieMaterial;
 
         Debug.Log("Die");
-
-        //todo red color
     }
 
     private void Alive(GeneticAlgorithm.Dnk dnk)

@@ -12,6 +12,9 @@ public class Manufacture : MonoBehaviour
     public WorldDateTime worldDateTime;
     public ManufacturesManager manufacturesManager;
     public GameObject productPrefab;
+
+    public Material liveMaterial;
+    public Material dieMaterial;
     private Renderer _renderer;
 
     private VM.Basic _vm;
@@ -98,8 +101,6 @@ public class Manufacture : MonoBehaviour
         _createDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, _dnk);
-
-        //_renderer.material.color = new Color(236, 236, 236);
     }
 
     private void MarkBusy(float time)
@@ -134,7 +135,7 @@ public class Manufacture : MonoBehaviour
     private void Die()
     {
         _isAlive = false;
-        //_renderer.material.color = Color.red;
+        _renderer.material = dieMaterial;
 
         Debug.Log("Die");
 
@@ -144,6 +145,8 @@ public class Manufacture : MonoBehaviour
     private void Alive(GeneticAlgorithm.Dnk dnk)
     {
         InitializeSettings(dnk);
+        _renderer.material = liveMaterial;
+
         CheckSize();
     }
 

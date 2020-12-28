@@ -44,7 +44,7 @@ public class Manufacture : MonoBehaviour
 
     private string _currentSize;
 
-    private void Start()
+    private void Awake()
     {
         _taxOffice = new TaxOffice();
         _stopWatch = new Stopwatch();

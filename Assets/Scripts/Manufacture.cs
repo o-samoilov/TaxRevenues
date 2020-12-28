@@ -35,8 +35,10 @@ public class Manufacture : MonoBehaviour
 
     private bool _isAlive;
     private bool _isBusy;
+    private float _busyTime;
+
+    public int CreateDay => _createDay;
     private int _createDay;
-    private TimeSpan _productCreate;
 
     private const string BigSize = "big_size";
     private const string MediumSize = "medium_size";
@@ -72,9 +74,10 @@ public class Manufacture : MonoBehaviour
         if (!_isBusy)
         {
             _vm.Process();
+            MarkBusy(0.5f);
         }
     }
-    
+
     public int GetId()
     {
         return this.GetHashCode();
@@ -93,10 +96,22 @@ public class Manufacture : MonoBehaviour
         _currentSize = SmallSize;
 
         _createDay = worldDateTime.CurrentDay;
-        
+
         _vm = new VM.Basic(this, _dnk);
 
         //_renderer.material.color = new Color(236, 236, 236);
+    }
+
+    private void MarkBusy(float time)
+    {
+        if (_isBusy)
+        {
+            return;
+        }
+
+        _isBusy = true;
+        _busyTime = time;
+        _stopWatch.Start();
     }
 
     private void CheckBusy()
@@ -108,7 +123,7 @@ public class Manufacture : MonoBehaviour
 
         var duration = float.Parse(_stopWatch.Elapsed.ToString(@"ss\,fff"));
 
-        if (duration >= _productCreationTime)
+        if (duration >= _busyTime)
         {
             _isBusy = false;
             _stopWatch.Stop();
@@ -138,7 +153,7 @@ public class Manufacture : MonoBehaviour
         {
             Debug.Log("Pay maintenance (100)");
             SpendMoney(100);
-            
+
             return;
         }
 
@@ -222,8 +237,7 @@ public class Manufacture : MonoBehaviour
 
         Debug.Log("Create product");
         SpendMoney(_productCoastPrice);
-        _isBusy = true;
-        _stopWatch.Start();
+        MarkBusy(_productCreationTime);
 
         //Create product from prefab
         var productPrefabPosition = gameObject.transform.position;

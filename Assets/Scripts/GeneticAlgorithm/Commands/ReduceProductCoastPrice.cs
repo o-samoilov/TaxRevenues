@@ -25,10 +25,8 @@ namespace GeneticAlgorithm.Commands
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
-            if (manufacture.IsPossibleReduceProductCoastPrice())
+            if (manufacture.IsPossibleReduceProductCoastPrice() && manufacture.ReduceProductCoastPrice())
             {
-                manufacture.ReduceProductCoastPrice();
-
                 return (int) Result.ReduceProductCoastPrice;
             }
 

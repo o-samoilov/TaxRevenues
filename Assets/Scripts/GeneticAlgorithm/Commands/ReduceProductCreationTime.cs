@@ -25,10 +25,8 @@ namespace GeneticAlgorithm.Commands
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
-            if (manufacture.IsPossibleReduceProductCreationTime())
+            if (manufacture.IsPossibleReduceProductCreationTime() && manufacture.ReduceProductCreationTime())
             {
-                manufacture.ReduceProductCreationTime();
-
                 return (int) Result.ReduceProductCreationTime;
             }
 

@@ -19,15 +19,10 @@ public class Manufacture : MonoBehaviour
     public Material liveMaterial;
     public Material dieMaterial;
 
-    private Renderer _renderer;
-
-    private int _id;
-
-    private VM.Basic _vm;
-    private Stopwatch _stopWatch;
-
     public float Money => _money;
     public Dnk Dnk => _dnk;
+    public float ProductCoastPrice => _productCoastPrice;
+    public float ProductCreationTime => _productCreationTime;
 
     private float _money;
     private Dnk _dnk;
@@ -40,6 +35,14 @@ public class Manufacture : MonoBehaviour
 
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 1f;
+
+    private Renderer _renderer;
+
+    private int _id;
+
+    private VM.Basic _vm;
+    private Stopwatch _stopWatch = new Stopwatch();
+    private LogManager _logManager = new LogManager();
 
     private bool _isAlive;
     private bool _isBusy;
@@ -57,8 +60,6 @@ public class Manufacture : MonoBehaviour
 
     private void Start()
     {
-        _stopWatch = new Stopwatch();
-
         _renderer = gameObject.GetComponentInChildren<Renderer>();
 
         var environment = gameObject.transform.parent.gameObject;
@@ -98,7 +99,7 @@ public class Manufacture : MonoBehaviour
         _id = id;
     }
 
-    public void UpdateInfoText()
+    private void UpdateInfoText()
     {
         textInfo.text = $"ID: {_id}\n" +
                         $"Money: {_money}\n" +
@@ -113,11 +114,8 @@ public class Manufacture : MonoBehaviour
         _productCoastPrice = Settings.Basic.ManufactureProductCoast;
         _productCreationTime = Settings.Basic.ManufactureProductCreationTime;
 
-        _isAlive = true;
         _isBusy = false;
-
         _currentSize = SmallSize;
-
         _createDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, _dnk);
@@ -152,22 +150,30 @@ public class Manufacture : MonoBehaviour
         }
     }
 
-    private void Die()
-    {
-        _isAlive = false;
-        _renderer.material = dieMaterial;
-
-        Debug.Log("Die");
-    }
-
     private void Alive(int id, GeneticAlgorithm.Dnk dnk)
     {
+        _isAlive = true;
+
         SetId(id);
         InitializeSettings(dnk);
         _renderer.material = liveMaterial;
 
         CheckSize();
         UpdateInfoText();
+
+        _logManager.SaveManufactureAliveInfo(worldDateTime.CurrentDay, this);
+        
+        Debug.Log("Alive");
+    }
+
+    private void Die()
+    {
+        _isAlive = false;
+        _renderer.material = dieMaterial;
+
+        _logManager.SaveManufactureDieInfo(worldDateTime.CurrentDay, this);
+        
+        Debug.Log("Die");
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
@@ -404,13 +410,4 @@ public class Manufacture : MonoBehaviour
     }
 
     #endregion
-
-    public override string ToString()
-    {
-        return $"ID: {_id}\n" +
-               $"Money: {_money}\n" +
-               $"Product coast: {_productCoastPrice}\n" +
-               $"Product creation time: {_productCreationTime}\n" +
-               $"Gen: {_dnk.MainGen.ToString()}\n";
-    }
 }

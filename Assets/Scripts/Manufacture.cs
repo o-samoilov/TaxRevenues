@@ -14,7 +14,7 @@ public class Manufacture : MonoBehaviour
     public WorldDateTime worldDateTime;
     public ManufacturesManager manufacturesManager;
     public GameObject productPrefab;
-    public TextMeshPro textId;
+    public TextMeshPro textInfo;
 
     public Material liveMaterial;
     public Material dieMaterial;
@@ -68,7 +68,7 @@ public class Manufacture : MonoBehaviour
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
         manufacturesManager = world.GetComponentInChildren<ManufacturesManager>();
         
-        textId = gameObject.GetComponentInChildren<TextMeshPro>();
+        textInfo = gameObject.GetComponentInChildren<TextMeshPro>();
 
         InitializeSettings(new DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
@@ -98,7 +98,11 @@ public class Manufacture : MonoBehaviour
     public void SetId(int id)
     {
         _id = id;
-        textId.text = $"ID: {_id}";
+    }
+
+    public void UpdateInfoText()
+    {
+        textInfo.text = $"ID: {_id}\nMoney: {_money}";
     }
 
     private void InitializeSettings(Dnk dnk)
@@ -155,12 +159,14 @@ public class Manufacture : MonoBehaviour
         Debug.Log("Die");
     }
 
-    private void Alive(GeneticAlgorithm.Dnk dnk)
+    private void Alive(int id, GeneticAlgorithm.Dnk dnk)
     {
+        SetId(id);
         InitializeSettings(dnk);
         _renderer.material = liveMaterial;
 
         CheckSize();
+        UpdateInfoText();
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
@@ -173,7 +179,7 @@ public class Manufacture : MonoBehaviour
             return;
         }
 
-        Alive(manufacturesManager.GetDnk());
+        Alive(manufacturesManager.GetManufactureId(), manufacturesManager.GetDnk());
 
         //todo save statistic
     }
@@ -185,7 +191,7 @@ public class Manufacture : MonoBehaviour
         _money += money;
         CheckSize();
 
-        Debug.Log("Add money. Money: " + _money);
+        UpdateInfoText();
     }
 
     private void SpendMoney(float money)
@@ -200,8 +206,7 @@ public class Manufacture : MonoBehaviour
         }
 
         CheckSize();
-
-        Debug.Log("Spend money. Money: " + _money);
+        UpdateInfoText();
     }
 
     public void PayTaxes(Product product)

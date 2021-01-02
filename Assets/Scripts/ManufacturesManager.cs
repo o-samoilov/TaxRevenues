@@ -12,18 +12,24 @@ public class ManufacturesManager : MonoBehaviour
     private Random _random = new Random();
     
     private GenElementFactory _genElementFactory = new GenElementFactory();
+
+    private int _id = 1;
     
     private void Start()
     {
-        int id = 1;
-        
         var world = gameObject.transform.parent.gameObject;
         foreach (var manufacture in world.GetComponentsInChildren<Manufacture>())
         {
             _manufactures.Add(manufacture);
-            manufacture.SetId(id);
-            id++;
+            manufacture.SetId(_id);
+            manufacture.UpdateInfoText();
+            _id++;
         }
+    }
+
+    public int GetManufactureId()
+    {
+        return ++_id;
     }
 
     public Dnk GetDnk()

@@ -49,7 +49,7 @@ MonoBehaviour:
   manufacturesManager: {fileID: 0}
   productPrefab: {fileID: 3161531434597317184, guid: 7e57ca516ea705e4187e985ee268efa8,
     type: 3}
-  textId: {fileID: 0}
+  textInfo: {fileID: 0}
   liveMaterial: {fileID: 2100000, guid: bbb71e91b4d8a44999b1f690a488dc5a, type: 2}
   dieMaterial: {fileID: 2100000, guid: a1daf31cdf41e484ca9ac33a5c6f524a, type: 2}
 --- !u!1 &7084895368022782444
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 875883243817100667}
   - component: {fileID: 7580681901197217257}
   m_Layer: 0
-  m_Name: Text ID Manufacture
+  m_Name: Text Info Manufacture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,7 +156,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'ID: 0'
+  m_text: 'ID: 0
+
+    Money: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -183,8 +185,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

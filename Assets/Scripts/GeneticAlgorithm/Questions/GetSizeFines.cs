@@ -2,8 +2,6 @@ namespace GeneticAlgorithm.Questions
 {
     public class GetSizeFines : AbstractQuestion
     {
-        private TaxOffice _taxOffice = new TaxOffice();
-
         private const float ExampleProductCoastPrice = 100;
         private const float ExampleProductPrice = 150;
 
@@ -43,7 +41,7 @@ namespace GeneticAlgorithm.Questions
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
-            var fines = _taxOffice.CalculateFines(manufacture, ExampleProductCoastPrice, ExampleProductPrice);
+            var fines = TaxOffice.CalculateFines(manufacture, ExampleProductCoastPrice, ExampleProductPrice);
 
             switch (genElement.Coefficient)
             {

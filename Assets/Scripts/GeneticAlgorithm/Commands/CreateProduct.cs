@@ -2,8 +2,6 @@ namespace GeneticAlgorithm.Commands
 {
     public class CreateProduct : AbstractCommand
     {
-        private TaxOffice _taxOffice = new TaxOffice();
-
         private enum Result
         {
             ProductCantBeCreated = 1,
@@ -61,7 +59,7 @@ namespace GeneticAlgorithm.Commands
                 return (int) Result.ProductCreated;
             }
 
-            if (_taxOffice.IsNeedPayFines(manufacture, product))
+            if (TaxOffice.IsNeedPayFines(manufacture, product))
             {
                 if (genElement.Coefficient == (int) Coefficient.PayFines)
                 {
@@ -70,7 +68,7 @@ namespace GeneticAlgorithm.Commands
                     return (int) Result.ProductCreated;
                 }
 
-                if (_taxOffice.IsCouldPayBribe(manufacture, product))
+                if (TaxOffice.IsCouldPayBribe(manufacture, product))
                 {
                     manufacture.PayBribe(product);
                 }

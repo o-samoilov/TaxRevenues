@@ -18,13 +18,12 @@ public class Manufacture : MonoBehaviour
 
     public Material liveMaterial;
     public Material dieMaterial;
-    
+
     private Renderer _renderer;
 
     private int _id;
-    
+
     private VM.Basic _vm;
-    private TaxOffice _taxOffice;
     private Stopwatch _stopWatch;
 
     public float Money => _money;
@@ -58,7 +57,6 @@ public class Manufacture : MonoBehaviour
 
     private void Start()
     {
-        _taxOffice = new TaxOffice();
         _stopWatch = new Stopwatch();
 
         _renderer = gameObject.GetComponentInChildren<Renderer>();
@@ -67,7 +65,7 @@ public class Manufacture : MonoBehaviour
         var world = environment.transform.parent.gameObject;
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
         manufacturesManager = world.GetComponentInChildren<ManufacturesManager>();
-        
+
         textInfo = gameObject.GetComponentInChildren<TextMeshPro>();
 
         InitializeSettings(new DnkFactory().CreateRandom());
@@ -94,7 +92,7 @@ public class Manufacture : MonoBehaviour
     {
         return _id;
     }
-    
+
     public void SetId(int id)
     {
         _id = id;
@@ -102,7 +100,10 @@ public class Manufacture : MonoBehaviour
 
     public void UpdateInfoText()
     {
-        textInfo.text = $"ID: {_id}\nMoney: {_money}";
+        textInfo.text = $"ID: {_id}\n" +
+                        $"Money: {_money}\n" +
+                        $"Pr. coast: {_productCoastPrice}\n" +
+                        $"Pr. time: {_productCreationTime}\n";
     }
 
     private void InitializeSettings(Dnk dnk)
@@ -209,7 +210,7 @@ public class Manufacture : MonoBehaviour
 
     public void PayTaxes(Product product)
     {
-        float taxes = _taxOffice.CalculateTaxes(this, product);
+        float taxes = TaxOffice.CalculateTaxes(this, product);
         SpendMoney(taxes);
 
         //todo statistic
@@ -217,7 +218,7 @@ public class Manufacture : MonoBehaviour
 
     public void PayFines(Product product)
     {
-        float fines = _taxOffice.CalculateFines(this, product);
+        float fines = TaxOffice.CalculateFines(this, product);
         SpendMoney(fines);
 
         //todo statistic
@@ -225,7 +226,7 @@ public class Manufacture : MonoBehaviour
 
     public void PayBribe(Product product)
     {
-        float bribe = _taxOffice.CalculateBribe(this, product);
+        float bribe = TaxOffice.CalculateBribe(this, product);
         SpendMoney(bribe);
 
         //todo statistic
@@ -296,6 +297,8 @@ public class Manufacture : MonoBehaviour
         _productCoastPrice -= 0.01f;
         SpendMoney(ProductReduceCoastPricePrice);
 
+        Debug.Log($"{_id}: ReduceProductCoastPrice");
+
         return true;
     }
 
@@ -314,6 +317,8 @@ public class Manufacture : MonoBehaviour
 
         _productCreationTime -= 0.01f;
         SpendMoney(ProductReduceCreationTimePrice);
+
+        Debug.Log($"{_id}: ReduceProductCreationTime");
 
         return true;
     }
@@ -374,7 +379,7 @@ public class Manufacture : MonoBehaviour
 
         Scale(new Vector3(2f, 5f, 2f), 6f);
     }
-    
+
     private void SetExtraBigSize()
     {
         if (_currentSize == ExtraBigSize)
@@ -399,4 +404,13 @@ public class Manufacture : MonoBehaviour
     }
 
     #endregion
+
+    public override string ToString()
+    {
+        return $"ID: {_id}\n" +
+               $"Money: {_money}\n" +
+               $"Product coast: {_productCoastPrice}\n" +
+               $"Product creation time: {_productCreationTime}\n" +
+               $"Gen: {_dnk.MainGen.ToString()}\n";
+    }
 }

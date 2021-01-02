@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Project
+namespace Common
 {
     public class FlyCamera : MonoBehaviour
     {

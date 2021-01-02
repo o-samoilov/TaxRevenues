@@ -32,8 +32,7 @@ namespace GeneticAlgorithm.Questions
         {
             return new List<AbstractQuestion>()
             {
-                new GetSizeBribe(),
-                new IsEnoughMoney()
+                new GetSizeBribe()
             };
         }
     }

@@ -1,5 +1,6 @@
 namespace GeneticAlgorithm.Questions
 {
+    // todo remove
     public class IsEnoughMoney : AbstractQuestion
     {
         private enum Result

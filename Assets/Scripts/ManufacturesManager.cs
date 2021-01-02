@@ -34,7 +34,7 @@ public class ManufacturesManager : MonoBehaviour
             dnk = GetRandomManufactureDnk();
         }
         
-        //todo mutation 20% probability
+        //mutation probability: 20%
         if (_probabilityManager.IsProbability(20))
         {
             var index = _random.Next(0, dnk.MainGen.Size());

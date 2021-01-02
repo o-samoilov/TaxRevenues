@@ -1,12 +1,7 @@
 namespace GeneticAlgorithm.Questions
 {
-    public class GetSizeTaxes : AbstractQuestion
+    public class GetSizeMoney : AbstractQuestion
     {
-        private TaxOffice _taxOffice = new TaxOffice();
-
-        private const float ExampleProductCoastPrice = 100;
-        private const float ExampleProductPrice = 150;
-
         private enum Result
         {
             Small = 1,
@@ -16,19 +11,19 @@ namespace GeneticAlgorithm.Questions
 
         private enum Coefficient
         {
-            // small: 0-200,  medium: 200-500,   big: >500
+            // small: 0-2000,  medium: 2000-10000,   big: >10000
             SmallScale = 0,
 
-            // small: 0-1000,  medium: 1000-2000,  big: >2000
+            // small: 0-10000,  medium: 10000-50000,  big: >50000
             MediumScale = 1,
 
-            // small: 0-2000, medium: 2000-5000, big: >5000
+            // small: 0-50000, medium: 50000-500000, big: >500000
             BigScale = 2
         }
 
         public override string GetName()
         {
-            return "get_size_taxes";
+            return "get_size_money";
         }
 
         public override int GetMinCoefficient()
@@ -43,47 +38,47 @@ namespace GeneticAlgorithm.Questions
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
-            var taxes = _taxOffice.CalculateTaxes(manufacture, ExampleProductCoastPrice, ExampleProductPrice);
-
+            var money = manufacture.Money;
+            
             switch (genElement.Coefficient)
             {
                 case (int) Coefficient.SmallScale:
                 {
-                    if (taxes <= 200)
+                    if (money <= 2000)
                     {
                         return (int) Result.Small;
                     }
-                    else if (taxes > 200 && taxes <= 500)
+                    else if (money > 2000 && money <= 10000)
                     {
                         return (int) Result.Medium;
                     }
-
+                    
                     break;
                 }
                 case (int) Coefficient.MediumScale:
                 {
-                    if (taxes <= 1000)
+                    if (money <= 10000)
                     {
                         return (int) Result.Small;
                     }
-                    else if (taxes > 1000 && taxes <= 2000)
+                    else if (money > 10000 && money <= 50000)
                     {
                         return (int) Result.Medium;
                     }
-
+                    
                     break;
                 }
                 case (int) Coefficient.BigScale:
                 {
-                    if (taxes <= 2000)
+                    if (money <= 50000)
                     {
                         return (int) Result.Small;
                     }
-                    else if (taxes > 2000 && taxes <= 5000)
+                    else if (money > 50000 && money <= 500000)
                     {
                         return (int) Result.Medium;
                     }
-
+                    
                     break;
                 }
             }

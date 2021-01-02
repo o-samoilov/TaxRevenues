@@ -172,6 +172,8 @@ public class Manufacture : MonoBehaviour
         _renderer.material = dieMaterial;
 
         _logManager.SaveManufactureDieInfo(worldDateTime.CurrentDay, this);
+        
+        Debug.Log("Die");
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)

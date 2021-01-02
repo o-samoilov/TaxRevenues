@@ -6,15 +6,15 @@ using GeneticAlgorithm;
 public class ManufacturesManager : MonoBehaviour
 {
     private const int TopManufacturePart = 10; // 10%
-        
+
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
     private Random _random = new Random();
-    
+
     private GenElementFactory _genElementFactory = new GenElementFactory();
 
     private int _id = 1;
-    
+
     private void Awake()
     {
         var world = gameObject.transform.parent.gameObject;
@@ -43,15 +43,16 @@ public class ManufacturesManager : MonoBehaviour
         {
             dnk = GetRandomManufactureDnk();
         }
-        
+
         //mutation probability: 20%
         if (_probabilityManager.IsProbability(20))
         {
             var index = _random.Next(0, dnk.MainGen.Size());
-            
             dnk.MainGen.SetElement(index, _genElementFactory.CreateRandom());
+            
+            Debug.Log("Mutation");
         }
-        
+
         return dnk;
     }
 
@@ -68,23 +69,23 @@ public class ManufacturesManager : MonoBehaviour
             {
                 return -1;
             }
-        
+
             return 0;
         });
 
         var topManufactureMaxIndex = (int) (_manufactures.Count * TopManufacturePart / 100);
-        
+
         var index = _random.Next(0, topManufactureMaxIndex);
         var manufacture = _manufactures[index];
-        
-        return (Dnk)manufacture.Dnk.Clone();
+
+        return (Dnk) manufacture.Dnk.Clone();
     }
-    
+
     private Dnk GetRandomManufactureDnk()
     {
         var index = _random.Next(0, _manufactures.Count);
         var manufacture = _manufactures[index];
 
-        return (Dnk)manufacture.Dnk.Clone();
+        return (Dnk) manufacture.Dnk.Clone();
     }
 }

@@ -45,6 +45,7 @@ public class TaxOffice
     public bool IsCouldPayBribe(Manufacture manufacture, Product product)
     {
         //todo complex 
-        return true;
+        // 50%
+        return _probabilityManager.IsProbability(50);
     }
 }

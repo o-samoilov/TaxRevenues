@@ -9,7 +9,7 @@ namespace GeneticAlgorithm.Questions
         {
             return GetQuestions()[index];
         }
-        
+
         public AbstractQuestion GetByName(string name)
         {
             foreach (var question in GetQuestions())
@@ -22,17 +22,23 @@ namespace GeneticAlgorithm.Questions
 
             throw new ArgumentOutOfRangeException();
         }
-        
+
         public int GetCount()
         {
             return GetQuestions().Count;
         }
-        
+
         private List<AbstractQuestion> GetQuestions()
         {
             return new List<AbstractQuestion>()
             {
-                new GetSizeBribe()
+                new GetSizeBribe(),
+                new GetSizeFines(),
+                new GetSizeMoney(),
+                new GetSizeTaxes(),
+                new IsPossibleReduceProductCoastPrice(),
+                new IsPossibleReduceProductCreationTime(),
+                new IsPossibleSellProduct()
             };
         }
     }

@@ -56,7 +56,7 @@ public class Manufacture : MonoBehaviour
 
     private string _currentSize;
 
-    private void Awake()
+    private void Start()
     {
         _taxOffice = new TaxOffice();
         _stopWatch = new Stopwatch();
@@ -173,9 +173,7 @@ public class Manufacture : MonoBehaviour
     {
         if (_isAlive)
         {
-            Debug.Log("Pay maintenance (100)");
             SpendMoney(100);
-
             return;
         }
 
@@ -212,8 +210,6 @@ public class Manufacture : MonoBehaviour
     public void PayTaxes(Product product)
     {
         float taxes = _taxOffice.CalculateTaxes(this, product);
-
-        Debug.Log("Pay taxes " + taxes);
         SpendMoney(taxes);
 
         //todo statistic
@@ -222,8 +218,6 @@ public class Manufacture : MonoBehaviour
     public void PayFines(Product product)
     {
         float fines = _taxOffice.CalculateFines(this, product);
-
-        Debug.Log("Pay fines " + fines);
         SpendMoney(fines);
 
         //todo statistic
@@ -232,8 +226,6 @@ public class Manufacture : MonoBehaviour
     public void PayBribe(Product product)
     {
         float bribe = _taxOffice.CalculateBribe(this, product);
-
-        Debug.Log("Pay bribe " + bribe);
         SpendMoney(bribe);
 
         //todo statistic
@@ -256,7 +248,6 @@ public class Manufacture : MonoBehaviour
             return null;
         }
 
-        Debug.Log("Create product");
         SpendMoney(_productCoastPrice);
         MarkBusy(_productCreationTime);
 

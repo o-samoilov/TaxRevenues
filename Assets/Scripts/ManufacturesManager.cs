@@ -15,14 +15,14 @@ public class ManufacturesManager : MonoBehaviour
 
     private int _id = 1;
     
-    private void Start()
+    private void Awake()
     {
         var world = gameObject.transform.parent.gameObject;
         foreach (var manufacture in world.GetComponentsInChildren<Manufacture>())
         {
             _manufactures.Add(manufacture);
             manufacture.SetId(_id);
-            manufacture.UpdateInfoText();
+            //manufacture.UpdateInfoText();
             _id++;
         }
     }

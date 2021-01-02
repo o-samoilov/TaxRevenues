@@ -12,7 +12,7 @@ public class WorldDateTime : MonoBehaviour
 
     public int CurrentDay => _currentDay;
 
-    private void Start()
+    private void Awake()
     {
         InvokeRepeating(nameof(NextDay), dayLength, dayLength);
     }

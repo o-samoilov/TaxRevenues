@@ -44,8 +44,8 @@ public class Manufacture : MonoBehaviour
     private Stopwatch _stopWatch = new Stopwatch();
     private LogManager _logManager = new LogManager();
 
-    private bool _isAlive;
-    private bool _isBusy;
+    private bool _isAlive = true;
+    private bool _isBusy = false;
     private float _busyTime;
 
     public int CreateDay => _createDay;
@@ -71,6 +71,8 @@ public class Manufacture : MonoBehaviour
 
         InitializeSettings(new DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
+        
+        _logManager.SaveManufactureAliveInfo(worldDateTime.CurrentDay, this);
     }
 
     private void Update()
@@ -162,8 +164,6 @@ public class Manufacture : MonoBehaviour
         UpdateInfoText();
 
         _logManager.SaveManufactureAliveInfo(worldDateTime.CurrentDay, this);
-        
-        Debug.Log("Alive");
     }
 
     private void Die()
@@ -172,8 +172,6 @@ public class Manufacture : MonoBehaviour
         _renderer.material = dieMaterial;
 
         _logManager.SaveManufactureDieInfo(worldDateTime.CurrentDay, this);
-        
-        Debug.Log("Die");
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
@@ -289,7 +287,7 @@ public class Manufacture : MonoBehaviour
 
     public bool IsPossibleReduceProductCoastPrice()
     {
-        return _productCoastPrice <= MinProductCoastPricePrice &&
+        return _productCoastPrice > MinProductCoastPricePrice &&
                Money >= ProductReduceCoastPricePrice;
     }
 
@@ -303,14 +301,12 @@ public class Manufacture : MonoBehaviour
         _productCoastPrice -= 0.01f;
         SpendMoney(ProductReduceCoastPricePrice);
 
-        Debug.Log($"{_id}: ReduceProductCoastPrice");
-
         return true;
     }
 
     public bool IsPossibleReduceProductCreationTime()
     {
-        return _productCreationTime <= MinProductCreationTimePrice &&
+        return _productCreationTime > MinProductCreationTimePrice &&
                Money >= ProductReduceCreationTimePrice;
     }
 
@@ -323,8 +319,6 @@ public class Manufacture : MonoBehaviour
 
         _productCreationTime -= 0.01f;
         SpendMoney(ProductReduceCreationTimePrice);
-
-        Debug.Log($"{_id}: ReduceProductCreationTime");
 
         return true;
     }

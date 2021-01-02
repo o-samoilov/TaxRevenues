@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using GeneticAlgorithm;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class Manufacture : MonoBehaviour
@@ -12,11 +14,15 @@ public class Manufacture : MonoBehaviour
     public WorldDateTime worldDateTime;
     public ManufacturesManager manufacturesManager;
     public GameObject productPrefab;
+    public TextMeshPro textId;
 
     public Material liveMaterial;
     public Material dieMaterial;
+    
     private Renderer _renderer;
 
+    private int _id;
+    
     private VM.Basic _vm;
     private TaxOffice _taxOffice;
     private Stopwatch _stopWatch;
@@ -61,6 +67,8 @@ public class Manufacture : MonoBehaviour
         var world = environment.transform.parent.gameObject;
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
         manufacturesManager = world.GetComponentInChildren<ManufacturesManager>();
+        
+        textId = gameObject.GetComponentInChildren<TextMeshPro>();
 
         InitializeSettings(new DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
@@ -84,7 +92,13 @@ public class Manufacture : MonoBehaviour
 
     public int GetId()
     {
-        return this.GetHashCode();
+        return _id;
+    }
+    
+    public void SetId(int id)
+    {
+        _id = id;
+        textId.text = $"ID: {_id}";
     }
 
     private void InitializeSettings(Dnk dnk)

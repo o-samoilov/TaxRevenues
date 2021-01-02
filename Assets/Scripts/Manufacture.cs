@@ -43,9 +43,10 @@ public class Manufacture : MonoBehaviour
     public int CreateDay => _createDay;
     private int _createDay;
 
-    private const string BigSize = "big_size";
-    private const string MediumSize = "medium_size";
     private const string SmallSize = "small_size";
+    private const string MediumSize = "medium_size";
+    private const string BigSize = "big_size";
+    private const string ExtraBigSize = "extra_big_size";
 
     private string _currentSize;
 
@@ -77,7 +78,7 @@ public class Manufacture : MonoBehaviour
         if (!_isBusy)
         {
             _vm.Process();
-            MarkBusy(0.5f);
+            MarkBusy(0.1f);
         }
     }
 
@@ -311,7 +312,7 @@ public class Manufacture : MonoBehaviour
 
     #region Size Manufacture Object
 
-    public void CheckSize()
+    private void CheckSize()
     {
         //todo const
         if (_money <= 5000f)
@@ -328,7 +329,7 @@ public class Manufacture : MonoBehaviour
         }
     }
 
-    public void SetSmallSize()
+    private void SetSmallSize()
     {
         if (_currentSize == SmallSize)
         {
@@ -340,7 +341,7 @@ public class Manufacture : MonoBehaviour
         Scale(new Vector3(1f, 1f, 1f), 1.6f);
     }
 
-    public void SetMediumSize()
+    private void SetMediumSize()
     {
         if (_currentSize == MediumSize)
         {
@@ -352,16 +353,28 @@ public class Manufacture : MonoBehaviour
         Scale(new Vector3(1.5f, 3f, 1.5f), 3.8f);
     }
 
-    public void SetBigSize()
+    private void SetBigSize()
     {
         if (_currentSize == BigSize)
         {
             return;
         }
 
-        _currentSize = MediumSize;
+        _currentSize = BigSize;
 
         Scale(new Vector3(2f, 5f, 2f), 6f);
+    }
+    
+    private void SetExtraBigSize()
+    {
+        if (_currentSize == ExtraBigSize)
+        {
+            return;
+        }
+
+        _currentSize = ExtraBigSize;
+
+        Scale(new Vector3(3f, 10f, 2f), 11.6f);
     }
 
     private void Scale(Vector3 scale, float y)

@@ -19,12 +19,14 @@ public class Manufacture : MonoBehaviour
     public Material liveMaterial;
     public Material dieMaterial;
 
+    public GameObject manufactureModel;
+
     public int Id { get; set; }
-    
+
     public float Money { get; private set; }
     public Dnk Dnk { get; private set; }
     public float ProductCoastPrice { get; private set; }
-    public float ProductCreationTime{ get; private set; }
+    public float ProductCreationTime { get; private set; }
     public int CreateDay { get; private set; }
 
     private const float ProductReduceCoastPricePrice = 50f;
@@ -83,6 +85,7 @@ public class Manufacture : MonoBehaviour
     private void UpdateInfoText()
     {
         textInfo.text = $"ID: {Id}\n" +
+                        $"Create day: {CreateDay}\n" +
                         $"Money: {Money}\n" +
                         $"Pr. coast: {ProductCoastPrice}\n" +
                         $"Pr. time: {ProductCreationTime}\n";
@@ -171,8 +174,8 @@ public class Manufacture : MonoBehaviour
     public void AddMoney(float money)
     {
         Money += money;
-        CheckSize();
 
+        CheckSize();
         UpdateInfoText();
     }
 
@@ -313,13 +316,17 @@ public class Manufacture : MonoBehaviour
         {
             SetSmallSize();
         }
-        else if (Money <= 20000f)
+        else if (Money <= 50000f)
         {
             SetMediumSize();
         }
-        else
+        else if (Money <= 500000f)
         {
             SetBigSize();
+        }
+        else
+        {
+            SetExtraBigSize();
         }
     }
 
@@ -332,7 +339,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = SmallSize;
 
-        Scale(new Vector3(1f, 1f, 1f), 1.6f);
+        Scale(new Vector3(0.01f, 0.01f, 0.01f), 1.6f);
     }
 
     private void SetMediumSize()
@@ -344,7 +351,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = MediumSize;
 
-        Scale(new Vector3(1.5f, 3f, 1.5f), 3.8f);
+        Scale(new Vector3(0.015f, 0.015f, 0.04f), 4.7f);
     }
 
     private void SetBigSize()
@@ -356,7 +363,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = BigSize;
 
-        Scale(new Vector3(2f, 5f, 2f), 6f);
+        Scale(new Vector3(0.02f, 0.02f, 0.08f), 8.6f);
     }
 
     private void SetExtraBigSize()
@@ -368,17 +375,17 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = ExtraBigSize;
 
-        Scale(new Vector3(3f, 10f, 2f), 11.6f);
+        Scale(new Vector3(0.02f, 0.025f, 0.12f), 12.5f);
     }
 
     private void Scale(Vector3 scale, float y)
     {
-        gameObject.transform.localScale = scale;
+        manufactureModel.transform.localScale = scale;
 
-        gameObject.transform.position = new Vector3(
-            gameObject.transform.position.x,
+        manufactureModel.transform.position = new Vector3(
+            manufactureModel.transform.position.x,
             y,
-            gameObject.transform.position.z
+            manufactureModel.transform.position.z
         );
     }
 

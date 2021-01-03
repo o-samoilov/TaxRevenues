@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,11 +20,16 @@ namespace Common
         {
             worldDateTime.NewDay += WorldDateTimeNewDayHandler;
         }
-        
+
+        private void Update()
+        {
+            //exchangeText.text = $"Sold Products: {Exchange.SoldProductsToday}";
+        }
+
         private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
         {
             worldDateTimeText.text = $"Current Day: {e.Day}";
-            exchangeText.text = $"Sold Products: {Exchange.SoldProducts}";
+            //exchangeText.text = $"Sold Products: {Exchange.SoldProducts}";
         }
     }
 }

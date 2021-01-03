@@ -38,7 +38,8 @@ namespace Common
             //Start position
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                gameObject.transform.position = new Vector3(0, 30, -100);
+                transform.position = new Vector3(0, 30, -100);
+                transform.rotation = Quaternion.Euler(25, 0, 0);
             }
 
             if (Input.GetMouseButtonDown(1))

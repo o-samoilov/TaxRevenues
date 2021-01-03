@@ -21,16 +21,11 @@ public class Manufacture : MonoBehaviour
 
     public int Id { get; set; }
     
-    public float Money => _money;
-    public Dnk Dnk => _dnk;
-    public float ProductCoastPrice => _productCoastPrice;
-    public float ProductCreationTime => _productCreationTime;
-
-    private float _money;
-    private Dnk _dnk;
-
-    private float _productCoastPrice;
-    private float _productCreationTime;
+    public float Money { get; private set; }
+    public Dnk Dnk { get; private set; }
+    public float ProductCoastPrice { get; private set; }
+    public float ProductCreationTime{ get; private set; }
+    public int CreateDay { get; private set; }
 
     private const float ProductReduceCoastPricePrice = 50f;
     private const float ProductReduceCreationTimePrice = 50f;
@@ -40,16 +35,12 @@ public class Manufacture : MonoBehaviour
 
     private Renderer _renderer;
 
-    private int _id;
-
     private VM.Basic _vm;
     private Stopwatch _stopWatch = new Stopwatch();
 
     private bool _isAlive = true;
     private bool _isBusy = false;
     private float _busyTime;
-
-    public int CreateDay { get; private set; }
 
     private const string SmallSize = "small_size";
     private const string MediumSize = "medium_size";
@@ -91,24 +82,24 @@ public class Manufacture : MonoBehaviour
 
     private void UpdateInfoText()
     {
-        textInfo.text = $"ID: {_id}\n" +
-                        $"Money: {_money}\n" +
-                        $"Pr. coast: {_productCoastPrice}\n" +
-                        $"Pr. time: {_productCreationTime}\n";
+        textInfo.text = $"ID: {Id}\n" +
+                        $"Money: {Money}\n" +
+                        $"Pr. coast: {ProductCoastPrice}\n" +
+                        $"Pr. time: {ProductCreationTime}\n";
     }
 
     private void InitializeSettings(Dnk dnk)
     {
-        _dnk = dnk;
-        _money = Settings.Basic.ManufactureMoney;
-        _productCoastPrice = Settings.Basic.ManufactureProductCoast;
-        _productCreationTime = Settings.Basic.ManufactureProductCreationTime;
+        Dnk = dnk;
+        Money = Settings.Basic.ManufactureMoney;
+        ProductCoastPrice = Settings.Basic.ManufactureProductCoast;
+        ProductCreationTime = Settings.Basic.ManufactureProductCreationTime;
 
         _isBusy = false;
         _currentSize = SmallSize;
         CreateDay = worldDateTime.CurrentDay;
 
-        _vm = new VM.Basic(this, _dnk);
+        _vm = new VM.Basic(this, Dnk);
     }
 
     private void MarkBusy(float time)
@@ -179,7 +170,7 @@ public class Manufacture : MonoBehaviour
 
     public void AddMoney(float money)
     {
-        _money += money;
+        Money += money;
         CheckSize();
 
         UpdateInfoText();
@@ -187,9 +178,9 @@ public class Manufacture : MonoBehaviour
 
     private void SpendMoney(float money)
     {
-        _money -= money;
+        Money -= money;
 
-        if (_money < 0)
+        if (Money < 0)
         {
             Die();
 
@@ -230,7 +221,7 @@ public class Manufacture : MonoBehaviour
 
     public bool IsPossibleCreateProduct()
     {
-        return _money >= _productCoastPrice;
+        return Money >= ProductCoastPrice;
     }
 
     [CanBeNull]
@@ -241,8 +232,8 @@ public class Manufacture : MonoBehaviour
             return null;
         }
 
-        SpendMoney(_productCoastPrice);
-        MarkBusy(_productCreationTime);
+        SpendMoney(ProductCoastPrice);
+        MarkBusy(ProductCreationTime);
 
         //Create product from prefab
         var productPrefabPosition = gameObject.transform.position;
@@ -268,14 +259,14 @@ public class Manufacture : MonoBehaviour
         productGameObject.transform.SetParent(environment.transform);
 
         var product = environment.GetComponentInChildren<Product>();
-        product.CoastPrice = _productCoastPrice;
+        product.CoastPrice = ProductCoastPrice;
 
         return product;
     }
 
     public bool IsPossibleReduceProductCoastPrice()
     {
-        return _productCoastPrice > MinProductCoastPricePrice &&
+        return ProductCoastPrice > MinProductCoastPricePrice &&
                Money >= ProductReduceCoastPricePrice;
     }
 
@@ -286,7 +277,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        _productCoastPrice -= 0.01f;
+        ProductCoastPrice -= 0.01f;
         SpendMoney(ProductReduceCoastPricePrice);
 
         return true;
@@ -294,7 +285,7 @@ public class Manufacture : MonoBehaviour
 
     public bool IsPossibleReduceProductCreationTime()
     {
-        return _productCreationTime > MinProductCreationTimePrice &&
+        return ProductCreationTime > MinProductCreationTimePrice &&
                Money >= ProductReduceCreationTimePrice;
     }
 
@@ -305,7 +296,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        _productCreationTime -= 0.01f;
+        ProductCreationTime -= 0.01f;
         SpendMoney(ProductReduceCreationTimePrice);
 
         return true;
@@ -318,11 +309,11 @@ public class Manufacture : MonoBehaviour
     private void CheckSize()
     {
         //todo const
-        if (_money <= 5000f)
+        if (Money <= 5000f)
         {
             SetSmallSize();
         }
-        else if (_money <= 20000f)
+        else if (Money <= 20000f)
         {
             SetMediumSize();
         }

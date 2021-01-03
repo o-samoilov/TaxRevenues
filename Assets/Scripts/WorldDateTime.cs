@@ -2,9 +2,8 @@
 
 public class WorldDateTime : MonoBehaviour
 {
-    [Tooltip("Day length in seconds.")] 
-    public float dayLength = 3f; // seconds
-    private int _currentDay = 1;
+    [Tooltip("Day length in seconds.")] public float dayLength = 3f; // seconds
+    private int _currentDay = 0;
 
     public delegate void NewDayHandler(object sender, Event.WorldDateTimeEventArgs e);
 
@@ -14,13 +13,11 @@ public class WorldDateTime : MonoBehaviour
 
     private void Awake()
     {
-        InvokeRepeating(nameof(NextDay), dayLength, dayLength);
+        InvokeRepeating(nameof(NextDay), 0, dayLength);
     }
 
     private void NextDay()
     {
-        _currentDay++;
-
-        NewDay?.Invoke(this, new Event.WorldDateTimeEventArgs(_currentDay));
+        NewDay?.Invoke(this, new Event.WorldDateTimeEventArgs(++_currentDay));
     }
 }

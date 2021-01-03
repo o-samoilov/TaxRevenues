@@ -42,14 +42,12 @@ public class Manufacture : MonoBehaviour
 
     private VM.Basic _vm;
     private Stopwatch _stopWatch = new Stopwatch();
-    private LogManager _logManager = new LogManager();
 
     private bool _isAlive = true;
     private bool _isBusy = false;
     private float _busyTime;
 
-    public int CreateDay => _createDay;
-    private int _createDay;
+    public int CreateDay { get; private set; }
 
     private const string SmallSize = "small_size";
     private const string MediumSize = "medium_size";
@@ -71,8 +69,6 @@ public class Manufacture : MonoBehaviour
 
         InitializeSettings(new DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
-        
-        _logManager.SaveManufactureAliveInfo(worldDateTime.CurrentDay, this);
     }
 
     private void Update()
@@ -118,7 +114,7 @@ public class Manufacture : MonoBehaviour
 
         _isBusy = false;
         _currentSize = SmallSize;
-        _createDay = worldDateTime.CurrentDay;
+        CreateDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, _dnk);
     }
@@ -163,7 +159,7 @@ public class Manufacture : MonoBehaviour
         CheckSize();
         UpdateInfoText();
 
-        _logManager.SaveManufactureAliveInfo(worldDateTime.CurrentDay, this);
+        Debug.Log("Alive");
     }
 
     private void Die()
@@ -171,8 +167,6 @@ public class Manufacture : MonoBehaviour
         _isAlive = false;
         _renderer.material = dieMaterial;
 
-        _logManager.SaveManufactureDieInfo(worldDateTime.CurrentDay, this);
-        
         Debug.Log("Die");
     }
 

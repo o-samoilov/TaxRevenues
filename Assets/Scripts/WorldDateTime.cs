@@ -3,7 +3,7 @@
 public class WorldDateTime : MonoBehaviour
 {
     [Tooltip("Day length in seconds.")] 
-    public float dayLength = 10f; // seconds
+    public float dayLength = 3f; // seconds
     private int _currentDay = 1;
 
     public delegate void NewDayHandler(object sender, Event.WorldDateTimeEventArgs e);

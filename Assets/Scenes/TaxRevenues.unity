@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2776e34c48c785b4d9f82a2ad7c65485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayLength: 10
+  dayLength: 3
 --- !u!4 &1754948322
 Transform:
   m_ObjectHideFlags: 0

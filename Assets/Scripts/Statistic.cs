@@ -1,6 +1,7 @@
 using System.IO;
+using UnityEngine;
 
-public class LogManager
+public class Statistic : MonoBehaviour
 {
     // todo in config
     private string _logPath = "C:\\Users\\alexa\\Desktop\\Log\\";
@@ -21,13 +22,21 @@ public class LogManager
             $"Day: {day}\n" +
             $"Action: {action}\n" +
             $"ID: {manufacture.GetId()}\n" +
+            $"Create Day: {manufacture.CreateDay}\n" +
             $"Money: {manufacture.Money}\n" +
             $"Product coast price: {manufacture.ProductCoastPrice}\n" +
             $"Product creation time: {manufacture.ProductCreationTime}\n" +
-            $"Gen: {manufacture.Dnk.MainGen.ToString()}\n";
+            $"Gen: \n{manufacture.Dnk.MainGen.ToString()}\n";
 
-        var fileName = $"Manufacture_day_{day}_id_{manufacture.GetId()}_action_{action}";
-        var filePath = _logPath + fileName;
+        var dirPath = _logPath + $"Day{day}\\";
+        var fileName = $"Manufacture_{manufacture.GetId()}_action_{action}";
+
+        var filePath = dirPath + fileName;
+
+        if (!Directory.Exists(dirPath))
+        {
+            Directory.CreateDirectory(dirPath);
+        }
         
         //File.Create(_logPath + fileName)
         

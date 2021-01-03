@@ -47,7 +47,7 @@ namespace GeneticAlgorithm
         
         public override string ToString()
         {
-            var result = $"Current Element Index: {_currentElementIndex}";
+            var result = $"Current Element Index: {_currentElementIndex}\n";
 
             var number = 1;
             foreach (var element in _elements)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Event;
+using UnityEngine;
 
 public class Exchange : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class Exchange : MonoBehaviour
     public WorldDateTime worldDateTime;
     public static float ProductPrice = 120f;
 
-    private static int _soldProductsToday = 0;
+    public static int SoldProducts { get; private set; }
+    private static int SoldProductsToday { get; set; }
 
     private void Start()
     {
@@ -17,7 +19,7 @@ public class Exchange : MonoBehaviour
 
     public static bool IsPossibleSell()
     {
-        return _soldProductsToday < MaxProductsPerDay;
+        return SoldProductsToday < MaxProductsPerDay;
     }
 
     public static float Sell()
@@ -27,19 +29,15 @@ public class Exchange : MonoBehaviour
             return 0;
         }
 
-        _soldProductsToday++;
+        SoldProducts++;
+        SoldProductsToday++;
 
         return ProductPrice;
     }
 
-    public static int CountOpportunitySell()
+    private void WorldDateTimeNewDayHandler(object sender, WorldDateTimeEventArgs e)
     {
-        return MaxProductsPerDay - _soldProductsToday;
-    }
-
-    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
-    {
-        _soldProductsToday = 0;
+        SoldProductsToday = 0;
 
         //todo save statistic
     }

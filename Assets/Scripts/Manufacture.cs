@@ -19,6 +19,8 @@ public class Manufacture : MonoBehaviour
     public Material liveMaterial;
     public Material dieMaterial;
 
+    public int Id { get; set; }
+    
     public float Money => _money;
     public Dnk Dnk => _dnk;
     public float ProductCoastPrice => _productCoastPrice;
@@ -87,16 +89,6 @@ public class Manufacture : MonoBehaviour
         }
     }
 
-    public int GetId()
-    {
-        return _id;
-    }
-
-    public void SetId(int id)
-    {
-        _id = id;
-    }
-
     private void UpdateInfoText()
     {
         textInfo.text = $"ID: {_id}\n" +
@@ -152,7 +144,7 @@ public class Manufacture : MonoBehaviour
     {
         _isAlive = true;
 
-        SetId(id);
+        Id = id;
         InitializeSettings(dnk);
         _renderer.material = liveMaterial;
 

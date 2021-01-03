@@ -21,10 +21,15 @@ public class ManufacturesManager : MonoBehaviour
         foreach (var manufacture in world.GetComponentsInChildren<Manufacture>())
         {
             _manufactures.Add(manufacture);
-            manufacture.SetId(_id);
+            manufacture.Id = _id;
             //manufacture.UpdateInfoText();
             _id++;
         }
+    }
+
+    public List<Manufacture> GetManufactures()
+    {
+        return _manufactures;
     }
 
     public int GetManufactureId()
@@ -49,7 +54,7 @@ public class ManufacturesManager : MonoBehaviour
         {
             var index = _random.Next(0, dnk.MainGen.Size());
             dnk.MainGen.SetElement(index, _genElementFactory.CreateRandom());
-            
+
             Debug.Log("Mutation");
         }
 

@@ -3,25 +3,22 @@ using UnityEngine;
 
 public class Statistic : MonoBehaviour
 {
+    public ManufacturesManager manufacturesManager;
+    public WorldDateTime worldDateTime;
+
     // todo in config
     private string _logPath = "C:\\Users\\alexa\\Desktop\\Log\\";
-        
-    public void SaveManufactureAliveInfo(int day, Manufacture manufacture)
+
+    private void Start()
     {
-        SaveManufactureInfo("Alive", day, manufacture);
+        worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
-    
-    public void SaveManufactureDieInfo(int day, Manufacture manufacture)
-    {
-        SaveManufactureInfo("Die", day, manufacture);
-    }
-    
-    public void SaveManufactureInfo(string action, int day, Manufacture manufacture)
+
+    private void SaveManufactureInfo(int day, Manufacture manufacture)
     {
         var message =
             $"Day: {day}\n" +
-            $"Action: {action}\n" +
-            $"ID: {manufacture.GetId()}\n" +
+            $"ID: {manufacture.Id}\n" +
             $"Create Day: {manufacture.CreateDay}\n" +
             $"Money: {manufacture.Money}\n" +
             $"Product coast price: {manufacture.ProductCoastPrice}\n" +
@@ -29,7 +26,7 @@ public class Statistic : MonoBehaviour
             $"Gen: \n{manufacture.Dnk.MainGen.ToString()}\n";
 
         var dirPath = _logPath + $"Day{day}\\";
-        var fileName = $"Manufacture_{manufacture.GetId()}_action_{action}";
+        var fileName = $"Manufacture_{manufacture.Id}";
 
         var filePath = dirPath + fileName;
 
@@ -37,12 +34,20 @@ public class Statistic : MonoBehaviour
         {
             Directory.CreateDirectory(dirPath);
         }
-        
+
         //File.Create(_logPath + fileName)
-        
-        using (var writer = new StreamWriter(filePath))  
-        {  
-            writer.WriteLine(message);  
-        }  
+
+        using (var writer = new StreamWriter(filePath))
+        {
+            writer.WriteLine(message);
+        }
+    }
+
+    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
+    {
+        foreach (var manufacture in manufacturesManager.GetManufactures())
+        {
+            SaveManufactureInfo(e.Day, manufacture);
+        }
     }
 }

@@ -5,7 +5,7 @@ using GeneticAlgorithm;
 
 public class ManufacturesManager : MonoBehaviour
 {
-    private const int TopManufacturePart = 10; // 10%
+    private const int TopManufacturePart = 30; // 30%
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();

@@ -160,8 +160,13 @@ public class Manufacture : MonoBehaviour
     {
         if (_isAlive)
         {
-            //todo complex
             SpendMoney(Settings.Basic.ManufactureMaintenanceCost);
+
+            if (worldDateTime.CurrentDay - CreateDay > Settings.Basic.ManufactureLiveDays)
+            {
+                Die();
+            }
+
             return;
         }
 
@@ -199,7 +204,7 @@ public class Manufacture : MonoBehaviour
     {
         float taxes = TaxOffice.CalculateTaxes(this, product);
         SpendMoney(taxes);
-        
+
         TaxOffice.PayTaxes(taxes);
 
         //todo statistic
@@ -209,7 +214,7 @@ public class Manufacture : MonoBehaviour
     {
         float fines = TaxOffice.CalculateFines(this, product);
         SpendMoney(fines);
-        
+
         TaxOffice.PayFines(fines);
 
         //todo statistic
@@ -221,7 +226,7 @@ public class Manufacture : MonoBehaviour
         SpendMoney(bribe);
 
         TaxOffice.PayBribe(bribe);
-        
+
         //todo statistic
     }
 

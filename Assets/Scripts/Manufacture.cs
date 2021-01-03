@@ -31,7 +31,7 @@ public class Manufacture : MonoBehaviour
     private const float ProductReduceCreationTimePrice = 50f;
 
     private const float MinProductCoastPricePrice = 10f;
-    private const float MinProductCreationTimePrice = 1f;
+    private const float MinProductCreationTimePrice = 0.1f;
 
     private Renderer _renderer;
 

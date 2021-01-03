@@ -3,18 +3,14 @@ using UnityEngine;
 public class TaxOffice : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
-    
-    public static float Taxes => _taxes;
-    public static float Fines => _fines;
-    public static float Bribe => _bribe;
 
-    private static float _taxes = 0;
-    private static float _fines = 0;
-    private static float _bribe = 0;
-    
-    private static float _currentTaxes = 0;
-    private static float _currentFines = 0;
-    private static float _currentBribe = 0;
+    public static float Taxes { get; private set; }
+    public static float Fines { get; private set; }
+    public static float Bribe { get; private set; }
+
+    public static float CurrentDayTaxes { get; private set; }
+    public static float CurrentDayFines { get; private set; }
+    public static float CurrentDayBribe { get; private set; }
 
     private static ProbabilityManager _probabilityManager = new ProbabilityManager();
 
@@ -22,7 +18,7 @@ public class TaxOffice : MonoBehaviour
     {
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
-    
+
     public static float CalculateTaxes(Manufacture manufacture, Product product)
     {
         return CalculateTaxes(manufacture, product.CoastPrice, product.Price);
@@ -31,7 +27,7 @@ public class TaxOffice : MonoBehaviour
     public static float CalculateTaxes(Manufacture manufacture, float productCoastPrice, float productPrice)
     {
         // todo complex taxes
-        return 50;
+        return 15;
     }
 
     public static float CalculateFines(Manufacture manufacture, Product product)
@@ -66,34 +62,34 @@ public class TaxOffice : MonoBehaviour
     public static bool IsCouldPayBribe(Manufacture manufacture, Product product)
     {
         //todo complex 
-        // 50%
-        return _probabilityManager.IsProbability(50);
+        // 90%
+        return _probabilityManager.IsProbability(90);
     }
 
     public static void PayTaxes(float money)
     {
-        _taxes += money;
-        _currentTaxes += money;
+        Taxes += money;
+        CurrentDayTaxes += money;
     }
 
     public static void PayFines(float money)
     {
-        _fines += money;
-        _currentFines += money;
+        Fines += money;
+        CurrentDayFines += money;
     }
 
     public static void PayBribe(float money)
     {
-        _bribe += money;
-        _currentBribe += money;
+        Bribe += money;
+        CurrentDayBribe += money;
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        _currentTaxes = 0;
-        _currentFines = 0;
-        _currentBribe = 0;
-        
+        CurrentDayTaxes = 0;
+        CurrentDayFines = 0;
+        CurrentDayBribe = 0;
+
         //todo save statistic
     }
 }

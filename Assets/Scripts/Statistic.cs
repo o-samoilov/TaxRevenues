@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -9,9 +10,20 @@ public class Statistic : MonoBehaviour
     // todo in config
     private string _logPath = "C:\\Users\\alexa\\Desktop\\Log\\";
 
+    private bool _isNeedSaveLogs = false;
+
     private void Start()
     {
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
+    }
+
+    private void Update()
+    {
+        //todo make toggle in menu
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            _isNeedSaveLogs = !_isNeedSaveLogs;
+        }
     }
 
     private void SaveManufactureInfo(int day, Manufacture manufacture)
@@ -45,6 +57,11 @@ public class Statistic : MonoBehaviour
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
+        if (!_isNeedSaveLogs)
+        {
+            return;
+        }
+
         foreach (var manufacture in manufacturesManager.GetManufactures())
         {
             SaveManufactureInfo(e.Day, manufacture);

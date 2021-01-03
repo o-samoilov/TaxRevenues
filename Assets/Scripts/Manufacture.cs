@@ -199,6 +199,8 @@ public class Manufacture : MonoBehaviour
     {
         float taxes = TaxOffice.CalculateTaxes(this, product);
         SpendMoney(taxes);
+        
+        TaxOffice.PayTaxes(taxes);
 
         //todo statistic
     }
@@ -207,6 +209,8 @@ public class Manufacture : MonoBehaviour
     {
         float fines = TaxOffice.CalculateFines(this, product);
         SpendMoney(fines);
+        
+        TaxOffice.PayFines(fines);
 
         //todo statistic
     }
@@ -216,6 +220,8 @@ public class Manufacture : MonoBehaviour
         float bribe = TaxOffice.CalculateBribe(this, product);
         SpendMoney(bribe);
 
+        TaxOffice.PayBribe(bribe);
+        
         //todo statistic
     }
 

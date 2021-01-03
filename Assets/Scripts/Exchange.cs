@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class Exchange : MonoBehaviour
 {
-    [Tooltip("Setting quantity max products for sold every day.")]
-    public static int MaxProductsPerDay = 1000;
+    public static int MaxProductsPerDay = Settings.Basic.ExchangeMaxProductsPerDay;
+    public static float ProductPrice = Settings.Basic.ExchangeProductPrice;
 
     public WorldDateTime worldDateTime;
-    public static float ProductPrice = 200f;
 
     public static int SoldProducts { get; private set; }
     public static int SoldProductsToday { get; private set; }

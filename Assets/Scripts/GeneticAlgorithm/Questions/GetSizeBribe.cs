@@ -14,13 +14,13 @@ namespace GeneticAlgorithm.Questions
 
         private enum Coefficient
         {
-            // small: 0-100,  medium: 100-300,   big: >300
+            // small: 0-2,  medium: 2-10,   big: >10
             SmallScale = 0,
 
-            // small: 0-500,  medium: 500-1500,  big: >1500
+            // small: 0-10,  medium: 10-20,  big: >20
             MediumScale = 1,
 
-            // small: 0-1000, medium: 1000-3000, big: >3000
+            // small: 0-15, medium: 15-30, big: >30
             BigScale = 2
         }
 
@@ -47,11 +47,11 @@ namespace GeneticAlgorithm.Questions
             {
                 case (int) Coefficient.SmallScale:
                 {
-                    if (bribe <= 100)
+                    if (bribe <= 2)
                     {
                         return (int) Result.Small;
                     }
-                    else if (bribe > 100 && bribe <= 300)
+                    else if (bribe > 2 && bribe <= 10)
                     {
                         return (int) Result.Medium;
                     }
@@ -60,11 +60,11 @@ namespace GeneticAlgorithm.Questions
                 }
                 case (int) Coefficient.MediumScale:
                 {
-                    if (bribe <= 500)
+                    if (bribe <= 10)
                     {
                         return (int) Result.Small;
                     }
-                    else if (bribe > 500 && bribe <= 1500)
+                    else if (bribe > 10 && bribe <= 20)
                     {
                         return (int) Result.Medium;
                     }
@@ -73,11 +73,11 @@ namespace GeneticAlgorithm.Questions
                 }
                 case (int) Coefficient.BigScale:
                 {
-                    if (bribe <= 1000)
+                    if (bribe <= 15)
                     {
                         return (int) Result.Small;
                     }
-                    else if (bribe > 1000 && bribe <= 3000)
+                    else if (bribe > 15 && bribe <= 30)
                     {
                         return (int) Result.Medium;
                     }

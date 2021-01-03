@@ -27,7 +27,7 @@ public class TaxOffice : MonoBehaviour
     public static float CalculateTaxes(Manufacture manufacture, float productCoastPrice, float productPrice)
     {
         // todo complex taxes
-        return 15;
+        return 50;
     }
 
     public static float CalculateFines(Manufacture manufacture, Product product)
@@ -38,7 +38,7 @@ public class TaxOffice : MonoBehaviour
     public static float CalculateFines(Manufacture manufacture, float productCoastPrice, float productPrice)
     {
         // todo complex fine
-        return 50;
+        return 200;
     }
 
     public static float CalculateBribe(Manufacture manufacture, Product product)

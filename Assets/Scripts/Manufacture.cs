@@ -95,8 +95,8 @@ public class Manufacture : MonoBehaviour
     {
         Dnk = dnk;
         Money = Settings.Basic.ManufactureMoney;
-        ProductCoastPrice = Settings.Basic.ManufactureProductCoast;
-        ProductCreationTime = Settings.Basic.ManufactureProductCreationTime;
+        ProductCoastPrice = Settings.Basic.ProductCoast;
+        ProductCreationTime = Settings.Basic.ProductCreationTime;
 
         _isBusy = false;
         _currentSize = SmallSize;
@@ -160,7 +160,8 @@ public class Manufacture : MonoBehaviour
     {
         if (_isAlive)
         {
-            SpendMoney(100);
+            //todo complex
+            SpendMoney(Settings.Basic.ManufactureMaintenanceCost);
             return;
         }
 
@@ -307,7 +308,7 @@ public class Manufacture : MonoBehaviour
 
     #endregion
 
-    #region Size Manufacture Object
+    #region Size Manufacture Model
 
     private void CheckSize()
     {

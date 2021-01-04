@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.IO;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class Statistic : MonoBehaviour
     // todo in config
     private string _logPath = "C:\\Users\\alexa\\Desktop\\Log\\";
 
-    private bool _isNeedSaveLogs = false;
+    private bool _isNeedSaveManufactureInfo = false;
 
     private void Start()
     {
@@ -22,8 +23,33 @@ public class Statistic : MonoBehaviour
         //todo make toggle in menu
         if (Input.GetKeyDown(KeyCode.L))
         {
-            _isNeedSaveLogs = !_isNeedSaveLogs;
+            _isNeedSaveManufactureInfo = !_isNeedSaveManufactureInfo;
         }
+    }
+    
+    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
+    {
+        if (_isNeedSaveManufactureInfo)
+        {
+            foreach (var manufacture in manufacturesManager.GetManufactures())
+            {
+                SaveManufactureInfo(e.Day, manufacture);
+            }
+        }
+
+        SaveInfo();
+    }
+
+    private void SaveInfo()
+    {
+        var statisticsExchange = new Statistics.Exchange { SoldProducts = Exchange.SoldProducts};
+        
+        var dirPath = _logPath + $"Day{day}\\";
+        var fileName = $"Manufacture_{manufacture.Id}";
+        
+        var filePath = dirPath + fileName;
+        
+        string json = JsonSerializer.Serialize<Statistics.Exchange>(statisticsExchange);
     }
 
     private void SaveManufactureInfo(int day, Manufacture manufacture)
@@ -55,16 +81,14 @@ public class Statistic : MonoBehaviour
         }
     }
 
-    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
+    private void Save(string fileName)
     {
-        if (!_isNeedSaveLogs)
+        var dirPath = _logPath + $"Day{day}\\";
+        var filePath = dirPath + fileName;
+        
+        if (!Directory.Exists(dirPath))
         {
-            return;
-        }
-
-        foreach (var manufacture in manufacturesManager.GetManufactures())
-        {
-            SaveManufactureInfo(e.Day, manufacture);
+            Directory.CreateDirectory(dirPath);
         }
     }
 }

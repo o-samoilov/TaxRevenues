@@ -22,8 +22,8 @@ namespace Common
                                 $"Sold Products Today: {Exchange.SoldProductsToday}";
             
             taxOfficeText.text = $"Taxes: \n" +
-                                 $"B: {TaxOffice.Bribe}, F: {TaxOffice.Fines}, T: {TaxOffice.Taxes}\n" +
-                                 $"CB: {TaxOffice.CurrentDayBribe}, CF: {TaxOffice.CurrentDayFines}, CT: {TaxOffice.CurrentDayTaxes}\n";
+                                 $"B: {TaxOffice.Bribes}, F: {TaxOffice.Fines}, T: {TaxOffice.Taxes}\n" +
+                                 $"CB: {TaxOffice.CurrentDayBribes}, CF: {TaxOffice.CurrentDayFines}, CT: {TaxOffice.CurrentDayTaxes}\n";
         }
 
         private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)

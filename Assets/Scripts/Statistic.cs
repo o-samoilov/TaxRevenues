@@ -1,5 +1,4 @@
 using System;
-using System.Text.Json;
 using System.IO;
 using UnityEngine;
 
@@ -37,19 +36,32 @@ public class Statistic : MonoBehaviour
             }
         }
 
-        SaveInfo();
+        CollectInfo(e.Day);
     }
 
-    private void SaveInfo()
+    private void CollectInfo(int day)
     {
-        var statisticsExchange = new Statistics.Exchange { SoldProducts = Exchange.SoldProducts};
+        var taxOffice = new Statistics.TaxOffice()
+        {
+            taxes = TaxOffice.Taxes,
+            fines = TaxOffice.Fines,
+            bribes = TaxOffice.Bribes
+        };
+        var exchange = new Statistics.Exchange { soldProducts = Exchange.SoldProducts};
+        var data = new Statistics.Data()
+        {
+            day = day,
+            taxOffice = taxOffice,
+            exchange = exchange
+        };
         
-        var dirPath = _logPath + $"Day{day}\\";
-        var fileName = $"Manufacture_{manufacture.Id}";
+        var json = JsonUtility.ToJson(data);
+        var filePath = _logPath + $"Day{day}.json";
         
-        var filePath = dirPath + fileName;
-        
-        string json = JsonSerializer.Serialize<Statistics.Exchange>(statisticsExchange);
+        using (var writer = new StreamWriter(filePath))
+        {
+            writer.WriteLine(json);
+        }
     }
 
     private void SaveManufactureInfo(int day, Manufacture manufacture)
@@ -83,12 +95,12 @@ public class Statistic : MonoBehaviour
 
     private void Save(string fileName)
     {
-        var dirPath = _logPath + $"Day{day}\\";
+        /*var dirPath = _logPath + $"Day{day}\\";
         var filePath = dirPath + fileName;
         
         if (!Directory.Exists(dirPath))
         {
             Directory.CreateDirectory(dirPath);
-        }
+        }*/
     }
 }

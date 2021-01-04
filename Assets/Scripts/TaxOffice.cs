@@ -6,11 +6,11 @@ public class TaxOffice : MonoBehaviour
 
     public static float Taxes { get; private set; }
     public static float Fines { get; private set; }
-    public static float Bribe { get; private set; }
+    public static float Bribes { get; private set; }
 
     public static float CurrentDayTaxes { get; private set; }
     public static float CurrentDayFines { get; private set; }
-    public static float CurrentDayBribe { get; private set; }
+    public static float CurrentDayBribes { get; private set; }
 
     private static ProbabilityManager _probabilityManager = new ProbabilityManager();
 
@@ -80,15 +80,15 @@ public class TaxOffice : MonoBehaviour
 
     public static void PayBribe(float money)
     {
-        Bribe += money;
-        CurrentDayBribe += money;
+        Bribes += money;
+        CurrentDayBribes += money;
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
         CurrentDayTaxes = 0;
         CurrentDayFines = 0;
-        CurrentDayBribe = 0;
+        CurrentDayBribes = 0;
 
         //todo save statistic
     }

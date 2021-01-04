@@ -372,7 +372,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = SmallSize;
 
-        Scale(new Vector3(0.01f, 0.01f, 0.01f), 1.6f);
+        Scale(new Vector3(1f, 1f, 1f), 1.6f);
     }
 
     private void SetMediumSize()
@@ -384,7 +384,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = MediumSize;
 
-        Scale(new Vector3(0.015f, 0.015f, 0.04f), 4.7f);
+        Scale(new Vector3(2f, 3f, 1.5f), 3.3f);
     }
 
     private void SetBigSize()
@@ -396,7 +396,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = BigSize;
 
-        Scale(new Vector3(0.02f, 0.02f, 0.08f), 8.6f);
+        Scale(new Vector3(3f, 5f, 2f), 5.6f);
     }
 
     private void SetExtraBigSize()
@@ -408,7 +408,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = ExtraBigSize;
 
-        Scale(new Vector3(0.02f, 0.025f, 0.12f), 12.5f);
+        Scale(new Vector3(3f, 10f, 2f), 11.2f);
     }
 
     private void Scale(Vector3 scale, float y)

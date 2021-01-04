@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7633482055189874100}
   m_Layer: 0
-  m_Name: Parent Gen
+  m_Name: Parent Dnk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,8 +179,8 @@ MonoBehaviour:
   liveMaterial: {fileID: 2100000, guid: bbb71e91b4d8a44999b1f690a488dc5a, type: 2}
   dieMaterial: {fileID: 2100000, guid: a1daf31cdf41e484ca9ac33a5c6f524a, type: 2}
   manufactureModel: {fileID: 5544764062991985775}
-  Gen: {fileID: 8428018828425549777}
-  ParentGen: {fileID: 9112652543737088027}
+  dnkSphere: {fileID: 8428018828425549777}
+  parentGenSphere: {fileID: 9112652543737088027}
 --- !u!1 &4862651169241142237
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7842416112255907793}
   m_Layer: 0
-  m_Name: Gen
+  m_Name: Dnk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

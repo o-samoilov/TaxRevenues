@@ -7,7 +7,6 @@ namespace GeneticAlgorithm
     {
         public const int BasicSize = 64;
 
-        private Random _random = new Random();
         private GenElementFactory _genElementFactory = new GenElementFactory();
 
         public Gen CreateRandom()

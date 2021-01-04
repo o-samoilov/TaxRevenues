@@ -12,6 +12,7 @@ public class ManufacturesManager : MonoBehaviour
     private Random _random = new Random();
 
     private GenElementFactory _genElementFactory = new GenElementFactory();
+    private DnkFactory _dnkFactory = new DnkFactory();
 
     private int _id = 1;
 
@@ -54,6 +55,9 @@ public class ManufacturesManager : MonoBehaviour
         {
             var index = _random.Next(0, dnk.MainGen.Size());
             dnk.MainGen.SetElement(index, _genElementFactory.CreateRandom());
+
+            dnk.ParentColor = dnk.Color;
+            dnk.Color = _dnkFactory.CreateRandomDnkColor();
 
             Debug.Log("Mutation");
         }

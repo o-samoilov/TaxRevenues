@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace GeneticAlgorithm
 {
@@ -18,7 +17,7 @@ namespace GeneticAlgorithm
         {
             return _elements[_currentElementIndex];
         }
-        
+
         public void SetElement(int index, GenElement genElement)
         {
             _elements[index] = genElement;
@@ -45,7 +44,7 @@ namespace GeneticAlgorithm
 
             return new Gen(elements);
         }
-        
+
         public override string ToString()
         {
             var result = $"Current Element Index: {_currentElementIndex}\n";

@@ -17,8 +17,8 @@ public class Manufacture : MonoBehaviour
 
     public GameObject manufactureModel;
 
-    public MeshRenderer Gen;
-    public MeshRenderer ParentGen;
+    public MeshRenderer dnkSphere;
+    public MeshRenderer parentGenSphere;
 
     public int Id { get; set; }
 
@@ -122,8 +122,8 @@ public class Manufacture : MonoBehaviour
 
         _vm = new VM.Basic(this, Dnk);
         
-        //Gen.material.color = Color.red;
-        //ParentGen.material.color = new Color(0.3f, 0.2f, 0.5f, 1);
+        dnkSphere.material.color = Dnk.Color;
+        parentGenSphere.material.color = Dnk.ParentColor;
     }
 
     private void MarkBusy(float time)

@@ -32,10 +32,10 @@ namespace GeneticAlgorithm.Questions
         {
             return new List<AbstractQuestion>()
             {
-                //new GetSizeBribe(),
-                //new GetSizeFines(),
+                new GetSizeBribe(),
+                new GetSizeFines(),
                 new GetSizeMoney(),
-                //new GetSizeTaxes(),
+                new GetSizeTaxes(),
                 new IsPossibleReduceProductCoastPrice(),
                 new IsPossibleReduceProductCreationTime(),
                 new IsPossibleSellProduct()

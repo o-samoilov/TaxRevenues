@@ -15,13 +15,13 @@ namespace GeneticAlgorithm.Questions
         private enum Coefficient
         {
             // small: 0-2,  medium: 2-10,   big: >10
-            SmallScale = 0,
+            //SmallScale = 0,
 
             // small: 0-10,  medium: 10-20,  big: >20
-            MediumScale = 1,
+            //MediumScale = 1,
 
             // small: 0-15, medium: 15-30, big: >30
-            BigScale = 2
+            //BigScale = 2
         }
 
         public override string GetName()
@@ -31,61 +31,27 @@ namespace GeneticAlgorithm.Questions
 
         public override int GetMinCoefficient()
         {
-            return (int) Coefficient.SmallScale;
+            return 0;
         }
 
         public override int GetMaxCoefficient()
         {
-            return (int) Coefficient.BigScale;
+            return 0;
         }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
             var bribe = TaxOffice.CalculateBribe(manufacture, ExampleProductCoastPrice, ExampleProductPrice);
 
-            switch (genElement.Coefficient)
+            if (bribe <= 5)
             {
-                case (int) Coefficient.SmallScale:
-                {
-                    if (bribe <= 2)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (bribe > 2 && bribe <= 10)
-                    {
-                        return (int) Result.Medium;
-                    }
-                    
-                    break;
-                }
-                case (int) Coefficient.MediumScale:
-                {
-                    if (bribe <= 10)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (bribe > 10 && bribe <= 20)
-                    {
-                        return (int) Result.Medium;
-                    }
-                    
-                    break;
-                }
-                case (int) Coefficient.BigScale:
-                {
-                    if (bribe <= 15)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (bribe > 15 && bribe <= 30)
-                    {
-                        return (int) Result.Medium;
-                    }
-                    
-                    break;
-                }
+                return (int) Result.Small;
             }
-
+            else if (bribe > 5 && bribe <= 15)
+            {
+                return (int) Result.Medium;
+            }
+            
             return (int) Result.Big;
         }
     }

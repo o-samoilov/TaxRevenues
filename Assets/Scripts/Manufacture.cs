@@ -329,11 +329,11 @@ public class Manufacture : MonoBehaviour
         {
             SetSmallSize();
         }
-        else if (Money <= 50000f)
+        else if (Money <= 15000f)
         {
             SetMediumSize();
         }
-        else if (Money <= 500000f)
+        else if (Money <= 50000f)
         {
             SetBigSize();
         }

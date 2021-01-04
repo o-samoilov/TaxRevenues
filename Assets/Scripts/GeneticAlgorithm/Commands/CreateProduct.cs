@@ -4,9 +4,9 @@ namespace GeneticAlgorithm.Commands
     {
         private enum Result
         {
-            ProductCantBeCreated = 1,
+            ProductCreated = 1,
             ProductCantBeSold = 2,
-            ProductCreated = 3
+            ProductCantBeCreated = 3
         }
 
         private enum Coefficient

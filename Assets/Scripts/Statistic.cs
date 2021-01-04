@@ -92,15 +92,4 @@ public class Statistic : MonoBehaviour
             writer.WriteLine(message);
         }
     }
-
-    private void Save(string fileName)
-    {
-        /*var dirPath = _logPath + $"Day{day}\\";
-        var filePath = dirPath + fileName;
-        
-        if (!Directory.Exists(dirPath))
-        {
-            Directory.CreateDirectory(dirPath);
-        }*/
-    }
 }

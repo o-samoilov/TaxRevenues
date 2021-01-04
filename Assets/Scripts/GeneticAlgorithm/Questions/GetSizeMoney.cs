@@ -12,13 +12,13 @@ namespace GeneticAlgorithm.Questions
         private enum Coefficient
         {
             // small: 0-2000,  medium: 2000-10000,   big: >10000
-            SmallScale = 0,
+            //SmallScale = 0,
 
             // small: 0-10000,  medium: 10000-50000,  big: >50000
-            MediumScale = 1,
+            //MediumScale = 1,
 
             // small: 0-50000, medium: 50000-500000, big: >500000
-            BigScale = 2
+            //BigScale = 2
         }
 
         public override string GetName()
@@ -28,61 +28,27 @@ namespace GeneticAlgorithm.Questions
 
         public override int GetMinCoefficient()
         {
-            return (int) Coefficient.SmallScale;
+            return 0;
         }
 
         public override int GetMaxCoefficient()
         {
-            return (int) Coefficient.BigScale;
+            return 0;
         }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
             var money = manufacture.Money;
             
-            switch (genElement.Coefficient)
+            if (money <= 5000)
             {
-                case (int) Coefficient.SmallScale:
-                {
-                    if (money <= 2000)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (money > 2000 && money <= 10000)
-                    {
-                        return (int) Result.Medium;
-                    }
-                    
-                    break;
-                }
-                case (int) Coefficient.MediumScale:
-                {
-                    if (money <= 10000)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (money > 10000 && money <= 50000)
-                    {
-                        return (int) Result.Medium;
-                    }
-                    
-                    break;
-                }
-                case (int) Coefficient.BigScale:
-                {
-                    if (money <= 50000)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (money > 50000 && money <= 500000)
-                    {
-                        return (int) Result.Medium;
-                    }
-                    
-                    break;
-                }
+                return (int) Result.Small;
             }
-
+            else if (money > 5000 && money <= 15000)
+            {
+                return (int) Result.Medium;
+            }
+            
             return (int) Result.Big;
         }
     }

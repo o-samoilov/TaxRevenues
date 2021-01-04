@@ -15,13 +15,13 @@ namespace GeneticAlgorithm.Questions
         private enum Coefficient
         {
             // small: 0-200,  medium: 200-500,   big: >500
-            SmallScale = 0,
+            //SmallScale = 0,
 
             // small: 0-1000,  medium: 1000-2000,  big: >2000
-            MediumScale = 1,
+            //MediumScale = 1,
 
             // small: 0-2000, medium: 2000-5000, big: >5000
-            BigScale = 2
+            //BigScale = 2
         }
 
         public override string GetName()
@@ -31,61 +31,27 @@ namespace GeneticAlgorithm.Questions
 
         public override int GetMinCoefficient()
         {
-            return (int) Coefficient.SmallScale;
+            return 0;
         }
 
         public override int GetMaxCoefficient()
         {
-            return (int) Coefficient.BigScale;
+            return 0;
         }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
             var fines = TaxOffice.CalculateFines(manufacture, ExampleProductCoastPrice, ExampleProductPrice);
 
-            switch (genElement.Coefficient)
+            if (fines <= 150)
             {
-                case (int) Coefficient.SmallScale:
-                {
-                    if (fines <= 200)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (fines > 200 && fines <= 500)
-                    {
-                        return (int) Result.Medium;
-                    }
-
-                    break;
-                }
-                case (int) Coefficient.MediumScale:
-                {
-                    if (fines <= 1000)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (fines > 1000 && fines <= 2000)
-                    {
-                        return (int) Result.Medium;
-                    }
-
-                    break;
-                }
-                case (int) Coefficient.BigScale:
-                {
-                    if (fines <= 2000)
-                    {
-                        return (int) Result.Small;
-                    }
-                    else if (fines > 2000 && fines <= 5000)
-                    {
-                        return (int) Result.Medium;
-                    }
-
-                    break;
-                }
+                return (int) Result.Small;
             }
-
+            else if (fines > 150 && fines <= 350)
+            {
+                return (int) Result.Medium;
+            }
+            
             return (int) Result.Big;
         }
     }

@@ -58,7 +58,7 @@ public class Manufacture : MonoBehaviour
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
         manufacturesManager = world.GetComponentInChildren<ManufacturesManager>();
 
-        textInfo = gameObject.GetComponentInChildren<TextMeshPro>();
+        //textInfo = gameObject.GetComponentInChildren<TextMeshPro>();
 
         InitializeSettings(new DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
@@ -83,13 +83,14 @@ public class Manufacture : MonoBehaviour
     public void ShowInfoText()
     {
         _showInfoText = true;
+        textInfo.gameObject.SetActive(true);
         UpdateInfoText();
     }
     
     public void HideInfoText()
     {
         _showInfoText = false;
-        textInfo.text = "";
+        textInfo.gameObject.SetActive(false);
     }
     
     private void UpdateInfoText()

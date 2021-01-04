@@ -29,7 +29,6 @@ namespace Common
         private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
         {
             worldDateTimeText.text = $"Current Day: {e.Day}";
-            //exchangeText.text = $"Sold Products: {Exchange.SoldProducts}";
         }
     }
 }

@@ -10,25 +10,16 @@ public class Statistic : MonoBehaviour
     // todo in config
     private string _logPath = "C:\\Users\\alexa\\Desktop\\Log\\";
 
-    private bool _isNeedSaveManufactureInfo = false;
+    public bool IsNeedSaveManufactureInfo { get; set; } = false;
 
     private void Start()
     {
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
     }
 
-    private void Update()
-    {
-        //todo make toggle in menu
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            _isNeedSaveManufactureInfo = !_isNeedSaveManufactureInfo;
-        }
-    }
-    
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        if (_isNeedSaveManufactureInfo)
+        if (IsNeedSaveManufactureInfo)
         {
             foreach (var manufacture in manufacturesManager.GetManufactures())
             {
@@ -84,8 +75,6 @@ public class Statistic : MonoBehaviour
         {
             Directory.CreateDirectory(dirPath);
         }
-
-        //File.Create(_logPath + fileName)
 
         using (var writer = new StreamWriter(filePath))
         {

@@ -49,7 +49,7 @@ MonoBehaviour:
   manufacturesManager: {fileID: 0}
   productPrefab: {fileID: 3161531434597317184, guid: 7e57ca516ea705e4187e985ee268efa8,
     type: 3}
-  textInfo: {fileID: 0}
+  textInfo: {fileID: 7580681901197217257}
   liveMaterial: {fileID: 2100000, guid: bbb71e91b4d8a44999b1f690a488dc5a, type: 2}
   dieMaterial: {fileID: 2100000, guid: a1daf31cdf41e484ca9ac33a5c6f524a, type: 2}
   manufactureModel: {fileID: 5544764062991985775}

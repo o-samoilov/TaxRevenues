@@ -155,7 +155,7 @@ public class Manufacture : MonoBehaviour
         }
     }
 
-    private void Alive(int id, GeneticAlgorithm.Dnk dnk)
+    private void Alive(int id, Dnk dnk)
     {
         _isAlive = true;
 

@@ -16,6 +16,11 @@ namespace GeneticAlgorithm.Commands
         {
             return GenFactory.BasicSize - 1;
         }
+        
+        public override bool IsFinished()
+        {
+            return false;
+        }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {

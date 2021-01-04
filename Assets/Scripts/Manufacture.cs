@@ -99,7 +99,8 @@ public class Manufacture : MonoBehaviour
         ProductCreationTime = Settings.Basic.ProductCreationTime;
 
         _isBusy = false;
-        _currentSize = SmallSize;
+        CheckSize();
+        
         CreateDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, Dnk);
@@ -292,7 +293,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        ProductCoastPrice -= 0.01f;
+        ProductCoastPrice -= 1f;
         SpendMoney(ProductReduceCoastPricePrice);
 
         return true;
@@ -311,7 +312,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        ProductCreationTime -= 0.01f;
+        ProductCreationTime -= 0.1f;
         SpendMoney(ProductReduceCreationTimePrice);
 
         return true;

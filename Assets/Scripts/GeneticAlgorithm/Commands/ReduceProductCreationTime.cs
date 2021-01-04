@@ -22,6 +22,11 @@ namespace GeneticAlgorithm.Commands
         {
             return 0;
         }
+        
+        public override bool IsFinished()
+        {
+            return true;
+        }
 
         public override int Process(Manufacture manufacture, GenElement genElement)
         {

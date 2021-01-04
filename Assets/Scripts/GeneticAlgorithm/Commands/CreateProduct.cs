@@ -31,6 +31,11 @@ namespace GeneticAlgorithm.Commands
             return (int) Coefficient.PayBribes;
         }
 
+        public override bool IsFinished()
+        {
+            return true;
+        }
+
         public override int Process(Manufacture manufacture, GenElement genElement)
         {
             if (!manufacture.IsPossibleCreateProduct())

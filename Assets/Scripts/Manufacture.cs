@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using GeneticAlgorithm;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class Manufacture : MonoBehaviour
@@ -43,6 +39,8 @@ public class Manufacture : MonoBehaviour
     private bool _isAlive = true;
     private bool _isBusy = false;
     private float _busyTime;
+    
+    private bool _showInfoText = false;
 
     private const string SmallSize = "small_size";
     private const string MediumSize = "medium_size";
@@ -82,8 +80,25 @@ public class Manufacture : MonoBehaviour
         }
     }
 
+    public void ShowInfoText()
+    {
+        _showInfoText = true;
+        UpdateInfoText();
+    }
+    
+    public void HideInfoText()
+    {
+        _showInfoText = false;
+        textInfo.text = "";
+    }
+    
     private void UpdateInfoText()
     {
+        if (!_showInfoText)
+        {
+            return;
+        }
+
         textInfo.text = $"ID: {Id}\n" +
                         $"Create day: {CreateDay}\n" +
                         $"Money: {Money}\n" +

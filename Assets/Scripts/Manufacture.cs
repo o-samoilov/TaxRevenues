@@ -16,6 +16,9 @@ public class Manufacture : MonoBehaviour
     public Material dieMaterial;
 
     public GameObject manufactureModel;
+    
+    public MeshRenderer Gen;
+    public MeshRenderer ParentGen;
 
     public int Id { get; set; }
 
@@ -52,6 +55,9 @@ public class Manufacture : MonoBehaviour
     private void Start()
     {
         _renderer = gameObject.GetComponentInChildren<Renderer>();
+
+        Gen.material.color = Color.red;
+        ParentGen.material.color = Color.yellow;
 
         var environment = gameObject.transform.parent.gameObject;
         var world = environment.transform.parent.gameObject;

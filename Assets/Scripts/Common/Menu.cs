@@ -13,23 +13,15 @@ namespace Common
         
         private void Start()
         {
-            worldDateTime.NewDay += WorldDateTimeNewDayHandler;
         }
 
         private void Update()
         {
-            exchangeText.text = $"Sold Products: {Exchange.SoldProducts}\n" +
-                                $"Sold Products Today: {Exchange.SoldProductsToday}";
-            
-            taxOfficeText.text = $"Taxes: \n" +
-                                 $"B: {TaxOffice.Bribes}, F: {TaxOffice.Fines}, T: {TaxOffice.Taxes}\n" +
-                                 $"CB: {TaxOffice.CurrentDayBribes}, CF: {TaxOffice.CurrentDayFines}, CT: {TaxOffice.CurrentDayTaxes}\n";
-        }
-
-        private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
-        {
-            worldDateTimeText.text = $"Current Day: {e.Day}";
-            //exchangeText.text = $"Sold Products: {Exchange.SoldProducts}";
+            if (Input.GetKey(KeyCode.M))
+            {
+                Debug.Log("asdasdasd");
+                gameObject.SetActive(!gameObject.activeSelf);
+            }
         }
     }
 }

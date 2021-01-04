@@ -16,7 +16,7 @@ public class Manufacture : MonoBehaviour
     public Material dieMaterial;
 
     public GameObject manufactureModel;
-    
+
     public MeshRenderer Gen;
     public MeshRenderer ParentGen;
 
@@ -42,7 +42,7 @@ public class Manufacture : MonoBehaviour
     private bool _isAlive = true;
     private bool _isBusy = false;
     private float _busyTime;
-    
+
     private bool _showInfoText = false;
 
     private const string SmallSize = "small_size";
@@ -56,15 +56,10 @@ public class Manufacture : MonoBehaviour
     {
         _renderer = gameObject.GetComponentInChildren<Renderer>();
 
-        Gen.material.color = Color.red;
-        ParentGen.material.color = Color.yellow;
-
         var environment = gameObject.transform.parent.gameObject;
         var world = environment.transform.parent.gameObject;
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
         manufacturesManager = world.GetComponentInChildren<ManufacturesManager>();
-
-        //textInfo = gameObject.GetComponentInChildren<TextMeshPro>();
 
         InitializeSettings(new DnkFactory().CreateRandom());
         worldDateTime.NewDay += WorldDateTimeNewDayHandler;
@@ -92,13 +87,13 @@ public class Manufacture : MonoBehaviour
         textInfo.gameObject.SetActive(true);
         UpdateInfoText();
     }
-    
+
     public void HideInfoText()
     {
         _showInfoText = false;
         textInfo.gameObject.SetActive(false);
     }
-    
+
     private void UpdateInfoText()
     {
         if (!_showInfoText)
@@ -122,10 +117,13 @@ public class Manufacture : MonoBehaviour
 
         _isBusy = false;
         CheckSize();
-        
+
         CreateDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, Dnk);
+        
+        //Gen.material.color = Color.red;
+        //ParentGen.material.color = new Color(0.3f, 0.2f, 0.5f, 1);
     }
 
     private void MarkBusy(float time)

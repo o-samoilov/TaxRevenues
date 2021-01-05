@@ -179,6 +179,7 @@ MonoBehaviour:
   manufactureModel: {fileID: 8467069332855910467}
   dnkSphere: {fileID: 8428018828425549777}
   parentGenSphere: {fileID: 9112652543737088027}
+  factoryRenderer: {fileID: 6337138592985550266}
 --- !u!1 &4862651169241142237
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +604,12 @@ PrefabInstance:
 --- !u!4 &5168202888954869461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7a735760680750c408dba295af033f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 4626213145452482878}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6337138592985550266 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 7a735760680750c408dba295af033f23,
     type: 3}
   m_PrefabInstance: {fileID: 4626213145452482878}
   m_PrefabAsset: {fileID: 0}

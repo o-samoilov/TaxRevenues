@@ -7,6 +7,10 @@ namespace Statistics
     public class Data
     {
         public int day;
+
+        public float avgProductCoastPrice;
+        public float avgProductCreationTime;
+
         public Exchange exchange;
         public TaxOffice taxOffice;
     }

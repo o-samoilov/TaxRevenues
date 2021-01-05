@@ -19,8 +19,10 @@ namespace Common
         private void Update()
         {
             exchangeText.text = $"Sold Products: {Exchange.SoldProducts}\n" +
-                                $"Sold Products Today: {Exchange.SoldProductsToday}";
-            
+                                $"Sold Products Today: {Exchange.SoldProductsToday}\n" +
+                                $"Vat:  {Exchange.Vat}\n" +
+                                $"Vat Today:  {Exchange.VatToday}";
+
             taxOfficeText.text = $"Taxes: \n" +
                                  $"B: {TaxOffice.Bribes}, F: {TaxOffice.Fines}, T: {TaxOffice.Taxes}\n" +
                                  $"CB: {TaxOffice.CurrentDayBribes}, CF: {TaxOffice.CurrentDayFines}, CT: {TaxOffice.CurrentDayTaxes}\n";

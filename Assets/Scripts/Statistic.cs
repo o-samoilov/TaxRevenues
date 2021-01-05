@@ -38,17 +38,33 @@ public class Statistic : MonoBehaviour
             fines = TaxOffice.Fines,
             bribes = TaxOffice.Bribes
         };
-        var exchange = new Statistics.Exchange { soldProducts = Exchange.SoldProducts};
+
+        var exchange = new Statistics.Exchange {soldProducts = Exchange.SoldProducts};
+
+
+        var productCoastPrice = 0f;
+        var productCreationTime = 0f;
+        foreach (var manufacture in manufacturesManager.GetManufactures())
+        {
+            productCoastPrice += manufacture.ProductCoastPrice;
+            productCreationTime += manufacture.ProductCreationTime;
+        }
+
+        var avgProductCoastPrice = productCoastPrice / manufacturesManager.GetManufactures().Count;
+        var avgProductCreationTime = productCreationTime / manufacturesManager.GetManufactures().Count;
+
         var data = new Statistics.Data()
         {
             day = day,
+            avgProductCoastPrice = avgProductCoastPrice,
+            avgProductCreationTime = avgProductCreationTime,
             taxOffice = taxOffice,
             exchange = exchange
         };
-        
+
         var json = JsonUtility.ToJson(data);
         var filePath = _logPath + $"Day{day}.json";
-        
+
         using (var writer = new StreamWriter(filePath))
         {
             writer.WriteLine(json);

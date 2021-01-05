@@ -20,6 +20,8 @@ public class Manufacture : MonoBehaviour
     public MeshRenderer dnkSphere;
     public MeshRenderer parentGenSphere;
 
+    public Renderer factoryRenderer;
+    
     public int Id { get; set; }
 
     public float Money { get; private set; }
@@ -33,8 +35,6 @@ public class Manufacture : MonoBehaviour
 
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 0.1f;
-
-    private Renderer _renderer;
 
     private VM.Basic _vm;
     private Stopwatch _stopWatch = new Stopwatch();
@@ -54,8 +54,6 @@ public class Manufacture : MonoBehaviour
 
     private void Start()
     {
-        _renderer = gameObject.GetComponentInChildren<Renderer>();
-
         var environment = gameObject.transform.parent.gameObject;
         var world = environment.transform.parent.gameObject;
         worldDateTime = world.GetComponentInChildren<WorldDateTime>();
@@ -121,7 +119,7 @@ public class Manufacture : MonoBehaviour
         CreateDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, Dnk);
-        
+
         dnkSphere.material.color = Dnk.Color;
         parentGenSphere.material.color = Dnk.ParentColor;
     }
@@ -161,7 +159,7 @@ public class Manufacture : MonoBehaviour
 
         Id = id;
         InitializeSettings(dnk);
-        _renderer.material = liveMaterial;
+        factoryRenderer.material = liveMaterial;
 
         CheckSize();
         UpdateInfoText();
@@ -172,7 +170,7 @@ public class Manufacture : MonoBehaviour
     private void Die()
     {
         _isAlive = false;
-        _renderer.material = dieMaterial;
+        factoryRenderer.material = dieMaterial;
 
         Debug.Log("Die");
     }

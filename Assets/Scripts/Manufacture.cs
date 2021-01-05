@@ -330,7 +330,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        ProductCreationTime -= 0.1f;
+        ProductCreationTime -= 0.05f;
         SpendMoney(ProductReduceCreationTimePrice);
 
         return true;

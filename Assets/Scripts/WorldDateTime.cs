@@ -2,7 +2,8 @@
 
 public class WorldDateTime : MonoBehaviour
 {
-    public float dayLength = 2f; // seconds
+    private const float DayLength = Settings.Basic.DayLength;
+
     private int _currentDay = 1;
 
     public delegate void NewDayHandler(object sender, Event.WorldDateTimeEventArgs e);
@@ -13,7 +14,7 @@ public class WorldDateTime : MonoBehaviour
 
     private void Awake()
     {
-        InvokeRepeating(nameof(NextDay), dayLength, dayLength);
+        InvokeRepeating(nameof(NextDay), DayLength, DayLength);
     }
 
     private void NextDay()

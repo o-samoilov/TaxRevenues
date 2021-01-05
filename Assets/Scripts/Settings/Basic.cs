@@ -2,6 +2,9 @@ namespace Settings
 {
     public class Basic
     {
+        //WorldDateTime
+        public const float DayLength = 2f; // seconds
+
         //Manufacture
         public const float ManufactureMoney = 1000f;
         public const float ManufactureMaintenanceCost = 100f;
@@ -9,7 +12,7 @@ namespace Settings
 
         //Product
         public const float ProductCoast = 100f;
-        public const float ProductCreationTime = 1f; // seconds
+        public const float ProductCreationTime = 0.7f; // seconds
 
         //Exchange
         public const int ExchangeMaxProductsPerDay = 500;

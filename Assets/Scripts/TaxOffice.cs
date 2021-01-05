@@ -62,8 +62,8 @@ public class TaxOffice : MonoBehaviour
     public static bool IsCouldPayBribe(Manufacture manufacture, Product product)
     {
         //todo complex 
-        // 90%
-        return _probabilityManager.IsProbability(90);
+        // 95%
+        return _probabilityManager.IsProbability(95);
     }
 
     public static void PayTaxes(float money)

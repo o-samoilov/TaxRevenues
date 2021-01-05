@@ -39,8 +39,11 @@ public class Statistic : MonoBehaviour
             bribes = TaxOffice.Bribes
         };
 
-        var exchange = new Statistics.Exchange {soldProducts = Exchange.SoldProducts};
-
+        var exchange = new Statistics.Exchange
+        {
+            soldProducts = Exchange.SoldProducts,
+            vat = Exchange.Vat
+        };
 
         var productCoastPrice = 0f;
         var productCreationTime = 0f;

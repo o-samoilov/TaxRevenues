@@ -19,6 +19,7 @@ namespace Statistics
     public class Exchange
     {
         public int soldProducts;
+        public float vat;
     }
 
     [Serializable]

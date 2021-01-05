@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
 using GeneticAlgorithm;
+using Random = System.Random;
 
 public class ManufacturesManager : MonoBehaviour
 {
@@ -9,10 +9,8 @@ public class ManufacturesManager : MonoBehaviour
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
-    private Random _random = new Random();
 
-    private GenElementFactory _genElementFactory = new GenElementFactory();
-    private DnkFactory _dnkFactory = new DnkFactory();
+    private Random _random = new Random();
 
     private int _id = 1;
 
@@ -40,24 +38,12 @@ public class ManufacturesManager : MonoBehaviour
 
     public Dnk GetDnk()
     {
-        Dnk dnk;
-        if (_probabilityManager.IsProbability(80))
-        {
-            dnk = GetTopManufactureDnk();
-        }
-        else
-        {
-            dnk = GetRandomManufactureDnk();
-        }
+        var dnk = GetTopManufactureDnk();
 
         //mutation probability: 20%
         if (_probabilityManager.IsProbability(20))
         {
-            var index = _random.Next(0, dnk.MainGen.Size());
-            dnk.MainGen.SetElement(index, _genElementFactory.CreateRandom());
-
-            dnk.ParentColor = dnk.Color;
-            dnk.Color = _dnkFactory.CreateRandomDnkColor();
+            dnk.Mutate();
 
             Debug.Log("Mutation");
         }

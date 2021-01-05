@@ -21,7 +21,7 @@ public class Manufacture : MonoBehaviour
     public MeshRenderer parentGenSphere;
 
     public Renderer factoryRenderer;
-    
+
     public int Id { get; set; }
 
     public float Money { get; private set; }
@@ -75,7 +75,6 @@ public class Manufacture : MonoBehaviour
         if (!_isBusy)
         {
             _vm.Process();
-            MarkBusy(0.1f);
         }
     }
 
@@ -313,6 +312,8 @@ public class Manufacture : MonoBehaviour
 
         ProductCoastPrice -= 1f;
         SpendMoney(ProductReduceCoastPricePrice);
+
+        MarkBusy(Settings.Basic.ManufactureReduceProductCoastTime);
 
         return true;
     }

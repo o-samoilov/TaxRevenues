@@ -8,6 +8,7 @@ namespace Statistics
     {
         public int day;
 
+        public float avgManufactureMoney;
         public float avgProductCoastPrice;
         public float avgProductCreationTime;
 

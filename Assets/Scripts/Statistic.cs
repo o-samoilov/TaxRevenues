@@ -45,20 +45,24 @@ public class Statistic : MonoBehaviour
             vat = Exchange.Vat
         };
 
+        var manufactureMoney = 0f;
         var productCoastPrice = 0f;
         var productCreationTime = 0f;
         foreach (var manufacture in manufacturesManager.GetManufactures())
         {
+            manufactureMoney += manufacture.Money;
             productCoastPrice += manufacture.ProductCoastPrice;
             productCreationTime += manufacture.ProductCreationTime;
         }
 
         var avgProductCoastPrice = productCoastPrice / manufacturesManager.GetManufactures().Count;
         var avgProductCreationTime = productCreationTime / manufacturesManager.GetManufactures().Count;
+        var avgManufactureMoney = manufactureMoney / manufacturesManager.GetManufactures().Count;
 
         var data = new Statistics.Data()
         {
             day = day,
+            avgManufactureMoney = avgManufactureMoney,
             avgProductCoastPrice = avgProductCoastPrice,
             avgProductCreationTime = avgProductCreationTime,
             taxOffice = taxOffice,

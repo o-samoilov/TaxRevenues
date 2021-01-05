@@ -9,6 +9,7 @@ namespace Settings
         public const float ManufactureMoney = 1000f;
         public const float ManufactureMaintenanceCost = 100f;
         public const int ManufactureLiveDays = 50;
+        public const float ManufactureReduceProductCoastTime = 0.5f; // seconds
 
         //Product
         public const float ProductCoast = 100f;
@@ -16,6 +17,6 @@ namespace Settings
 
         //Exchange
         public const int ExchangeMaxProductsPerDay = 500;
-        public const float ExchangeProductPrice = 180f;
+        public const float ExchangeProductPrice = 150f;
     }
 }

@@ -34,7 +34,7 @@ namespace GeneticAlgorithm.Commands
             {
                 new CreateProduct(),
                 new ReduceProductCoastPrice(),
-                new ReduceProductCreationTime(),
+                //new ReduceProductCreationTime(), //todo
                 new RelativeJump()
             };
         }

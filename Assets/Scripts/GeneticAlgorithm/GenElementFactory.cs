@@ -1,10 +1,9 @@
-using System;
+using Random = UnityEngine.Random;
 
 namespace GeneticAlgorithm
 {
     public class GenElementFactory
     {
-        private Random _random = new Random();
         private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
         private Commands.Manager _commandManager = new Commands.Manager();
@@ -19,9 +18,9 @@ namespace GeneticAlgorithm
         
         private GenElement CreateRandomCommand()
         {
-            var commandIndex = _random.Next(0, _commandManager.GetCount());
+            var commandIndex = Random.Range(0, _commandManager.GetCount());
             var command = _commandManager.GetByIndex(commandIndex);
-            var coefficient = _random.Next(command.GetMinCoefficient(), command.GetMaxCoefficient() + 1);
+            var coefficient = Random.Range(command.GetMinCoefficient(), command.GetMaxCoefficient() + 1);
 
             return new GenElement(
                 GenTypes.Command,
@@ -32,9 +31,9 @@ namespace GeneticAlgorithm
 
         private GenElement CreateRandomQuestion()
         {
-            var questionIndex = _random.Next(0, _questionsManager.GetCount());
+            var questionIndex = Random.Range(0, _questionsManager.GetCount());
             var question = _questionsManager.GetByIndex(questionIndex);
-            var coefficient = _random.Next(question.GetMinCoefficient(), question.GetMaxCoefficient() + 1);
+            var coefficient = Random.Range(question.GetMinCoefficient(), question.GetMaxCoefficient() + 1);
 
             return new GenElement(
                 GenTypes.Question,

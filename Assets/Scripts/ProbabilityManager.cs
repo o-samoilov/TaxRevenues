@@ -1,9 +1,8 @@
 using System;
+using Random = UnityEngine.Random;
 
 public class ProbabilityManager
 {
-    private Random _random = new Random();
-
     public bool IsProbability(int percentageProbability)
     {
         if (percentageProbability < 0 || percentageProbability > 100)
@@ -11,6 +10,6 @@ public class ProbabilityManager
             throw new ArgumentException();
         }
 
-        return _random.Next(0, 101) <= percentageProbability;
+        return Random.Range(0, 101) <= percentageProbability;
     }
 }

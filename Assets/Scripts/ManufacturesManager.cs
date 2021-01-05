@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GeneticAlgorithm;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class ManufacturesManager : MonoBehaviour
 {
@@ -9,8 +9,6 @@ public class ManufacturesManager : MonoBehaviour
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
-
-    private Random _random = new Random();
 
     private int _id = 1;
 
@@ -68,9 +66,9 @@ public class ManufacturesManager : MonoBehaviour
             return 0;
         });
 
-        var topManufactureMaxIndex = (int) (_manufactures.Count * TopManufacturePart / 100);
+        var topManufactureMaxIndex = (int) (_manufactures.Count * TopManufacturePart / 100f);
 
-        var index = _random.Next(0, topManufactureMaxIndex);
+        var index = Random.Range(0, topManufactureMaxIndex);
         var manufacture = _manufactures[index];
 
         return (Dnk) manufacture.Dnk.Clone();
@@ -78,7 +76,7 @@ public class ManufacturesManager : MonoBehaviour
 
     private Dnk GetRandomManufactureDnk()
     {
-        var index = _random.Next(0, _manufactures.Count);
+        var index = Random.Range(0, _manufactures.Count);
         var manufacture = _manufactures[index];
 
         return (Dnk) manufacture.Dnk.Clone();

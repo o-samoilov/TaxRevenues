@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 namespace GeneticAlgorithm
 {
@@ -11,7 +11,6 @@ namespace GeneticAlgorithm
         
         public Gen MainGen { get; }
 
-        private Random _random = new Random();
         private DnkFactory _dnkFactory = new DnkFactory();
         private GenElementFactory _genElementFactory = new GenElementFactory();
 
@@ -24,7 +23,7 @@ namespace GeneticAlgorithm
 
         public void Mutate()
         {
-            var index = _random.Next(0, MainGen.Size());
+            var index = Random.Range(0, MainGen.Size());
             MainGen.SetElement(index, _genElementFactory.CreateRandom());
 
             ParentColor = Color;

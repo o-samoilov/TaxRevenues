@@ -19,7 +19,7 @@ public class ManufacturesManager : MonoBehaviour
         {
             _manufactures.Add(manufacture);
             manufacture.Id = _id;
-            //manufacture.UpdateInfoText();
+
             _id++;
         }
     }

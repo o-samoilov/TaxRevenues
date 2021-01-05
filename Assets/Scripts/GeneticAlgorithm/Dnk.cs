@@ -23,11 +23,16 @@ namespace GeneticAlgorithm
 
         public void Mutate()
         {
-            var index = Random.Range(0, MainGen.Size());
-            MainGen.SetElement(index, _genElementFactory.CreateRandom());
+            var countMutations = Random.Range(1, 4);
 
-            ParentColor = Color;
-            Color = _dnkFactory.CreateRandomDnkColor();
+            for (var i = 0; i < countMutations; i++)
+            {
+                var index = Random.Range(0, MainGen.Size());
+                MainGen.SetElement(index, _genElementFactory.CreateRandom());
+
+                ParentColor = Color;
+                Color = _dnkFactory.CreateRandomDnkColor();
+            }
         }
 
         public object Clone()

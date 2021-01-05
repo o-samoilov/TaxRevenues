@@ -344,15 +344,15 @@ public class Manufacture : MonoBehaviour
     private void CheckSize()
     {
         //todo const
-        if (Money <= 5000f)
+        if (Money <= 2000f)
         {
             SetSmallSize();
         }
-        else if (Money <= 15000f)
+        else if (Money <= 5000f)
         {
             SetMediumSize();
         }
-        else if (Money <= 50000f)
+        else if (Money <= 15000f)
         {
             SetBigSize();
         }

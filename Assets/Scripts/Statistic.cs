@@ -8,7 +8,7 @@ public class Statistic : MonoBehaviour
     public WorldDateTime worldDateTime;
 
     // todo in config
-    private string _logPath = "C:\\Users\\alexa\\Desktop\\Log\\";
+    private string _logPath = "D:\\Projects\\samoylov\\unity\\TaxRevenuesHelper\\log\\";
 
     public bool IsNeedSaveManufactureInfo { get; set; } = false;
 

@@ -40,11 +40,11 @@ namespace GeneticAlgorithm.Questions
         {
             var money = manufacture.Money;
             
-            if (money <= 5000)
+            if (money <= 2000)
             {
                 return (int) Result.Small;
             }
-            else if (money > 5000 && money <= 15000)
+            else if (money > 2000 && money <= 5000)
             {
                 return (int) Result.Medium;
             }

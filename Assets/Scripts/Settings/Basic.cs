@@ -13,7 +13,7 @@ namespace Settings
 
         //Product
         public const float ProductCoast = 100f;
-        public const float ProductCreationTime = 0.7f; // seconds
+        public const float ProductCreationTime = 0.5f; // seconds
 
         //Exchange
         public const int ExchangeMaxProductsPerDay = 500;

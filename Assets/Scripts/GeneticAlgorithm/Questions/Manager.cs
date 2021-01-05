@@ -37,7 +37,7 @@ namespace GeneticAlgorithm.Questions
                 new GetSizeMoney(),
                 new GetSizeTaxes(),
                 new IsPossibleReduceProductCoastPrice(),
-                new IsPossibleReduceProductCreationTime(),
+                //new IsPossibleReduceProductCreationTime(), //todo
                 new IsPossibleSellProduct()
             };
         }

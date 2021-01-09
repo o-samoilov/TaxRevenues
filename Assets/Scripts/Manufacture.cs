@@ -66,25 +66,6 @@ public class Manufacture : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SetSmallSize();
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            SetMediumSize();
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            SetBigSize();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SetExtraBigSize();
-        }
-        
-        return;
-        
         if (!_isAlive)
         {
             return;
@@ -351,7 +332,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        ProductCreationTime -= 0.1f;
+        ProductCreationTime -= 0.05f;
         SpendMoney(ProductReduceCreationTimePrice);
 
         return true;

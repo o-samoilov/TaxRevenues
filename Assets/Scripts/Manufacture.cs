@@ -66,6 +66,25 @@ public class Manufacture : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SetSmallSize();
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SetMediumSize();
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SetBigSize();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            SetExtraBigSize();
+        }
+        
+        return;
+        
         if (!_isAlive)
         {
             return;
@@ -372,7 +391,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = SmallSize;
 
-        Scale(new Vector3(1f, 1f, 1f), 1.6f);
+        Scale(new Vector3(1f, 1f, 1f), 1.6f, 14f);
     }
 
     private void SetMediumSize()
@@ -384,7 +403,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = MediumSize;
 
-        Scale(new Vector3(2f, 3f, 1.5f), 3.3f);
+        Scale(new Vector3(2f, 3f, 1.5f), 3.3f, 30f);
     }
 
     private void SetBigSize()
@@ -396,7 +415,7 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = BigSize;
 
-        Scale(new Vector3(3f, 5f, 2f), 5.6f);
+        Scale(new Vector3(3f, 5f, 2f), 5.6f, 50f);
     }
 
     private void SetExtraBigSize()
@@ -408,10 +427,10 @@ public class Manufacture : MonoBehaviour
 
         _currentSize = ExtraBigSize;
 
-        Scale(new Vector3(3f, 10f, 2f), 11.2f);
+        Scale(new Vector3(3f, 10f, 2f), 11.2f, 90f);
     }
 
-    private void Scale(Vector3 scale, float y)
+    private void Scale(Vector3 scale, float y, float infoY)
     {
         manufactureModel.transform.localScale = scale;
 
@@ -419,6 +438,12 @@ public class Manufacture : MonoBehaviour
             manufactureModel.transform.position.x,
             y,
             manufactureModel.transform.position.z
+        );
+
+        info.transform.position= new Vector3(
+            info.transform.position.x,
+            infoY,
+            info.transform.position.z
         );
     }
 

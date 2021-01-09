@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA version="1.5.0" xmlns="http://www.collada.org/2008/03/COLLADASchema">
+  <asset>
+    <contributor />
+    <unit meter="1" />
+  </asset>
+  <library_lights />
+  <library_materials>
+    <material id="material_1">
+      <instance_effect url="#effect-material_1" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="effect-material_1" />
+  </library_effects>
+  <library_cameras />
+  <library_geometries>
+    <geometry id="mesh_1">
+      <mesh>
+        <source id="mesh_1-position" name="position">
+          <float_array id="mesh_1-position-array" count="51">0 -73.12344360351562 0 -74.17321014404297 -73.12344360351562 -74.17321014404297 74.17321014404297 -73.12344360351562 -74.17321014404297 -74.17321014404297 -73.12344360351562 -74.17321014404297 0 73.12344360351562 0 74.17321014404297 -73.12344360351562 -74.17321014404297 -74.17320251464844 -73.12344360351562 74.17322540283203 -74.17320251464844 -73.12344360351562 74.17322540283203 0 73.12344360351562 0 -74.17321014404297 -73.12344360351562 -74.17321014404297 74.1732406616211 -73.12344360351562 74.17318725585938 74.1732406616211 -73.12344360351562 74.17318725585938 0 73.12344360351562 0 -74.17320251464844 -73.12344360351562 74.17322540283203 74.17321014404297 -73.12344360351562 -74.17321014404297 0 73.12344360351562 0 74.1732406616211 -73.12344360351562 74.17318725585938 </float_array>
+          <technique_common>
+            <accessor source="#mesh_1-position-array" count="17" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="mesh_1-normal" name="normal">
+          <float_array id="mesh_1-normal-array" count="51">0 -1 0 0 -1 0 0 -1 0 0 0.7121281623840332 -0.7020494937896729 0 0.7121281623840332 -0.7020494937896729 0 0.7121281623840332 -0.7020494937896729 0 -1 0 -0.7020494937896729 0.7121281623840332 3.610610832538441E-08 -0.7020494937896729 0.7121281623840332 3.610610832538441E-08 -0.7020495533943176 0.7121281027793884 3.610610832538441E-08 0 -1 0 1.805305345214947E-07 0.7121281623840332 0.7020494937896729 1.805305345214947E-07 0.7121281623840332 0.7020494937896729 1.805305345214947E-07 0.7121281623840332 0.7020494937896729 0.7020494341850281 0.7121282815933228 -1.4442446172324708E-07 0.7020494341850281 0.7121282815933228 -1.4442446172324708E-07 0.7020493745803833 0.7121282815933228 -1.4442444751239236E-07 </float_array>
+          <technique_common>
+            <accessor source="#mesh_1-normal-array" count="17" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="mesh_1-vertices">
+          <input semantic="POSITION" source="#mesh_1-position" />
+        </vertices>
+        <triangles material="default" count="8">
+          <input semantic="VERTEX" source="#mesh_1-vertices" offset="0" />
+          <input semantic="NORMAL" source="#mesh_1-normal" offset="1" />
+          <p>0 0 1 1 2 2 3 3 4 4 5 5 0 0 6 6 1 1 7 7 8 8 9 9 0 0 10 10 6 6 11 11 12 12 13 13 0 0 2 2 10 10 14 14 15 15 16 16</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_images>
+    <image id="object_1" />
+    <image id="object_2" />
+  </library_images>
+  <library_visual_scenes>
+    <visual_scene id="Scene">
+      <node id="root" sid="root" name="root" type="NODE">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="node_1" sid="node_1" type="NODE">
+          <matrix>0.00100000004749745 0 0 -0.01479866448789835 0 0.00100000004749745 0 0.00963666755706071 0 0 0.00100000004749745 0.20004834234714508 0 0 0 1</matrix>
+          <instance_geometry url="#mesh_1">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="mat0" target="#material_1" />
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <library_animations />
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

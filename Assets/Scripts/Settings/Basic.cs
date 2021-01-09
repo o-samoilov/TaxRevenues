@@ -16,7 +16,7 @@ namespace Settings
         public const float ProductCreationTime = 0.5f; // seconds
 
         //Exchange
-        public const int ExchangeMaxProductsPerDay = 500;
+        public const int ExchangeMaxProductsPerDay = 1000;
         public const float ExchangeProductPrice = 150f;
     }
 }

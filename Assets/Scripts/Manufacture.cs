@@ -10,6 +10,7 @@ public class Manufacture : MonoBehaviour
     public WorldDateTime worldDateTime;
     public ManufacturesManager manufacturesManager;
     public GameObject productPrefab;
+    public GameObject info;
     public TextMeshPro textInfo;
 
     public Material liveMaterial;
@@ -81,14 +82,14 @@ public class Manufacture : MonoBehaviour
     public void ShowInfoText()
     {
         _showInfoText = true;
-        textInfo.gameObject.SetActive(true);
+        info.gameObject.SetActive(true);
         UpdateInfoText();
     }
 
     public void HideInfoText()
     {
         _showInfoText = false;
-        textInfo.gameObject.SetActive(false);
+        info.gameObject.SetActive(false);
     }
 
     private void UpdateInfoText()
@@ -331,7 +332,7 @@ public class Manufacture : MonoBehaviour
             return false;
         }
 
-        ProductCreationTime -= 0.05f;
+        ProductCreationTime -= 0.1f;
         SpendMoney(ProductReduceCreationTimePrice);
 
         return true;

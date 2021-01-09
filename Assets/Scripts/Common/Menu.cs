@@ -47,5 +47,10 @@ namespace Common
         {
             statistic.IsNeedSaveManufactureInfo = value;
         }
+
+        public void ExitButtonOnClick()
+        {
+            Application.Quit();
+        }
     }
 }

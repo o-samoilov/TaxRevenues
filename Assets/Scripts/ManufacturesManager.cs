@@ -1,16 +1,27 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GeneticAlgorithm;
 using Random = UnityEngine.Random;
 
 public class ManufacturesManager : MonoBehaviour
 {
+    public WorldDateTime worldDateTime;
+
+    private const int ReproductionGensLiveDays = 20;
     private const int TopManufacturePart = 30; // 30%
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
+    private Queue<ReproductionDnk> _reproductionDnkQueue = new Queue<ReproductionDnk>();
+
     private int _id = 1;
+
+    private void Start()
+    {
+        worldDateTime.NewDay += WorldDateTimeNewDayHandler;
+    }
 
     private void Awake()
     {
@@ -36,7 +47,15 @@ public class ManufacturesManager : MonoBehaviour
 
     public Dnk GetDnk()
     {
-        var dnk = GetTopManufactureDnk();
+        Dnk dnk;
+        if (_reproductionDnkQueue.Count != 0)
+        {
+            dnk = _reproductionDnkQueue.Dequeue().Dnk;
+        }
+        else
+        {
+            dnk = GetTopManufactureDnk();
+        }
 
         //mutation probability: 20%
         if (_probabilityManager.IsProbability(20))
@@ -47,6 +66,16 @@ public class ManufacturesManager : MonoBehaviour
         }
 
         return dnk;
+    }
+
+    public int GetReproductionDnkCount()
+    {
+        return _reproductionDnkQueue.Count;
+    }
+
+    public void AddReproductionDnk(ReproductionDnk reproductionDnk)
+    {
+        _reproductionDnkQueue.Enqueue(reproductionDnk);
     }
 
     private Dnk GetTopManufactureDnk()
@@ -72,5 +101,12 @@ public class ManufacturesManager : MonoBehaviour
         var manufacture = _manufactures[index];
 
         return (Dnk) manufacture.Dnk.Clone();
+    }
+
+    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
+    {
+        _reproductionDnkQueue = new Queue<ReproductionDnk>(
+            _reproductionDnkQueue.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
+        );
     }
 }

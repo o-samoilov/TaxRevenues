@@ -37,6 +37,8 @@ public class Manufacture : MonoBehaviour
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 0.3f;
 
+    private const int ReproductionIntervalDays = 10;
+
     private VM.Basic _vm;
     private Stopwatch _stopWatch = new Stopwatch();
 
@@ -45,6 +47,8 @@ public class Manufacture : MonoBehaviour
     private float _busyTime;
 
     private bool _showInfoText = false;
+
+    private int _lastReproductionDay;
 
     private const string SmallSize = "small_size";
     private const string MediumSize = "medium_size";
@@ -117,6 +121,7 @@ public class Manufacture : MonoBehaviour
         CheckSize();
 
         CreateDay = worldDateTime.CurrentDay;
+        _lastReproductionDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, Dnk);
 
@@ -175,6 +180,17 @@ public class Manufacture : MonoBehaviour
         Debug.Log("Die");
     }
 
+    private void Reproduction(int currentDay)
+    {
+        for (var i = 0; i < 2; i++)
+        {
+            var dnk = (Dnk) Dnk.Clone();
+            manufacturesManager.AddReproductionDnk(new ReproductionDnk(currentDay, dnk));
+        }
+
+        _lastReproductionDay = currentDay;
+    }
+
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
         if (_isAlive)
@@ -184,6 +200,13 @@ public class Manufacture : MonoBehaviour
             if (worldDateTime.CurrentDay - CreateDay > Settings.Basic.ManufactureLiveDays)
             {
                 Die();
+            }
+
+            // Is Need Reproduction
+            if (worldDateTime.CurrentDay - _lastReproductionDay >= ReproductionIntervalDays &&
+                Money >= 10000f) //todo const
+            {
+                Reproduction(worldDateTime.CurrentDay);
             }
 
             return;

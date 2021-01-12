@@ -1,28 +1,16 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using GeneticAlgorithm;
 using Random = UnityEngine.Random;
 
 public class ManufacturesManager : MonoBehaviour
 {
-    public WorldDateTime worldDateTime;
-
-    private const int ReproductionGensLiveDays = 50;
     private const int TopManufacturePart = 30; // 30%
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
-    private Queue<ReproductionDnk> _reproductionDnkQueue = new Queue<ReproductionDnk>();
-    private Queue<ReproductionDnk> _reproductionDnkHighPriorityQueue = new Queue<ReproductionDnk>();
-
     private int _id = 1;
-
-    private void Start()
-    {
-        worldDateTime.NewDay += WorldDateTimeNewDayHandler;
-    }
 
     private void Awake()
     {
@@ -48,19 +36,7 @@ public class ManufacturesManager : MonoBehaviour
 
     public Dnk GetDnk()
     {
-        Dnk dnk;
-        if (_reproductionDnkHighPriorityQueue.Count != 0)
-        {
-            dnk = _reproductionDnkHighPriorityQueue.Dequeue().Dnk;
-        }
-        else if (_reproductionDnkQueue.Count != 0)
-        {
-            dnk = _reproductionDnkQueue.Dequeue().Dnk;
-        }
-        else
-        {
-            dnk = GetTopManufactureDnk();
-        }
+        var dnk = GetTopManufactureDnk();
 
         //mutation probability: 20%
         if (_probabilityManager.IsProbability(20))
@@ -71,28 +47,6 @@ public class ManufacturesManager : MonoBehaviour
         }
 
         return dnk;
-    }
-
-    public int GetReproductionDnkCount()
-    {
-        return _reproductionDnkQueue.Count;
-    }
-    
-    public int GetReproductionDnkHighPriorityCount()
-    {
-        return _reproductionDnkHighPriorityQueue.Count;
-    }
-
-    public void AddReproductionDnk(ReproductionDnk reproductionDnk)
-    {
-        if (reproductionDnk.IsHighPriority)
-        {
-            _reproductionDnkHighPriorityQueue.Enqueue(reproductionDnk);
-
-            return;
-        }
-
-        _reproductionDnkQueue.Enqueue(reproductionDnk);
     }
 
     private Dnk GetTopManufactureDnk()
@@ -118,16 +72,5 @@ public class ManufacturesManager : MonoBehaviour
         var manufacture = _manufactures[index];
 
         return (Dnk) manufacture.Dnk.Clone();
-    }
-
-    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
-    {
-        _reproductionDnkHighPriorityQueue = new Queue<ReproductionDnk>(
-            _reproductionDnkHighPriorityQueue.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
-        );
-
-        _reproductionDnkQueue = new Queue<ReproductionDnk>(
-            _reproductionDnkQueue.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
-        );
     }
 }

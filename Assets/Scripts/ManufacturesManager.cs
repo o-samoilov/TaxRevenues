@@ -14,7 +14,7 @@ public class ManufacturesManager : MonoBehaviour
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
-    private Queue<ReproductionDnk> _reproductionGens = new Queue<ReproductionDnk>();
+    public Queue<ReproductionDnk> ReproductionGens = new Queue<ReproductionDnk>();
 
     private int _id = 1;
 
@@ -48,9 +48,9 @@ public class ManufacturesManager : MonoBehaviour
     public Dnk GetDnk()
     {
         Dnk dnk;
-        if (_reproductionGens.Count != 0)
+        if (ReproductionGens.Count != 0)
         {
-            dnk = _reproductionGens.Dequeue().Dnk;
+            dnk = ReproductionGens.Dequeue().Dnk;
         }
         else
         {
@@ -70,7 +70,7 @@ public class ManufacturesManager : MonoBehaviour
 
     public void AddReproductionDnk(ReproductionDnk reproductionDnk)
     {
-        _reproductionGens.Enqueue(reproductionDnk);
+        ReproductionGens.Enqueue(reproductionDnk);
     }
 
     private Dnk GetTopManufactureDnk()
@@ -100,8 +100,8 @@ public class ManufacturesManager : MonoBehaviour
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        _reproductionGens = new Queue<ReproductionDnk>(
-            _reproductionGens.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
+        ReproductionGens = new Queue<ReproductionDnk>(
+            ReproductionGens.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
         );
     }
 }

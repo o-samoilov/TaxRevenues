@@ -100,7 +100,6 @@ public class ManufacturesManager : MonoBehaviour
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        //todo check
         _reproductionGens = new Queue<ReproductionDnk>(
             _reproductionGens.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
         );

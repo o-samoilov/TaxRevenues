@@ -197,15 +197,17 @@ public class Manufacture : MonoBehaviour
             if (worldDateTime.CurrentDay - CreateDay > Settings.Basic.ManufactureLiveDays)
             {
                 Die();
-            }
-
-            // Is Need Reproduction
-            if (worldDateTime.CurrentDay - _lastReproductionDay >= ReproductionIntervalDays &&
-                Money >= 10000f &&
-                manufacturesManager.GetReproductionDnkCount(Id) < 2
-            )
-            {
-                Reproduction(worldDateTime.CurrentDay);
+                
+                // Is Need Reproduction
+                if (_currentSize == BigSize)
+                {
+                    Reproduction(worldDateTime.CurrentDay);
+                }
+                else if(_currentSize == ExtraBigSize);
+                {
+                    Reproduction(worldDateTime.CurrentDay);
+                    Reproduction(worldDateTime.CurrentDay);
+                }
             }
 
             return;

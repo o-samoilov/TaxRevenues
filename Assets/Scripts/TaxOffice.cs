@@ -8,6 +8,8 @@ public class TaxOffice : MonoBehaviour
     public static float Fines { get; private set; }
     public static float Bribes { get; private set; }
 
+    public static float UncollectedTaxes { get; private set; }
+
     public static float CurrentDayTaxes { get; private set; }
     public static float CurrentDayFines { get; private set; }
     public static float CurrentDayBribes { get; private set; }
@@ -69,22 +71,35 @@ public class TaxOffice : MonoBehaviour
         return _probabilityManager.IsProbability(98);
     }
 
-    public static void PayTaxes(float money)
+    public static float PayTaxes(Manufacture manufacture, Product product)
     {
+        var money = CalculateTaxes(manufacture, product);
+
         Taxes += money;
         CurrentDayTaxes += money;
+
+        return money;
     }
 
-    public static void PayFines(float money)
+    public static float PayFines(Manufacture manufacture, Product product)
     {
+        var money = CalculateFines(manufacture, product);
+
         Fines += money;
         CurrentDayFines += money;
+
+        return money;
     }
 
-    public static void PayBribe(float money)
+    public static float PayBribe(Manufacture manufacture, Product product)
     {
+        var money = CalculateBribe(manufacture, product);
+
         Bribes += money;
         CurrentDayBribes += money;
+        UncollectedTaxes += CalculateTaxes(manufacture, product);
+
+        return money;
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)

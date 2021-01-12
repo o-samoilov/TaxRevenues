@@ -29,5 +29,7 @@ namespace Statistics
         public float taxes;
         public float fines;
         public float bribes;
+
+        public float uncollectedTaxes;
     }
 }

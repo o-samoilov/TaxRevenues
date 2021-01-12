@@ -36,7 +36,8 @@ public class Statistic : MonoBehaviour
         {
             taxes = TaxOffice.Taxes,
             fines = TaxOffice.Fines,
-            bribes = TaxOffice.Bribes
+            bribes = TaxOffice.Bribes,
+            uncollectedTaxes = TaxOffice.UncollectedTaxes
         };
 
         var exchange = new Statistics.Exchange

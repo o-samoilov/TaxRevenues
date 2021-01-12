@@ -243,30 +243,24 @@ public class Manufacture : MonoBehaviour
 
     public void PayTaxes(Product product)
     {
-        float taxes = TaxOffice.CalculateTaxes(this, product);
+        var taxes = TaxOffice.PayTaxes(this, product);
         SpendMoney(taxes);
-
-        TaxOffice.PayTaxes(taxes);
 
         //todo statistic
     }
 
     public void PayFines(Product product)
     {
-        float fines = TaxOffice.CalculateFines(this, product);
+        var fines = TaxOffice.PayFines(this, product);
         SpendMoney(fines);
-
-        TaxOffice.PayFines(fines);
 
         //todo statistic
     }
 
     public void PayBribe(Product product)
     {
-        float bribe = TaxOffice.CalculateBribe(this, product);
+        var bribe = TaxOffice.PayBribe(this, product);
         SpendMoney(bribe);
-
-        TaxOffice.PayBribe(bribe);
 
         //todo statistic
     }

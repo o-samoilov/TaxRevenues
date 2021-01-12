@@ -1,16 +1,27 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GeneticAlgorithm;
 using Random = UnityEngine.Random;
 
 public class ManufacturesManager : MonoBehaviour
 {
+    public WorldDateTime worldDateTime;
+
+    private const int ReproductionGensLiveDays = Settings.Basic.ManufactureLiveDays;
     private const int TopManufacturePart = 30; // 30%
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
+    private Queue<ReproductionDnk> _reproductionGens = new Queue<ReproductionDnk>();
+
     private int _id = 1;
+
+    private void Start()
+    {
+        worldDateTime.NewDay += WorldDateTimeNewDayHandler;
+    }
 
     private void Awake()
     {
@@ -36,7 +47,15 @@ public class ManufacturesManager : MonoBehaviour
 
     public Dnk GetDnk()
     {
-        var dnk = GetTopManufactureDnk();
+        Dnk dnk;
+        if (_reproductionGens.Count != 0)
+        {
+            dnk = _reproductionGens.Dequeue().Dnk;
+        }
+        else
+        {
+            dnk = GetTopManufactureDnk();
+        }
 
         //mutation probability: 20%
         if (_probabilityManager.IsProbability(20))
@@ -47,6 +66,11 @@ public class ManufacturesManager : MonoBehaviour
         }
 
         return dnk;
+    }
+
+    public void AddReproductionDnk(ReproductionDnk reproductionDnk)
+    {
+        _reproductionGens.Enqueue(reproductionDnk);
     }
 
     private Dnk GetTopManufactureDnk()
@@ -74,11 +98,11 @@ public class ManufacturesManager : MonoBehaviour
         return (Dnk) manufacture.Dnk.Clone();
     }
 
-    private Dnk GetRandomManufactureDnk()
+    private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        var index = Random.Range(0, _manufactures.Count);
-        var manufacture = _manufactures[index];
-
-        return (Dnk) manufacture.Dnk.Clone();
+        //todo check
+        _reproductionGens = new Queue<ReproductionDnk>(
+            _reproductionGens.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
+        );
     }
 }

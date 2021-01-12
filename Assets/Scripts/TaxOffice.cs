@@ -26,8 +26,9 @@ public class TaxOffice : MonoBehaviour
 
     public static float CalculateTaxes(Manufacture manufacture, float productCoastPrice, float productPrice)
     {
-        // todo complex taxes
-        return 50;
+        var income = productPrice - productCoastPrice;
+
+        return income * 0.425f; //42,5%
     }
 
     public static float CalculateFines(Manufacture manufacture, Product product)
@@ -49,7 +50,9 @@ public class TaxOffice : MonoBehaviour
     public static float CalculateBribe(Manufacture manufacture, float productCoastPrice, float productPrice)
     {
         // todo complex bribe
-        return 10;
+        var income = productPrice - productCoastPrice;
+
+        return income * 0.05f + 1; //5% + 1
     }
 
     public static bool IsNeedPayFines(Manufacture manufacture, Product product)
@@ -62,8 +65,8 @@ public class TaxOffice : MonoBehaviour
     public static bool IsCouldPayBribe(Manufacture manufacture, Product product)
     {
         //todo complex 
-        // 95%
-        return _probabilityManager.IsProbability(95);
+        // 98%
+        return _probabilityManager.IsProbability(98);
     }
 
     public static void PayTaxes(float money)

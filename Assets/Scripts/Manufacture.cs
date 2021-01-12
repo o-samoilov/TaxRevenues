@@ -32,7 +32,7 @@ public class Manufacture : MonoBehaviour
     public int CreateDay { get; private set; }
 
     private const float ProductReduceCoastPricePrice = 50f;
-    private const float ProductReduceCreationTimePrice = 170f;
+    private const float ProductReduceCreationTimePrice = 150f;
 
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 0.3f;
@@ -183,7 +183,7 @@ public class Manufacture : MonoBehaviour
     private void Reproduction(int currentDay)
     {
         var dnk = (Dnk) Dnk.Clone();
-        manufacturesManager.AddReproductionDnk(new ReproductionDnk(currentDay, dnk));
+        manufacturesManager.AddReproductionDnk(new ReproductionDnk(currentDay, this.Id, dnk));
 
         _lastReproductionDay = currentDay;
     }
@@ -201,7 +201,8 @@ public class Manufacture : MonoBehaviour
 
             // Is Need Reproduction
             if (worldDateTime.CurrentDay - _lastReproductionDay >= ReproductionIntervalDays &&
-                Money >= 8000f
+                Money >= 10000f &&
+                manufacturesManager.GetReproductionDnkCount(Id) < 2
             )
             {
                 Reproduction(worldDateTime.CurrentDay);

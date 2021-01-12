@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 public class ManufacturesManager : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
+    
+    public int ReproductionCount { get; private set; }
 
     private const int ReproductionGensLiveDays = 35;
     private const int TopManufacturePart = 30; // 30%
@@ -72,9 +74,15 @@ public class ManufacturesManager : MonoBehaviour
     {
         return _reproductionDnkQueue.Count;
     }
+    
+    public int GetReproductionDnkCount(int manufactureId)
+    {
+        return _reproductionDnkQueue.Count(x => x.ManufactureId == manufactureId);
+    }
 
     public void AddReproductionDnk(ReproductionDnk reproductionDnk)
     {
+        ReproductionCount++;
         _reproductionDnkQueue.Enqueue(reproductionDnk);
     }
 

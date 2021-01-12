@@ -29,7 +29,7 @@ namespace Common
                                  $"B: {TaxOffice.Bribes}, F: {TaxOffice.Fines}, T: {TaxOffice.Taxes}\n" +
                                  $"CB: {TaxOffice.CurrentDayBribes}, CF: {TaxOffice.CurrentDayFines}, CT: {TaxOffice.CurrentDayTaxes}\n";
 
-            manufactureManagerText.text = $"Count reproduction dnk: {manufacturesManager.GetReproductionDnkCount()}\n";
+            manufactureManagerText.text = $"Count reproduction dnk: {manufacturesManager.GetReproductionDnkCount()} ({manufacturesManager.ReproductionCount})";
         }
 
         private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)

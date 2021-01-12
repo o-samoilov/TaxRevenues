@@ -8,7 +8,7 @@ public class ManufacturesManager : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
 
-    private const int ReproductionGensLiveDays = 20;
+    private const int ReproductionGensLiveDays = 35;
     private const int TopManufacturePart = 30; // 30%
 
     private List<Manufacture> _manufactures = new List<Manufacture>();

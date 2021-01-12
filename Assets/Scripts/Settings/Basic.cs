@@ -8,7 +8,7 @@ namespace Settings
         //Manufacture
         public const float ManufactureMoney = 1000f;
         public const float ManufactureMaintenanceCost = 100f;
-        public const int ManufactureLiveDays = 50;
+        public const int ManufactureLiveDays = 100;
         public const float ManufactureReduceProductCoastTime = 0.5f; // seconds
 
         //Product

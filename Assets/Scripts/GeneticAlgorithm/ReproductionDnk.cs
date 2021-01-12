@@ -2,13 +2,16 @@ namespace GeneticAlgorithm
 {
     public class ReproductionDnk
     {
-        public Dnk Dnk { get; }
         public int CreateDay { get; }
+        public bool IsHighPriority { get; }
+        
+        public Dnk Dnk { get; }
 
-        public ReproductionDnk(Dnk dnk, int createDay)
+        public ReproductionDnk(int createDay, bool isHighPriority, Dnk dnk)
         {
-            Dnk = dnk;
             CreateDay = createDay;
+            IsHighPriority = isHighPriority;
+            Dnk = dnk;
         }
     }
 }

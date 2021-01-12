@@ -12,7 +12,7 @@ namespace Common
         public TextMeshProUGUI exchangeText;
         public TextMeshProUGUI taxOfficeText;
         public TextMeshProUGUI manufactureManagerText;
-        
+
         private void Start()
         {
             worldDateTime.NewDay += WorldDateTimeNewDayHandler;
@@ -28,8 +28,9 @@ namespace Common
             taxOfficeText.text = $"Taxes: \n" +
                                  $"B: {TaxOffice.Bribes}, F: {TaxOffice.Fines}, T: {TaxOffice.Taxes}\n" +
                                  $"CB: {TaxOffice.CurrentDayBribes}, CF: {TaxOffice.CurrentDayFines}, CT: {TaxOffice.CurrentDayTaxes}\n";
-            
-            manufactureManagerText.text = $"Count reproduction gens: {manufacturesManager.ReproductionGens.Count}";
+
+            manufactureManagerText.text = $"Count reproduction dnk: {manufacturesManager.GetReproductionDnkCount()}\n" +
+                                          $"Count reproduction dnk hp: {manufacturesManager.GetReproductionDnkHighPriorityCount()}\n";
         }
 
         private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)

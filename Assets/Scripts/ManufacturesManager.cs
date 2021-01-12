@@ -8,13 +8,14 @@ public class ManufacturesManager : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
 
-    private const int ReproductionGensLiveDays = Settings.Basic.ManufactureLiveDays;
+    private const int ReproductionGensLiveDays = 50;
     private const int TopManufacturePart = 30; // 30%
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
-    public Queue<ReproductionDnk> ReproductionGens = new Queue<ReproductionDnk>();
+    private Queue<ReproductionDnk> _reproductionDnkQueue = new Queue<ReproductionDnk>();
+    private Queue<ReproductionDnk> _reproductionDnkHighPriorityQueue = new Queue<ReproductionDnk>();
 
     private int _id = 1;
 
@@ -48,9 +49,13 @@ public class ManufacturesManager : MonoBehaviour
     public Dnk GetDnk()
     {
         Dnk dnk;
-        if (ReproductionGens.Count != 0)
+        if (_reproductionDnkHighPriorityQueue.Count != 0)
         {
-            dnk = ReproductionGens.Dequeue().Dnk;
+            dnk = _reproductionDnkHighPriorityQueue.Dequeue().Dnk;
+        }
+        else if (_reproductionDnkQueue.Count != 0)
+        {
+            dnk = _reproductionDnkQueue.Dequeue().Dnk;
         }
         else
         {
@@ -68,9 +73,26 @@ public class ManufacturesManager : MonoBehaviour
         return dnk;
     }
 
+    public int GetReproductionDnkCount()
+    {
+        return _reproductionDnkQueue.Count;
+    }
+    
+    public int GetReproductionDnkHighPriorityCount()
+    {
+        return _reproductionDnkHighPriorityQueue.Count;
+    }
+
     public void AddReproductionDnk(ReproductionDnk reproductionDnk)
     {
-        ReproductionGens.Enqueue(reproductionDnk);
+        if (reproductionDnk.IsHighPriority)
+        {
+            _reproductionDnkHighPriorityQueue.Enqueue(reproductionDnk);
+
+            return;
+        }
+
+        _reproductionDnkQueue.Enqueue(reproductionDnk);
     }
 
     private Dnk GetTopManufactureDnk()
@@ -100,8 +122,12 @@ public class ManufacturesManager : MonoBehaviour
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        ReproductionGens = new Queue<ReproductionDnk>(
-            ReproductionGens.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
+        _reproductionDnkHighPriorityQueue = new Queue<ReproductionDnk>(
+            _reproductionDnkHighPriorityQueue.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
+        );
+
+        _reproductionDnkQueue = new Queue<ReproductionDnk>(
+            _reproductionDnkQueue.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
         );
     }
 }

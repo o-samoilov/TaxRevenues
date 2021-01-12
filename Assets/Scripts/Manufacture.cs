@@ -37,7 +37,7 @@ public class Manufacture : MonoBehaviour
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 0.3f;
 
-    private const int ReproductionIntervalDays = 5;
+    private const int ReproductionIntervalDays = 20;
 
     private VM.Basic _vm;
     private Stopwatch _stopWatch = new Stopwatch();
@@ -188,10 +188,12 @@ public class Manufacture : MonoBehaviour
         }
 
         var count = _currentSize == MediumSize ? 2 : 4;
+        var isHighPriority = _currentSize != MediumSize;
+
         for (var i = 0; i < count; i++)
         {
             var dnk = (Dnk) Dnk.Clone();
-            manufacturesManager.AddReproductionDnk(new ReproductionDnk(dnk, currentDay));
+            manufacturesManager.AddReproductionDnk(new ReproductionDnk(currentDay, isHighPriority, dnk));
         }
 
         _lastReproductionDay = currentDay;

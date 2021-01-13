@@ -13,7 +13,7 @@ public class ManufacturesManager : MonoBehaviour
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
-    private int _manufactureId = 1;
+    private int _manufactureId = 0;
 
     private void Start()
     {
@@ -26,9 +26,7 @@ public class ManufacturesManager : MonoBehaviour
         foreach (var manufacture in world.GetComponentsInChildren<Manufacture>())
         {
             _manufactures.Add(manufacture);
-            manufacture.Id = _manufactureId;
-
-            _manufactureId++;
+            manufacture.Id = GetManufactureId();
         }
     }
 
@@ -37,7 +35,7 @@ public class ManufacturesManager : MonoBehaviour
         return _manufactures;
     }
 
-    public int GetManufactureId()
+    private int GetManufactureId()
     {
         return ++_manufactureId;
     }
@@ -46,6 +44,7 @@ public class ManufacturesManager : MonoBehaviour
     {
         var result = new List<Dnk>();
 
+        //Sort by money
         _manufactures.Sort(delegate(Manufacture x, Manufacture y)
         {
             if (x.Money < y.Money)
@@ -112,6 +111,17 @@ public class ManufacturesManager : MonoBehaviour
         {
             var index = 0;
             var topManufacturesDnk = GetTopManufacturesDnk();
+            
+            //Sort by id
+            _manufactures.Sort(delegate(Manufacture x, Manufacture y)
+            {
+                if (x.Id > y.Id)
+                {
+                    return 1;
+                }
+
+                return -1;
+            });
 
             foreach (var manufacture in _manufactures)
             {

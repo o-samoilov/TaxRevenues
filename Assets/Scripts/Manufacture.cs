@@ -25,6 +25,7 @@ public class Manufacture : MonoBehaviour
 
     public int Id { get; set; }
 
+    public bool IsAlive { get; private set;  } = true;
     public float Money { get; private set; }
     public Dnk Dnk { get; private set; }
     public float ProductCoastPrice { get; private set; }
@@ -37,18 +38,13 @@ public class Manufacture : MonoBehaviour
     private const float MinProductCoastPricePrice = 10f;
     private const float MinProductCreationTimePrice = 0.3f;
 
-    private const int ReproductionIntervalDays = 10;
-
     private VM.Basic _vm;
     private Stopwatch _stopWatch = new Stopwatch();
 
-    private bool _isAlive = true;
     private bool _isBusy = false;
     private float _busyTime;
 
     private bool _showInfoText = false;
-
-    private int _lastReproductionDay;
 
     private const string SmallSize = "small_size";
     private const string MediumSize = "medium_size";
@@ -70,7 +66,7 @@ public class Manufacture : MonoBehaviour
 
     private void Update()
     {
-        if (!_isAlive)
+        if (!IsAlive)
         {
             return;
         }
@@ -81,33 +77,6 @@ public class Manufacture : MonoBehaviour
         {
             _vm.Process();
         }
-    }
-
-    public void ShowInfoText()
-    {
-        _showInfoText = true;
-        info.gameObject.SetActive(true);
-        UpdateInfoText();
-    }
-
-    public void HideInfoText()
-    {
-        _showInfoText = false;
-        info.gameObject.SetActive(false);
-    }
-
-    private void UpdateInfoText()
-    {
-        if (!_showInfoText)
-        {
-            return;
-        }
-
-        textInfo.text = $"ID: {Id}\n" +
-                        $"Create day: {CreateDay}\n" +
-                        $"Money: {Money}\n" +
-                        $"Pr. coast: {ProductCoastPrice}\n" +
-                        $"Pr. time: {ProductCreationTime}\n";
     }
 
     private void InitializeSettings(Dnk dnk)
@@ -121,7 +90,6 @@ public class Manufacture : MonoBehaviour
         CheckSize();
 
         CreateDay = worldDateTime.CurrentDay;
-        _lastReproductionDay = worldDateTime.CurrentDay;
 
         _vm = new VM.Basic(this, Dnk);
 
@@ -158,9 +126,9 @@ public class Manufacture : MonoBehaviour
         }
     }
 
-    private void Alive(int id, Dnk dnk)
+    public void Alive(int id, Dnk dnk)
     {
-        _isAlive = true;
+        IsAlive = true;
 
         Id = id;
         InitializeSettings(dnk);
@@ -172,50 +140,20 @@ public class Manufacture : MonoBehaviour
         Debug.Log("Alive");
     }
 
-    private void Die()
+    public void Die()
     {
-        _isAlive = false;
+        IsAlive = false;
         factoryRenderer.material = dieMaterial;
 
         Debug.Log("Die");
     }
 
-    private void Reproduction(int currentDay)
-    {
-        var dnk = (Dnk) Dnk.Clone();
-        manufacturesManager.AddReproductionDnk(new ReproductionDnk(currentDay, this.Id, dnk));
-
-        _lastReproductionDay = currentDay;
-    }
-
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        if (_isAlive)
+        if (IsAlive)
         {
             SpendMoney(Settings.Basic.ManufactureMaintenanceCost);
-
-            if (worldDateTime.CurrentDay - CreateDay > Settings.Basic.ManufactureLiveDays)
-            {
-                Die();
-                
-                // Is Need Reproduction
-                if (_currentSize == BigSize)
-                {
-                    Reproduction(worldDateTime.CurrentDay);
-                }
-                else if(_currentSize == ExtraBigSize);
-                {
-                    Reproduction(worldDateTime.CurrentDay);
-                    Reproduction(worldDateTime.CurrentDay);
-                }
-            }
-
-            return;
         }
-
-        Alive(manufacturesManager.GetManufactureId(), manufacturesManager.GetDnk());
-
-        //todo save statistic
     }
 
     #region Finance
@@ -444,6 +382,37 @@ public class Manufacture : MonoBehaviour
             infoY,
             info.transform.position.z
         );
+    }
+
+    #endregion
+
+    #region InfoText
+
+    public void ShowInfoText()
+    {
+        _showInfoText = true;
+        info.gameObject.SetActive(true);
+        UpdateInfoText();
+    }
+
+    public void HideInfoText()
+    {
+        _showInfoText = false;
+        info.gameObject.SetActive(false);
+    }
+
+    private void UpdateInfoText()
+    {
+        if (!_showInfoText)
+        {
+            return;
+        }
+
+        textInfo.text = $"ID: {Id}\n" +
+                        $"Create day: {CreateDay}\n" +
+                        $"Money: {Money}\n" +
+                        $"Pr. coast: {ProductCoastPrice}\n" +
+                        $"Pr. time: {ProductCreationTime}\n";
     }
 
     #endregion

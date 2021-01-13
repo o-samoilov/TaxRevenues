@@ -7,18 +7,13 @@ using Random = UnityEngine.Random;
 public class ManufacturesManager : MonoBehaviour
 {
     public WorldDateTime worldDateTime;
-    
-    public int ReproductionCount { get; private set; }
 
-    private const int ReproductionGensLiveDays = 35;
-    private const int TopManufacturePart = 30; // 30%
+    private const int TopManufacturePart = 25; // 25%
 
     private List<Manufacture> _manufactures = new List<Manufacture>();
     private ProbabilityManager _probabilityManager = new ProbabilityManager();
 
-    private Queue<ReproductionDnk> _reproductionDnkQueue = new Queue<ReproductionDnk>();
-
-    private int _id = 1;
+    private int _manufactureId = 1;
 
     private void Start()
     {
@@ -31,9 +26,9 @@ public class ManufacturesManager : MonoBehaviour
         foreach (var manufacture in world.GetComponentsInChildren<Manufacture>())
         {
             _manufactures.Add(manufacture);
-            manufacture.Id = _id;
+            manufacture.Id = _manufactureId;
 
-            _id++;
+            _manufactureId++;
         }
     }
 
@@ -44,50 +39,13 @@ public class ManufacturesManager : MonoBehaviour
 
     public int GetManufactureId()
     {
-        return ++_id;
+        return ++_manufactureId;
     }
 
-    public Dnk GetDnk()
+    private List<Dnk> GetTopManufacturesDnk()
     {
-        Dnk dnk;
-        if (_reproductionDnkQueue.Count != 0)
-        {
-            dnk = _reproductionDnkQueue.Dequeue().Dnk;
-        }
-        else
-        {
-            dnk = GetTopManufactureDnk();
-        }
+        var result = new List<Dnk>();
 
-        //mutation probability: 20%
-        if (_probabilityManager.IsProbability(20))
-        {
-            dnk.Mutate();
-
-            Debug.Log("Mutation");
-        }
-
-        return dnk;
-    }
-
-    public int GetReproductionDnkCount()
-    {
-        return _reproductionDnkQueue.Count;
-    }
-    
-    public int GetReproductionDnkCount(int manufactureId)
-    {
-        return _reproductionDnkQueue.Count(x => x.ManufactureId == manufactureId);
-    }
-
-    public void AddReproductionDnk(ReproductionDnk reproductionDnk)
-    {
-        ReproductionCount++;
-        _reproductionDnkQueue.Enqueue(reproductionDnk);
-    }
-
-    private Dnk GetTopManufactureDnk()
-    {
         _manufactures.Sort(delegate(Manufacture x, Manufacture y)
         {
             if (x.Money < y.Money)
@@ -104,17 +62,65 @@ public class ManufacturesManager : MonoBehaviour
         });
 
         var topManufactureMaxIndex = (int) (_manufactures.Count * TopManufacturePart / 100f);
+        var countGenToReproduction = _manufactures.Count / topManufactureMaxIndex;
 
-        var index = Random.Range(0, topManufactureMaxIndex);
-        var manufacture = _manufactures[index];
+        for (var i = 0; i < topManufactureMaxIndex; i++)
+        {
+            var manufacture = _manufactures[i];
 
-        return (Dnk) manufacture.Dnk.Clone();
+            for (var j = 0; j < countGenToReproduction; j++)
+            {
+                var dnk = (Dnk) manufacture.Dnk.Clone();
+
+                //mutation probability: 20%
+                if (_probabilityManager.IsProbability(20))
+                {
+                    dnk.Mutate();
+
+                    Debug.Log("Mutation");
+                }
+
+                result.Add(dnk);
+            }
+        }
+
+        return result;
     }
 
     private void WorldDateTimeNewDayHandler(object sender, Event.WorldDateTimeEventArgs e)
     {
-        _reproductionDnkQueue = new Queue<ReproductionDnk>(
-            _reproductionDnkQueue.Where(x => e.Day - ReproductionGensLiveDays <= x.CreateDay)
-        );
+        var isAllManufacturesDie = true;
+
+        //kill old manufacture
+        foreach (var manufacture in _manufactures)
+        {
+            if (manufacture.IsAlive &&
+                worldDateTime.CurrentDay - manufacture.CreateDay > Settings.Basic.ManufactureLiveDays
+            )
+            {
+                manufacture.Die();
+            }
+
+            if (manufacture.IsAlive)
+            {
+                isAllManufacturesDie = false;
+            }
+        }
+
+        //new iteration, alive all manufactures
+        if (isAllManufacturesDie)
+        {
+            var index = 0;
+            var topManufacturesDnk = GetTopManufacturesDnk();
+
+            foreach (var manufacture in _manufactures)
+            {
+                var dnk = topManufacturesDnk[index];
+
+                manufacture.Alive(GetManufactureId(), dnk);
+
+                index++;
+            }
+        }
     }
 }
